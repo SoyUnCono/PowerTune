@@ -45,11 +45,24 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <AppBarButton x:Uid="ShellMenuItem_Views_Main"
-                          Command="{x:Bind ViewModel.MenuViewsMainCommand}" />
+            <StackPanel Orientation="Horizontal">
+                <AppBarButton x:Uid="ShellMenuItem_Views_Main"
+                              Icon="Home"
+                              Foreground="Turquoise"
+                              BorderThickness="0 0 0 2"
+                              BorderBrush="{StaticResource ControlBackground}"
+                              Command="{x:Bind ViewModel.MenuViewsMainCommand}">
+                    <AppBarButton.Shadow>
+                        <ThemeShadow/>
+                    </AppBarButton.Shadow>
+                </AppBarButton>
+            </StackPanel>
             <AppBarButton Grid.Column="1"
                           x:Name="ShellMenuBarSettingsButton"
                           x:Uid="ShellMenuBarSettingsButton"
+                          BorderThickness="0 0 0 2"
+                          Foreground="Turquoise"
+                          BorderBrush="{StaticResource ControlBackground}"
                           AnimatedIcon.State="Normal"
                           PointerEntered="ShellMenuBarSettingsButton_PointerEntered"
                           PointerExited="ShellMenuBarSettingsButton_PointerExited"
@@ -63,6 +76,9 @@
                                         Glyph="&#xE713;" />
                     </AnimatedIcon.FallbackIconSource>
                 </AnimatedIcon>
+                <AppBarButton.Shadow>
+                    <ThemeShadow />
+                </AppBarButton.Shadow>
             </AppBarButton>
         </Grid>
         <Grid Grid.Row="2"

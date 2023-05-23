@@ -21,6 +21,9 @@
 	  <Content Include="Assets\*.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\NavigationViewIcons\*.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Assets\FullLogo.png" />
     <None Remove="Styles\Colors.xaml" />
     <None Remove="Views\Pages\SplashScreen.xaml" />
