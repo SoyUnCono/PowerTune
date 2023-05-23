@@ -21,18 +21,28 @@
                                HorizontalAlignment="Stretch">
             <controls:CustomHeader.HeaderRightContent>
                 <StackPanel Orientation="Horizontal"
+                            Canvas.ZIndex="2"
                             BorderBrush="{StaticResource MainWindowBackground}"
                             BorderThickness="2"
                             CornerRadius="{StaticResource ControlCornerRadius}">
                     <Button Style="{StaticResource HeaderButtons}"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
+                            CornerRadius="0"
                             ToolTipService.ToolTip="Boost Your performance with only OneClick!">
                         <StackPanel Orientation="Horizontal"
                                     Spacing="15">
                             <FontIcon Glyph="&#xEC4A;" />
-                            <TextBlock x:Uid="Boost_now_button"/>
+                            <TextBlock x:Uid="Boost_now_button" />
                         </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource HeaderButtons}"
+                            VerticalAlignment="Stretch"
+                            BorderThickness="2 0 0 0"
+                            CornerRadius="0"
+                            HorizontalAlignment="Stretch"
+                            ToolTipService.ToolTip="Tweaks Settings">
+                        <FontIcon Glyph="&#xE713;" />
                     </Button>
                 </StackPanel>
             </controls:CustomHeader.HeaderRightContent>
