@@ -20,7 +20,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0"
-              x:Name="AppTitleBar">
+              x:Name="AppTitleBar"
+              Background="{StaticResource ControlBackground}">
             <Image Source="/Assets/WindowIcon.ico"
                    HorizontalAlignment="Left"
                    Visibility="{x:Bind ViewModel.IsNotBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -40,7 +41,8 @@
                             Visibility="{x:Bind ViewModel.IsBusy,Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
                             Margin="{StaticResource NavigationViewPageContentMargin}" />
         <Grid Grid.Row="1"
-              Visibility="{x:Bind ViewModel.IsNotBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}">
+              Visibility="{x:Bind ViewModel.IsNotBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
+              Background="{StaticResource ControlBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -49,8 +51,6 @@
                 <AppBarButton x:Uid="ShellMenuItem_Views_Main"
                               Icon="Home"
                               Foreground="Turquoise"
-                              BorderThickness="0 0 0 2"
-                              BorderBrush="{StaticResource ControlBackground}"
                               Command="{x:Bind ViewModel.MenuViewsMainCommand}">
                     <AppBarButton.Shadow>
                         <ThemeShadow/>
@@ -60,9 +60,7 @@
             <AppBarButton Grid.Column="1"
                           x:Name="ShellMenuBarSettingsButton"
                           x:Uid="ShellMenuBarSettingsButton"
-                          BorderThickness="0 0 0 2"
                           Foreground="Turquoise"
-                          BorderBrush="{StaticResource ControlBackground}"
                           AnimatedIcon.State="Normal"
                           PointerEntered="ShellMenuBarSettingsButton_PointerEntered"
                           PointerExited="ShellMenuBarSettingsButton_PointerExited"

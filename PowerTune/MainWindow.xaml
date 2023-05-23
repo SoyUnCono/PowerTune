@@ -12,9 +12,10 @@
                    IsResizable="False"
                    MaxHeight="750"
                    MaxWidth="500"
+                   IsAlwaysOnTop="True"
                    PersistenceId="MainWindow"
                    mc:Ignorable="d">
-    <Grid Background="{StaticResource MainWindowBackground}">
+    <Grid Background="{StaticResource ControlBackground}">
         
     </Grid>
 </windowex:WindowEx>

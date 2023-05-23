@@ -61,7 +61,7 @@ public partial class ShellViewModel : ObservableRecipient
         }
         finally
         {
-            await Task.Delay(12000);
+            await Task.Delay(4000);
             IsBusy = false;
         }
     }

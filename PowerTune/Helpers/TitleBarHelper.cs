@@ -16,8 +16,6 @@ internal class TitleBarHelper
     private const int WAINACTIVE = 0x00;
     private const int WAACTIVE = 0x01;
     private const int WMACTIVATE = 0x0006;
-    private const int GWL_EXSTYLE = -20;
-    private const int WS_EX_MAXIMIZEBOX = 0x00010000;
 
     [DllImport("user32.dll")]
     private static extern IntPtr GetActiveWindow();
@@ -105,8 +103,6 @@ internal class TitleBarHelper
                 SendMessage(hwnd, WMACTIVATE, WAACTIVE, IntPtr.Zero);
                 SendMessage(hwnd, WMACTIVATE, WAINACTIVE, IntPtr.Zero);
             }
-
-        
         }
     }
 

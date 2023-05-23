@@ -193,4 +193,7 @@
   <data name="SplasScreen_Title.Text" xml:space="preserve">
     <value>PowerTune</value>
   </data>
+  <data name="Boost_Now_Button.Text" xml:space="preserve">
+    <value>Boost</value>
+  </data>
 </root>

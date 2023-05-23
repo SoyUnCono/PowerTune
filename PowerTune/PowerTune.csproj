@@ -25,7 +25,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\FullLogo.png" />
+    <None Remove="Styles\Buttons.xaml" />
     <None Remove="Styles\Colors.xaml" />
+    <None Remove="Views\Controls\CustomHeader.xaml" />
     <None Remove="Views\Pages\SplashScreen.xaml" />
   </ItemGroup>
 
@@ -49,6 +51,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Styles\Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Controls\CustomHeader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Pages\SplashScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
