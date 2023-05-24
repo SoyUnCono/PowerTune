@@ -5,6 +5,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:controls="using:PowerTune.Views.Controls"
       mc:Ignorable="d"
+      xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+      xmlns:ui="using:CommunityToolkit.WinUI.UI"
+      xmlns:models="using:PowerTune.Views.Controls.Models"
       Background="{StaticResource MainWindowBackground}">
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
@@ -47,6 +50,64 @@
                 </StackPanel>
             </controls:CustomHeader.HeaderRightContent>
         </controls:CustomHeader>
-        <Grid Grid.Row="1"></Grid>
+        <Grid Grid.Row="1">
+            <models:Groups Header="About your PC">
+                <labs:SettingsExpander Header="Check Windows Updates"
+                                       Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xE895;" />
+                    </labs:SettingsExpander.HeaderIcon>
+                    <labs:SettingsExpander.Items>
+                        <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
+                                           Margin="0"
+                                           IsClickEnabled="True"
+                                           Padding="15 20 20 30"
+                                           HorizontalContentAlignment="Left"
+                                           Click="{x:Bind ViewModel.OpenWindowsUpdatesAsync}"
+                                           CornerRadius="{StaticResource ControlCornerRadius}">
+                            <labs:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;" />
+                            </labs:SettingsCard.ActionIcon>
+                        </labs:SettingsCard>
+                    </labs:SettingsExpander.Items>
+                </labs:SettingsExpander>
+                <!-- Storage Capacity Labs -->
+                <labs:SettingsExpander Header="Storage Capacity"
+                                       Description="{x:Bind ViewModel.Storage}">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xE96A;" />
+                    </labs:SettingsExpander.HeaderIcon>
+                    <labs:SettingsExpander.Items>
+                        <labs:SettingsCard Description="{x:Bind ViewModel.Fulldatastorage}"
+                                           Margin="0"
+                                           Padding="15 20 20 30"
+                                           IsClickEnabled="True"
+                                           HorizontalContentAlignment="Left"
+                                           IsActionIconVisible="False"
+                                           CornerRadius="{StaticResource ControlCornerRadius}" />
+                        
+                    </labs:SettingsExpander.Items>
+                </labs:SettingsExpander>
+                <!-- Launch Start Apps Labs -->
+                <labs:SettingsExpander Header="Start-up Time"
+                                       Description="See details">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xE835;" />
+                    </labs:SettingsExpander.HeaderIcon>
+                    <labs:SettingsExpander.Items>
+                        <labs:SettingsCard Description="Start-up time vary depend on how many apps you have installed, the speed of your processor and the kind of storage you have."
+                                           IsClickEnabled="True"
+                                           Margin="0"
+                                           Padding="15 20 20 30"
+                                           HorizontalContentAlignment="Left"
+                                           CornerRadius="{StaticResource ControlCornerRadius}">
+                            <labs:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;" />
+                            </labs:SettingsCard.ActionIcon>
+                        </labs:SettingsCard>
+                    </labs:SettingsExpander.Items>
+                </labs:SettingsExpander>
+            </models:Groups>
+        </Grid>
     </Grid>
 </Page>

@@ -46,7 +46,8 @@
         <Grid Grid.Row="1"
               Margin="{StaticResource MenuBarContentMargin}"
               Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Frame x:Name="NavigationFrame">
+            <Frame x:Name="NavigationFrame"
+                   Margin="0 0 0 20">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition FromHorizontalOffset="100" />
