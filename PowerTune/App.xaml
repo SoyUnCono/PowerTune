@@ -16,8 +16,8 @@
                 <ResourceDictionary Source="/Styles/TextBlock.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <TransitionCollection x:Key="SettingsCardsAnimations">
-                <EntranceThemeTransition FromVerticalOffset="10" />
-                <RepositionThemeTransition  IsStaggeringEnabled="True" />
+                <EntranceThemeTransition FromVerticalOffset="100" />
+                <RepositionThemeTransition  IsStaggeringEnabled="False" />
             </TransitionCollection>
         </ResourceDictionary>
     </Application.Resources>

@@ -17,11 +17,14 @@
         <controls:CustomHeader HeaderImage="ms-appx:///Assets/NavigationViewIcons/Home.png"
                                HeaderTitle="Home"
                                SubHeaderTitle="Welcome Back! We are glad to see you again."
-                               Canvas.ZIndex="2"
+                               Canvas.ZIndex="8"
                                VerticalContentAlignment="Center"
                                Canvas.Top="0"
                                Grid.Row="0"
                                HorizontalAlignment="Stretch">
+            <controls:CustomHeader.Shadow>
+                <ThemeShadow />
+            </controls:CustomHeader.Shadow>
             <controls:CustomHeader.HeaderRightContent>
                 <StackPanel Orientation="Horizontal"
                             Canvas.ZIndex="2"
@@ -50,64 +53,93 @@
                 </StackPanel>
             </controls:CustomHeader.HeaderRightContent>
         </controls:CustomHeader>
-        <Grid Grid.Row="1">
-            <models:Groups Header="About your PC">
-                <labs:SettingsExpander Header="Check Windows Updates"
-                                       Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
-                    <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xE895;" />
-                    </labs:SettingsExpander.HeaderIcon>
-                    <labs:SettingsExpander.Items>
-                        <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
-                                           Margin="0"
-                                           IsClickEnabled="True"
-                                           Padding="15 20 20 30"
-                                           HorizontalContentAlignment="Left"
-                                           Click="{x:Bind ViewModel.OpenWindowsUpdatesAsync}"
-                                           CornerRadius="{StaticResource ControlCornerRadius}">
-                            <labs:SettingsCard.ActionIcon>
-                                <FontIcon Glyph="&#xE8A7;" />
-                            </labs:SettingsCard.ActionIcon>
-                        </labs:SettingsCard>
-                    </labs:SettingsExpander.Items>
-                </labs:SettingsExpander>
-                <!-- Storage Capacity Labs -->
-                <labs:SettingsExpander Header="Storage Capacity"
-                                       Description="{x:Bind ViewModel.Storage}">
-                    <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xE96A;" />
-                    </labs:SettingsExpander.HeaderIcon>
-                    <labs:SettingsExpander.Items>
-                        <labs:SettingsCard Description="{x:Bind ViewModel.Fulldatastorage}"
-                                           Margin="0"
-                                           Padding="15 20 20 30"
-                                           IsClickEnabled="True"
-                                           HorizontalContentAlignment="Left"
-                                           IsActionIconVisible="False"
-                                           CornerRadius="{StaticResource ControlCornerRadius}" />
-                        
-                    </labs:SettingsExpander.Items>
-                </labs:SettingsExpander>
-                <!-- Launch Start Apps Labs -->
-                <labs:SettingsExpander Header="Start-up Time"
-                                       Description="See details">
-                    <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xE835;" />
-                    </labs:SettingsExpander.HeaderIcon>
-                    <labs:SettingsExpander.Items>
-                        <labs:SettingsCard Description="Start-up time vary depend on how many apps you have installed, the speed of your processor and the kind of storage you have."
-                                           IsClickEnabled="True"
-                                           Margin="0"
-                                           Padding="15 20 20 30"
-                                           HorizontalContentAlignment="Left"
-                                           CornerRadius="{StaticResource ControlCornerRadius}">
-                            <labs:SettingsCard.ActionIcon>
-                                <FontIcon Glyph="&#xE8A7;" />
-                            </labs:SettingsCard.ActionIcon>
-                        </labs:SettingsCard>
-                    </labs:SettingsExpander.Items>
-                </labs:SettingsExpander>
-            </models:Groups>
-        </Grid>
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Hidden"
+                      Margin="0 5 0 0">
+            <StackPanel>
+                <models:Groups Header="About your PC">
+                    <labs:SettingsExpander Header="Check Windows Updates"
+                                           Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
+                        <labs:SettingsExpander.HeaderIcon>
+                            <FontIcon Glyph="&#xE895;" />
+                        </labs:SettingsExpander.HeaderIcon>
+                        <labs:SettingsExpander.Items>
+                            <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
+                                               Margin="0"
+                                               IsClickEnabled="True"
+                                               Padding="15 20 20 30"
+                                               HorizontalContentAlignment="Left"
+                                               Click="{x:Bind ViewModel.OpenWindowsUpdatesAsync}"
+                                               CornerRadius="{StaticResource ControlCornerRadius}">
+                                <labs:SettingsCard.ActionIcon>
+                                    <FontIcon Glyph="&#xE8A7;" />
+                                </labs:SettingsCard.ActionIcon>
+                            </labs:SettingsCard>
+                        </labs:SettingsExpander.Items>
+                    </labs:SettingsExpander>
+                    <!-- Storage Capacity Labs -->
+                    <labs:SettingsExpander Header="Storage Capacity"
+                                           Description="{x:Bind ViewModel.Storage}">
+                        <labs:SettingsExpander.HeaderIcon>
+                            <FontIcon Glyph="&#xE96A;" />
+                        </labs:SettingsExpander.HeaderIcon>
+                        <labs:SettingsExpander.Items>
+                            <labs:SettingsCard Description="{x:Bind ViewModel.Fulldatastorage}"
+                                               Margin="0"
+                                               Padding="15 20 20 30"
+                                               IsClickEnabled="True"
+                                               HorizontalContentAlignment="Left"
+                                               IsActionIconVisible="False"
+                                               CornerRadius="{StaticResource ControlCornerRadius}" />
+                        </labs:SettingsExpander.Items>
+                    </labs:SettingsExpander>
+                    <!-- Launch Start Apps Labs -->
+                    <labs:SettingsExpander Header="Start-up Time"
+                                           Description="See details">
+                        <labs:SettingsExpander.HeaderIcon>
+                            <FontIcon Glyph="&#xE835;" />
+                        </labs:SettingsExpander.HeaderIcon>
+                        <labs:SettingsExpander.Items>
+                            <labs:SettingsCard Description="Start-up time vary depend on how many apps you have installed, the speed of your processor and the kind of storage you have."
+                                               IsClickEnabled="True"
+                                               Margin="0"
+                                               Padding="15 20 20 30"
+                                               HorizontalContentAlignment="Left"
+                                               CornerRadius="{StaticResource ControlCornerRadius}">
+                                <labs:SettingsCard.ActionIcon>
+                                    <FontIcon Glyph="&#xE8A7;" />
+                                </labs:SettingsCard.ActionIcon>
+                            </labs:SettingsCard>
+                        </labs:SettingsExpander.Items>
+                    </labs:SettingsExpander>
+                </models:Groups>
+                <models:Groups Header="More Tweaks">
+                    <labs:SettingsCard Header="Auto Game"
+                                       IsClickEnabled="True"
+                                       Description="Auto Game automatically detects and optimizes your games for you. Enjoy enhanced performance and smoother gameplay with just one click."
+                                       IsActionIconVisible="True">
+                        <labs:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE7FC;" />
+                        </labs:SettingsCard.HeaderIcon>
+                    </labs:SettingsCard>
+                    <labs:SettingsCard Header="JunkRemoval"
+                                       IsClickEnabled="True"
+                                       Description="Cleanse your system from junk files with a single click. Optimize your computer's performance and free up valuable storage space. Try it now!"
+                                       IsActionIconVisible="True">
+                        <labs:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE74D;" />
+                        </labs:SettingsCard.HeaderIcon>
+                    </labs:SettingsCard>
+                    <labs:SettingsCard Header="Check System Health"
+                                       IsClickEnabled="True"
+                                       Description="Get a comprehensive assessment of your PC's performance in seconds. Discover potential issues and optimize your system for peak efficiency. Try it now!"
+                                       IsActionIconVisible="True">
+                        <labs:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xEB51;" />
+                        </labs:SettingsCard.HeaderIcon>
+                    </labs:SettingsCard>
+                </models:Groups>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
