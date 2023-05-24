@@ -12,6 +12,7 @@
                    IsResizable="False"
                    MaxHeight="750"
                    MaxWidth="500"
+                   IsMaximizable="False"
                    IsAlwaysOnTop="True"
                    PersistenceId="MainWindow"
                    mc:Ignorable="d">
