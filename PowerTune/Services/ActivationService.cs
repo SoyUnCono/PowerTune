@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-
 using PowerTune.Activation;
 using PowerTune.Contracts.Services;
 using PowerTune.Views;

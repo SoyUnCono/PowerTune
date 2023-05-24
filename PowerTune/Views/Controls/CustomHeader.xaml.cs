@@ -10,7 +10,6 @@ using Microsoft.UI.Xaml.Controls;
 namespace PowerTune.Views.Controls;
 public sealed partial class CustomHeader : UserControl
 {
-    public event EventHandler? MyEvent;
 
     /// <summary>
     /// HeaderImageProperty 
