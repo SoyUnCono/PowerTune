@@ -9,7 +9,6 @@ public class RestorePointService : IRestorePointService
     /// </summary>
     private const string restorePointServiceName = "PowerTune_RestorePoint";
 
-
     /// <summary>
     /// Runs a restore point operation.
     /// </summary>
@@ -49,9 +48,8 @@ public class RestorePointService : IRestorePointService
             // Invoke the "Enable" method on the SystemRestore class with the provided parameters
             SRClass.InvokeMethod("Enable", SRArgs, null!);
         }
-        catch (Exception ex) { throw new Exception(ex.Message); } // If an exception occurs, throw a new exception with the error message
+        catch (Exception ex) { App.MainWindow.ShowMessageDialogAsync($"{ex.Message}", $"{ex.Source}"); } // If an exception occurs, throw a new exception with the error message
     }
-
 
     /// <summary>
     /// Creates a restore point with the specified name, type, and event type.
@@ -77,7 +75,7 @@ public class RestorePointService : IRestorePointService
                 .InvokeMethod("CreateRestorePoint", SRArgs, new InvokeMethodOptions(null!, TimeSpan.MaxValue)));
             return true; // Return true indicating successful creation of restore point
         }
-        catch { return false; } // Return false if an exception occurs during method invocation 
+        catch (Exception ex) { App.MainWindow.CreateMessageDialog($"{ex.Message}", $"{ex.Source}"); return false; } // Return false if an exception occurs during method invocation 
     }
 
     /// <summary>
@@ -100,7 +98,7 @@ public class RestorePointService : IRestorePointService
             // Check if any ManagementObject in the collection matches the specified description
             return oCollection.Cast<ManagementObject>().Any(oItem => oItem["Description"].ToString()!.Equals(description, StringComparison.OrdinalIgnoreCase));
         }
-        catch { return false; } // If any exception occurs, return false to indicate that the restore point check failed
+        catch (Exception ex) { App.MainWindow.CreateMessageDialog($"{ex.Message}", $"{ex.Source}"); return false; } // If any exception occurs, return false to indicate that the restore point check failed
     }
 
 }
