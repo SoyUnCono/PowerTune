@@ -58,18 +58,7 @@
                     </TransitionCollection>
                 </Frame.ContentTransitions>
             </Frame>
-            <InfoBar IsOpen='{x:Bind ViewModel.IsNotificationOpen,Mode=OneWay}'
-                     IsClosable='{x:Bind ViewModel.CanCloseNotification,Mode=OneWay}'
-                     Title='{x:Bind ViewModel.NotificationTitle,Mode=OneWay}'
-                     Message="{x:Bind ViewModel.NotificationMessage,Mode=OneWay}"
-                     IsIconVisible="{x:Bind ViewModel.NotificationIconsVisible,Mode=OneWay}"
-                     CornerRadius="0"
-                     Background="{StaticResource ControlBackground}"
-                     Severity="Warning"
-                     Canvas.ZIndex="2"
-                     Margin="0 70 0 0"
-                     HorizontalAlignment="Stretch"
-                     VerticalAlignment="Top" />
+           
         </Grid>
         <!--NavigationView-->
         <Grid Grid.Row="2"

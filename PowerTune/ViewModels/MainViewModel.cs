@@ -7,12 +7,13 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.Win32;
 using PowerTune.Contracts.Services;
 using PowerTune.CustomCommands;
+using PowerTune.Services;
 using Windows.System;
 
 namespace PowerTune.ViewModels;
 
 public partial class MainViewModel : ObservableRecipient
-{   
+{
     // Const String
     private readonly INavigationService _navigationService;
 
@@ -30,21 +31,29 @@ public partial class MainViewModel : ObservableRecipient
     [ObservableProperty] private string? fulldatastorage;
     [ObservableProperty] private int index;
     [ObservableProperty] private bool uacToggleSwitchValue;
+    [ObservableProperty][NotifyPropertyChangedFor(nameof(IsNotBusy))] private bool isBusy;
+
+    // Notifications && Checks
+    [ObservableProperty] private string? notificationTitle;
+    [ObservableProperty] private string? notificationMessage;
+    [ObservableProperty] private string? notificationsIconSource;
+    [ObservableProperty] private string? isRunAsAdmin;
+    [ObservableProperty] private bool isNotificationOpen = false;
+    [ObservableProperty] private bool canCloseNotification = false;
+    [ObservableProperty] private bool notificationIconsVisible = false;
 
     //Dependecy Injection && Commands
     public ICommand OpenWindowsUpdatesCommand
     {
         get;
     }
+    public bool IsNotBusy => !IsBusy;
+
+    public INavigationService NavigationService => _navigationService;
 
     public MainViewModel()
     {
-        // Startup Tasks
-        GetUsernamePC();
-        GetSystemInformation();
-        GetDiskInformation();
-        GetLastChecked();
-        SetToggleStateInitialValues();
+        _ = StartupAsyncTasks();
 
         // Opens the Windows Updates settings page asynchronously
         OpenWindowsUpdatesCommand = new RelayCommand(OnWindowsUpdatesAsync);
@@ -52,6 +61,26 @@ public partial class MainViewModel : ObservableRecipient
         // Navigation Services
         _navigationService = App.GetService<INavigationService>();
 
+    }
+
+    private async Task StartupAsyncTasks()
+    {
+        try
+        {
+            // Startup Tasks and Set IsBusy to True
+            IsBusy = true;
+            GetUsernamePC();
+            GetSystemInformation();
+            GetDiskInformation();
+            GetLastChecked();
+            SetToggleStateInitialValues();
+            await NotificationTask();
+        }
+        finally
+        {
+            // Set IsBusy to False
+            IsBusy = false;
+        }
     }
 
     // Retrieves the username of the current PC user
@@ -88,6 +117,23 @@ public partial class MainViewModel : ObservableRecipient
             Fulldatastorage = $"Your storage device is currently utilizing {Storage}GB of space, leaving you with {freeSpaceInGB} of free space. {MoreThan75Perccent}";
         if (usedSpacePercentage >= 90)
             Fulldatastorage = $"Your storage device is currently utilizing {Storage}GB of space, leaving you with {freeSpaceInGB} of free space. {MoreThan90Perccent}";
+    }
+
+    /// <summary>
+    /// Asynchronous method that handles the notification task.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    public async Task NotificationTask()
+    {
+        // Verifies if a restore point with the specified name exists
+        var restorePointExists = await RestorePointService.CheckIfRestorePointExists(Constants.restorePointServiceName);
+
+        // Checks the conditions to display the appropriate notification message
+        IsNotificationOpen = true;
+        CanCloseNotification = true;
+        NotificationIconsVisible = true;
+        NotificationTitle = "Information about the status of the restore point.";
+        NotificationMessage = $"{(restorePointExists ? "Restore point already detected, operation aborted." : $"The restore point has been successfully created at {DateTime.Now}.")}";
     }
 
 

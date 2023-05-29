@@ -18,4 +18,8 @@ public class Constants
     /// </summary>
     public const string uacValue = "EnableLUA";
 
+    /// <summary>
+    /// Important Constants
+    /// </summary>s
+    public const string restorePointServiceName = "PowerTune_RestorePoint";
 }

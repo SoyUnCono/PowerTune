@@ -14,6 +14,7 @@ public partial class ShellViewModel : ObservableRecipient
     private bool isBackEnabled;
 
     //Dependecy Injection && Commands
+    private readonly IRestorePointService _restorePointService = new RestorePointService();
     public ICommand MenuSettingsCommand
     {
         get;
@@ -27,21 +28,13 @@ public partial class ShellViewModel : ObservableRecipient
         get;
     }
 
-    // Notifications && Checks
-    [ObservableProperty] private string? notificationTitle;
-    [ObservableProperty] private string? notificationMessage;
-    [ObservableProperty] private string? notificationsIconSource;
-    [ObservableProperty] private string? isRunAsAdmin;
-    [ObservableProperty] private bool isNotificationOpen = false;
-    [ObservableProperty] private bool canCloseNotification = false;
-    [ObservableProperty] private bool notificationIconsVisible = false;
+
 
     // ProgressBar
     [ObservableProperty][NotifyPropertyChangedFor(nameof(IsNotSplashScreenBusy))] private bool isSplashScreenBusy;
     [ObservableProperty] private bool isVisible = false;
     public bool IsNotSplashScreenBusy => !IsSplashScreenBusy;
-    private const string restorePointServiceName = "PowerTune_RestorePoint";
-
+   
 
     public ShellViewModel(INavigationService navigationService)
     {
@@ -61,7 +54,7 @@ public partial class ShellViewModel : ObservableRecipient
         // Set IsSplashScreenBusy property to true to indicate that the splash screen is busy
         IsSplashScreenBusy = true;
 
-        try { await NotificationTask(); } // Perform the notification task asynchronously
+        try { await _restorePointService.RunRestorePoint(); } // Perform the notification task asynchronously
         finally
         {
             // Delay the execution for 4000 milliseconds (4 seconds)
@@ -71,26 +64,7 @@ public partial class ShellViewModel : ObservableRecipient
         }
     }
 
-    public async Task NotificationTask()
-    {
-        // Create an instance of the RestorePointService
-        IRestorePointService _restorePointService = new RestorePointService();
-
-        // Run the restore point operation asynchronously
-        var _RunRestorePoint = _restorePointService.RunRestorePoint();
-        // Check if a restore point with the specified name exists asynchronously
-        var _RestorePointExists = await RestorePointService.CheckIfRestorePointExists(restorePointServiceName);
-
-        // Check the conditions to display the appropriate notification message
-        if (_RestorePointExists || !_RestorePointExists)
-        {
-            IsNotificationOpen = true;
-            CanCloseNotification = true;
-            NotificationIconsVisible = true;
-            NotificationTitle = "Information about the status of the restore point.";
-            NotificationMessage = $"{(await _RunRestorePoint ? $"The restore point has been successfully created at {DateTime.Now}." : "Restore point already detected, operation aborted.")}";
-        }
-    }
+   
 
     // Updates the value of IsBackEnabled based on whether the NavigationService can go back
     private void OnNavigated(object sender, NavigationEventArgs e) => IsBackEnabled = NavigationService.CanGoBack;

@@ -9,17 +9,21 @@
       xmlns:ui="using:CommunityToolkit.WinUI.UI"
       xmlns:models="using:PowerTune.Views.Controls.Models"
       xmlns:converter="using:PowerTune.Helpers"
+      xmlns:converter1="using:FixMeUP.Helpers"
       Background="{StaticResource MainWindowBackground}">
     <Page.Resources>
         <converter:ToggleSwitchToStatusConverter x:Key="ToggleSwitchToStatusConverter" />
+        <converter1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Page.Resources>
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
             <RowDefinition Height="78" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <controls:CustomHeader HeaderImage="ms-appx:///Assets/NavigationViewIcons/Home.png"
                                HeaderTitle="Home"
+                               IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}"
                                SubHeaderTitle="Welcome Back! We are glad to see you again."
                                Canvas.ZIndex="8"
                                VerticalContentAlignment="Center"
@@ -35,6 +39,8 @@
                             BorderBrush="{StaticResource MainWindowBackground}"
                             BorderThickness="2"
                             CornerRadius="{StaticResource ControlCornerRadius}">
+                    <ProgressRing IsIndeterminate="{x:Bind ViewModel.IsBusy}"
+                                  Visibility="{x:Bind ViewModel.IsBusy, Converter={StaticResource BooleanToVisibilityConverter},Mode=OneWay}"/>
                     <Button Style="{StaticResource HeaderButtons}"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
@@ -57,11 +63,25 @@
                 </StackPanel>
             </controls:CustomHeader.HeaderRightContent>
         </controls:CustomHeader>
-        <ScrollViewer Grid.Row="1"
+        <InfoBar IsOpen='{x:Bind ViewModel.IsNotificationOpen,Mode=OneWay}'
+                 IsClosable='{x:Bind ViewModel.CanCloseNotification,Mode=OneWay}'
+                 Title='{x:Bind ViewModel.NotificationTitle,Mode=OneWay}'
+                 Message="{x:Bind ViewModel.NotificationMessage,Mode=OneWay}"
+                 IsIconVisible="{x:Bind ViewModel.NotificationIconsVisible,Mode=OneWay}"
+                 CornerRadius="0"
+                 Grid.Row="1"
+                 Background="{StaticResource ControlBackground}"
+                 Severity="Warning"
+                 Canvas.ZIndex="2"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Top" />
+        <ScrollViewer Grid.Row="2"
+                      Transitions="{StaticResource SettingsCardsAnimations}"
                       Margin="{StaticResource MenuBarContentMargin}"
                       VerticalScrollBarVisibility="Hidden">
             <StackPanel>
-                <models:Groups Header="About your PC">
+                <models:Groups Header="About your PC"
+                               IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
                     <!--Check windows updates -->
                     <labs:SettingsExpander Header="Check Windows Updates"
                                            Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
@@ -109,7 +129,8 @@
                         </labs:SettingsCard>
                     </StackPanel>
                 </models:Groups>
-                <models:Groups Header="Personalization">
+                <models:Groups Header="Personalization"
+                               IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
                     <!-- UAC SettingsCard -->
                     <labs:SettingsCard Header="Disable UAC"
                                        IsClickEnabled="True"
@@ -173,7 +194,8 @@
                         </SplitButton>
                     </labs:SettingsCard>
                 </models:Groups>
-                <models:Groups Header="App Features">
+                <models:Groups Header="App Features"
+                               IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
                     <!-- Auto Game -->
                     <labs:SettingsCard Header="Auto Game"
                                        IsClickEnabled="True"

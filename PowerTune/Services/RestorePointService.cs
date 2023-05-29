@@ -1,14 +1,10 @@
 ﻿using System.Management;
+using PowerTune.CustomCommands;
 
 namespace PowerTune.Services;
 
 public class RestorePointService : IRestorePointService
 {
-    /// <summary>
-    /// Const Strings
-    /// </summary>
-    private const string restorePointServiceName = "PowerTune_RestorePoint";
-
     /// <summary>
     /// Runs a restore point operation.
     /// </summary>
@@ -16,12 +12,12 @@ public class RestorePointService : IRestorePointService
     public async Task<bool> RunRestorePoint()
     {
         // Check if a restore point with the specified service name already exists
-        if (await CheckIfRestorePointExists(restorePointServiceName))
+        if (await CheckIfRestorePointExists(Constants.restorePointServiceName))
             return false;
 
         // Create a new restore point with the specified service name and parameters
         // Return false to indicate that a restore point was not previously present
-        await CreateRestorePoint(restorePointServiceName, 0, 100);
+        await CreateRestorePoint(Constants.restorePointServiceName, 0, 100);
         return true;
     }
 

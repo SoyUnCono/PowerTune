@@ -21,8 +21,8 @@ namespace PowerTune.Views.Controls.Models;
 public partial class Groups : ItemsControl
 {
     private const string PartDescriptionPresenter = "DescriptionPresenter";
-    private ContentPresenter _descriptionPresenter;
-    private Groups _settingsGroup;
+    private ContentPresenter? _descriptionPresenter;
+    private Groups? _settingsGroup;
 
     public Groups() => DefaultStyleKey = typeof(Groups);
 
@@ -86,11 +86,11 @@ public partial class Groups : ItemsControl
 
         if (_settingsGroup.Description == null)
         {
-            _settingsGroup._descriptionPresenter.Visibility = Visibility.Collapsed;
+            _settingsGroup._descriptionPresenter!.Visibility = Visibility.Collapsed;
         }
         else
         {
-            _settingsGroup._descriptionPresenter.Visibility = Visibility.Visible;
+            _settingsGroup._descriptionPresenter!.Visibility = Visibility.Visible;
         }
     }
 
