@@ -1,12 +1,18 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Reflection.Metadata;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.Win32;
 using PowerTune.Contracts.Services;
+using PowerTune.CustomCommands;
 using Windows.System;
 
 namespace PowerTune.ViewModels;
 
 public partial class MainViewModel : ObservableRecipient
-{
+{   
     // Const String
     private readonly INavigationService _navigationService;
 
@@ -23,6 +29,13 @@ public partial class MainViewModel : ObservableRecipient
     [ObservableProperty] private string? lastchecked;
     [ObservableProperty] private string? fulldatastorage;
     [ObservableProperty] private int index;
+    [ObservableProperty] private bool uacToggleSwitchValue;
+
+    //Dependecy Injection && Commands
+    public ICommand OpenWindowsUpdatesCommand
+    {
+        get;
+    }
 
     public MainViewModel()
     {
@@ -31,15 +44,20 @@ public partial class MainViewModel : ObservableRecipient
         GetSystemInformation();
         GetDiskInformation();
         GetLastChecked();
+        SetToggleStateInitialValues();
+
+        // Opens the Windows Updates settings page asynchronously
+        OpenWindowsUpdatesCommand = new RelayCommand(OnWindowsUpdatesAsync);
 
         // Navigation Services
         _navigationService = App.GetService<INavigationService>();
+
     }
 
     // Retrieves the username of the current PC user
     private void GetUsernamePC() => Username = Environment.UserName;
     // Opens the Windows Updates settings page asynchronously
-    public async Task OpenWindowsUpdatesAsync() => await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsupdate"));
+    private async void OnWindowsUpdatesAsync() => await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsupdate"));
 
     /// <summary>
     /// Retrieves disk information including total space, free space, and used space percentage
@@ -107,4 +125,43 @@ public partial class MainViewModel : ObservableRecipient
         // Create a string that represents the last time the system was updated
         Lastchecked = $"The last time the system was updated was: {lastUpdate}";
     }
+
+    // Method to set the initial values of the toggle switch
+    private void SetToggleStateInitialValues()
+    {
+        // Assign the custom registry command to a variable.
+        var CustomCommand = CustomCommands.RegistryCommands.GetToggleSwitchInitialValue;
+
+        // Create the registry key path
+        var registryKeyPath_UAC = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.uacPath}";
+
+        // Call the custom command with the specified parameters to set the toggle value.
+        UacToggleSwitchValue = CustomCommand(registryKeyPath_UAC, Constants.uacValue, 0);
+    }
+
+    // Method to set the Windows Registry value based on the ToggleSwitch state
+    public void SetWindowsRegistry(object sender, RoutedEventArgs e)
+    {
+        // Cast the sender object to a ToggleSwitch
+        // Retrieve the Tag property of the toggleSwitch control and assign it to toggleSwitchId as a string
+        var toggleSwitch = (ToggleSwitch)sender;
+        var toggleSwitchId = toggleSwitch.Tag as string;
+
+        // Assign the SetRegistryValue method of the CustomCommands.RegistryCommands object to the CustomCommand variable
+        var CustomCommand = CustomCommands.RegistryCommands.SetRegistryValue;
+
+        // Call the custom command to set the registry value based on the ToggleSwitch state
+        switch (toggleSwitchId)
+        {
+            case "UAC":
+                CustomCommand(Constants.HKEY_LOCAL_MACHINE, Constants.uacPath, Constants.uacValue, toggleSwitch.IsOn ? 0 : 1);
+                break;
+
+            // Default Case
+            default:
+                break;
+        }
+    }
+
+
 }

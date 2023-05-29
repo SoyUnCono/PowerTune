@@ -8,7 +8,11 @@
       xmlns:labs="using:CommunityToolkit.Labs.WinUI"
       xmlns:ui="using:CommunityToolkit.WinUI.UI"
       xmlns:models="using:PowerTune.Views.Controls.Models"
+      xmlns:converter="using:PowerTune.Helpers"
       Background="{StaticResource MainWindowBackground}">
+    <Page.Resources>
+        <converter:ToggleSwitchToStatusConverter x:Key="ToggleSwitchToStatusConverter" />
+    </Page.Resources>
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
             <RowDefinition Height="78" />
@@ -54,25 +58,24 @@
             </controls:CustomHeader.HeaderRightContent>
         </controls:CustomHeader>
         <ScrollViewer Grid.Row="1"
-                      VerticalScrollBarVisibility="Hidden"
-                      Margin="0 5 0 0">
+                      Margin="{StaticResource MenuBarContentMargin}"
+                      VerticalScrollBarVisibility="Hidden">
             <StackPanel>
                 <models:Groups Header="About your PC">
                     <!--Check windows updates -->
                     <labs:SettingsExpander Header="Check Windows Updates"
-                                           Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}"
-                                           >
+                                           Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
                         <labs:SettingsExpander.HeaderIcon>
                             <FontIcon Glyph="&#xE895;" />
                         </labs:SettingsExpander.HeaderIcon>
                         <labs:SettingsExpander.Items>
+                            <!-- System Information -->
                             <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
                                                Margin="0"
                                                IsClickEnabled="True"
-                                               
                                                Padding="15 20 20 30"
                                                HorizontalContentAlignment="Left"
-                                               Click="{x:Bind ViewModel.OpenWindowsUpdatesAsync}"
+                                               Command="{x:Bind ViewModel.OpenWindowsUpdatesCommand}"
                                                CornerRadius="{StaticResource ControlCornerRadius}">
                                 <labs:SettingsCard.ActionIcon>
                                     <FontIcon Glyph="&#xE8A7;" />
@@ -84,14 +87,14 @@
                     <labs:SettingsCard Header="Start-up Time"
                                        Description="See details"
                                        IsClickEnabled="True">
-                        <ToggleSwitch ToolTipService.ToolTip="Disable or enable our Boost Startup Service."/>
+                        <ToggleSwitch ToolTipService.ToolTip="Disable or enable our Boost Startup Service." />
                         <labs:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE835;" />
                         </labs:SettingsCard.HeaderIcon>
-                     
                     </labs:SettingsCard>
                     <StackPanel Spacing="0"
                                 Padding="0">
+                        <!-- Information Storage -->
                         <InfoBar IsOpen="True"
                                  Title="{x:Bind ViewModel.Fulldatastorage}"
                                  Severity="Warning"
@@ -107,14 +110,13 @@
                     </StackPanel>
                 </models:Groups>
                 <models:Groups Header="Personalization">
+                    <!-- UAC SettingsCard -->
                     <labs:SettingsCard Header="Disable UAC"
                                        IsClickEnabled="True"
-                                       Description="fffffafafa">
-                        <labs:SettingsCard.Resources>
-                           
-                        </labs:SettingsCard.Resources>
-                        <ToggleSwitch />
+                                       Description="{Binding IsOn, ElementName=_ToggleSwitchUAC,Converter={StaticResource ToggleSwitchToStatusConverter}}">
+                        <ToggleSwitch x:Name="_ToggleSwitchUAC" IsOn="{x:Bind ViewModel.UacToggleSwitchValue}" Toggled="{x:Bind ViewModel.SetWindowsRegistry}" Tag="UAC"/>
                     </labs:SettingsCard>
+                    <!-- Set Windows Color -->
                     <labs:SettingsCard Header="Set Windows Color"
                                        Description="fffffafafa"
                                        IsClickEnabled="False">
@@ -169,6 +171,7 @@
                     </labs:SettingsCard>
                 </models:Groups>
                 <models:Groups Header="App Features">
+                    <!-- Auto Game -->
                     <labs:SettingsCard Header="Auto Game"
                                        IsClickEnabled="True"
                                        Description="Auto Game automatically detects and optimizes your games for you. Enjoy enhanced performance and smoother gameplay with just one click."
@@ -177,7 +180,8 @@
                             <FontIcon Glyph="&#xE7FC;" />
                         </labs:SettingsCard.HeaderIcon>
                     </labs:SettingsCard>
-                    <labs:SettingsCard Header="JunkRemoval"
+                    <!-- Junk Removal -->
+                    <labs:SettingsCard Header="Junk Removal"
                                        IsClickEnabled="True"
                                        Description="Cleanse your system from junk files with a single click. Optimize your computer's performance and free up valuable storage space. Try it now!"
                                        IsActionIconVisible="True">
@@ -185,6 +189,7 @@
                             <FontIcon Glyph="&#xE74D;" />
                         </labs:SettingsCard.HeaderIcon>
                     </labs:SettingsCard>
+                    <!-- Check System Health -->
                     <labs:SettingsCard Header="Check System Health"
                                        IsClickEnabled="True"
                                        Description="Get a comprehensive assessment of your PC's performance in seconds. Discover potential issues and optimize your system for peak efficiency. Try it now!"

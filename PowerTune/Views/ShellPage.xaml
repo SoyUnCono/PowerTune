@@ -15,7 +15,7 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
+            <RowDefinition Height="28" />
             <RowDefinition Height="*" />
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
@@ -44,7 +44,6 @@
                             Margin="{StaticResource NavigationViewPageContentMargin}" />
         <!--AppFrame-->
         <Grid Grid.Row="1"
-              Margin="{StaticResource MenuBarContentMargin}"
               Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}">
             <Frame x:Name="NavigationFrame"
                    Margin="0 0 0 10">
@@ -64,12 +63,13 @@
                      Title='{x:Bind ViewModel.NotificationTitle,Mode=OneWay}'
                      Message="{x:Bind ViewModel.NotificationMessage,Mode=OneWay}"
                      IsIconVisible="{x:Bind ViewModel.NotificationIconsVisible,Mode=OneWay}"
-                     Background='{StaticResource ControlBackground}'
-                     Severity="Informational"
+                     CornerRadius="0"
+                     Background="{StaticResource ControlBackground}"
+                     Severity="Warning"
                      Canvas.ZIndex="2"
-                     Margin="0 0 0 10"
+                     Margin="0 70 0 0"
                      HorizontalAlignment="Stretch"
-                     VerticalAlignment="Bottom" />
+                     VerticalAlignment="Top" />
         </Grid>
         <!--NavigationView-->
         <Grid Grid.Row="2"

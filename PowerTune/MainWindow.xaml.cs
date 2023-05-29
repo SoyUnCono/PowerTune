@@ -1,6 +1,9 @@
-﻿using PowerTune.Helpers;
+﻿using Microsoft.UI.Windowing;
+using Microsoft.UI;
+using PowerTune.Helpers;
 
 using Windows.UI.ViewManagement;
+using WinRT.Interop;
 
 namespace PowerTune;
 
@@ -23,6 +26,34 @@ public sealed partial class MainWindow : WindowEx
         settings = new UISettings();
         settings.ColorValuesChanged += Settings_ColorValuesChanged; // cannot use FrameworkElement.ActualThemeChanged event
 
+        // Moves the window to the right side of the screen.
+        MoveWindowToTheRight();
+    }
+
+    /// <summary>
+    /// Moves the window to the right side of the screen.
+    /// </summary>
+    private void MoveWindowToTheRight()
+    {
+        // Get the window ID
+        // Get the window handle
+        var hWnd = WindowNative.GetWindowHandle(this);
+        var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+
+        // Check if the window ID corresponds to an AppWindow and a valid DisplayArea
+        if (AppWindow.GetFromWindowId(windowId) is AppWindow appWindow && DisplayArea.GetFromWindowId(windowId, DisplayAreaFallback.Nearest) is DisplayArea displayArea)
+        {
+            // Create a new position for the window
+            var newPosition = appWindow.Position;
+
+            // Set X position to the right side of the screen
+            // Set Y position to the bottom of the screen
+            newPosition.X = displayArea.WorkArea.X + displayArea.WorkArea.Width - appWindow.Size.Width;
+            newPosition.Y = displayArea.WorkArea.Y + displayArea.WorkArea.Height - appWindow.Size.Height;
+
+            // Move the window to the new position
+            appWindow.Move(newPosition);
+        }
     }
 
     // this handles updating the caption button colors correctly when indows system theme is changed
