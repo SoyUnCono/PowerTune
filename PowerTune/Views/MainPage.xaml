@@ -58,8 +58,10 @@
                       Margin="0 5 0 0">
             <StackPanel>
                 <models:Groups Header="About your PC">
+                    <!--Check windows updates -->
                     <labs:SettingsExpander Header="Check Windows Updates"
-                                           Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
+                                           Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}"
+                                           >
                         <labs:SettingsExpander.HeaderIcon>
                             <FontIcon Glyph="&#xE895;" />
                         </labs:SettingsExpander.HeaderIcon>
@@ -67,6 +69,7 @@
                             <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
                                                Margin="0"
                                                IsClickEnabled="True"
+                                               
                                                Padding="15 20 20 30"
                                                HorizontalContentAlignment="Left"
                                                Click="{x:Bind ViewModel.OpenWindowsUpdatesAsync}"
@@ -77,43 +80,95 @@
                             </labs:SettingsCard>
                         </labs:SettingsExpander.Items>
                     </labs:SettingsExpander>
-                    <!-- Storage Capacity Labs -->
-                    <labs:SettingsExpander Header="Storage Capacity"
-                                           Description="{x:Bind ViewModel.Storage}">
-                        <labs:SettingsExpander.HeaderIcon>
-                            <FontIcon Glyph="&#xE96A;" />
-                        </labs:SettingsExpander.HeaderIcon>
-                        <labs:SettingsExpander.Items>
-                            <labs:SettingsCard Description="{x:Bind ViewModel.Fulldatastorage}"
-                                               Margin="0"
-                                               Padding="15 20 20 30"
-                                               IsClickEnabled="True"
-                                               HorizontalContentAlignment="Left"
-                                               IsActionIconVisible="False"
-                                               CornerRadius="{StaticResource ControlCornerRadius}" />
-                        </labs:SettingsExpander.Items>
-                    </labs:SettingsExpander>
                     <!-- Launch Start Apps Labs -->
-                    <labs:SettingsExpander Header="Start-up Time"
-                                           Description="See details">
-                        <labs:SettingsExpander.HeaderIcon>
+                    <labs:SettingsCard Header="Start-up Time"
+                                       Description="See details"
+                                       IsClickEnabled="True">
+                        <ToggleSwitch ToolTipService.ToolTip="Disable or enable our Boost Startup Service."/>
+                        <labs:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE835;" />
-                        </labs:SettingsExpander.HeaderIcon>
-                        <labs:SettingsExpander.Items>
-                            <labs:SettingsCard Description="Start-up time vary depend on how many apps you have installed, the speed of your processor and the kind of storage you have."
-                                               IsClickEnabled="True"
-                                               Margin="0"
-                                               Padding="15 20 20 30"
-                                               HorizontalContentAlignment="Left"
-                                               CornerRadius="{StaticResource ControlCornerRadius}">
-                                <labs:SettingsCard.ActionIcon>
-                                    <FontIcon Glyph="&#xE8A7;" />
-                                </labs:SettingsCard.ActionIcon>
-                            </labs:SettingsCard>
-                        </labs:SettingsExpander.Items>
-                    </labs:SettingsExpander>
+                        </labs:SettingsCard.HeaderIcon>
+                     
+                    </labs:SettingsCard>
+                    <StackPanel Spacing="0"
+                                Padding="0">
+                        <InfoBar IsOpen="True"
+                                 Title="{x:Bind ViewModel.Fulldatastorage}"
+                                 Severity="Warning"
+                                 IsClosable="False" />
+                        <!-- Storage Capacity Labs -->
+                        <labs:SettingsCard Header="Storage Capacity"
+                                           Description="{x:Bind ViewModel.Storage}"
+                                           IsClickEnabled="True">
+                            <labs:SettingsCard.HeaderIcon>
+                                <FontIcon Glyph="&#xE96A;" />
+                            </labs:SettingsCard.HeaderIcon>
+                        </labs:SettingsCard>
+                    </StackPanel>
                 </models:Groups>
-                <models:Groups Header="More Tweaks">
+                <models:Groups Header="Personalization">
+                    <labs:SettingsCard Header="Disable UAC"
+                                       IsClickEnabled="True"
+                                       Description="fffffafafa">
+                        <labs:SettingsCard.Resources>
+                           
+                        </labs:SettingsCard.Resources>
+                        <ToggleSwitch />
+                    </labs:SettingsCard>
+                    <labs:SettingsCard Header="Set Windows Color"
+                                       Description="fffffafafa"
+                                       IsClickEnabled="False">
+                        <SplitButton x:Name="myColorButton"
+                                     AutomationProperties.Name="Font color"
+                                     Padding="0"
+                                     MinHeight="0"
+                                     MinWidth="0"
+                                     VerticalAlignment="Top">
+                            <Border x:Name="CurrentColor"
+                                    Width="32"
+                                    Height="32"
+                                    Background="Green"
+                                    Margin="0"
+                                    CornerRadius="4,0,0,4" />
+                            <SplitButton.Flyout>
+                                <Flyout Placement="Bottom">
+                                    <GridView SelectionMode="None"
+                                              IsItemClickEnabled="True">
+                                        <GridView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <ItemsWrapGrid MaximumRowsOrColumns="3"
+                                                               Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </GridView.ItemsPanel>
+                                        <GridView.Resources>
+                                            <Style TargetType="Rectangle">
+                                                <Setter Property="RadiusX"
+                                                        Value="4" />
+                                                <Setter Property="Width"
+                                                        Value="32" />
+                                                <Setter Property="Height"
+                                                        Value="32" />
+                                                <Setter Property="RadiusY"
+                                                        Value="4" />
+                                            </Style>
+                                        </GridView.Resources>
+                                        <GridView.Items>
+                                            <Rectangle Fill="Red" />
+                                            <Rectangle Fill="Orange" />
+                                            <Rectangle Fill="Yellow" />
+                                            <Rectangle Fill="Green" />
+                                            <Rectangle Fill="Blue" />
+                                            <Rectangle Fill="Indigo" />
+                                            <Rectangle Fill="Violet" />
+                                            <Rectangle Fill="Gray" />
+                                        </GridView.Items>
+                                    </GridView>
+                                </Flyout>
+                            </SplitButton.Flyout>
+                        </SplitButton>
+                    </labs:SettingsCard>
+                </models:Groups>
+                <models:Groups Header="App Features">
                     <labs:SettingsCard Header="Auto Game"
                                        IsClickEnabled="True"
                                        Description="Auto Game automatically detects and optimizes your games for you. Enjoy enhanced performance and smoother gameplay with just one click."
