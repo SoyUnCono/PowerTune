@@ -13,7 +13,7 @@ public partial class ShellViewModel : ObservableRecipient
     [ObservableProperty]
     private bool isBackEnabled;
 
-    // DependencyInjection
+    //Dependecy Injection && Commands
     public ICommand MenuSettingsCommand
     {
         get;

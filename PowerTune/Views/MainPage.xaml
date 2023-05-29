@@ -114,7 +114,10 @@
                     <labs:SettingsCard Header="Disable UAC"
                                        IsClickEnabled="True"
                                        Description="{Binding IsOn, ElementName=_ToggleSwitchUAC,Converter={StaticResource ToggleSwitchToStatusConverter}}">
-                        <ToggleSwitch x:Name="_ToggleSwitchUAC" IsOn="{x:Bind ViewModel.UacToggleSwitchValue}" Toggled="{x:Bind ViewModel.SetWindowsRegistry}" Tag="UAC"/>
+                        <ToggleSwitch x:Name="_ToggleSwitchUAC"
+                                      IsOn="{x:Bind ViewModel.UacToggleSwitchValue}"
+                                      Toggled="{x:Bind ViewModel.SetWindowsRegistry}"
+                                      Tag="UAC" />
                     </labs:SettingsCard>
                     <!-- Set Windows Color -->
                     <labs:SettingsCard Header="Set Windows Color"

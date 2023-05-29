@@ -83,11 +83,11 @@ public partial class MainViewModel : ObservableRecipient
 
         // Determine the appropriate message based on the used space percentage
         if (usedSpacePercentage < 75)
-            Fulldatastorage = $"Your storage device is currently utilizing {Storage} of space, leaving you with {freeSpaceInGB} of free space. {LessThan75Perccent}";
+            Fulldatastorage = $"Your storage device is currently utilizing {Storage}GB of space, leaving you with {freeSpaceInGB} of free space. {LessThan75Perccent}";
         if (usedSpacePercentage >= 75 && usedSpacePercentage < 90)
-            Fulldatastorage = $"Your storage device is currently utilizing {Storage} of space, leaving you with {freeSpaceInGB} of free space. {MoreThan75Perccent}";
+            Fulldatastorage = $"Your storage device is currently utilizing {Storage}GB of space, leaving you with {freeSpaceInGB} of free space. {MoreThan75Perccent}";
         if (usedSpacePercentage >= 90)
-            Fulldatastorage = $"Your storage device is currently utilizing {Storage} of space, leaving you with {freeSpaceInGB} of free space. {MoreThan90Perccent}";
+            Fulldatastorage = $"Your storage device is currently utilizing {Storage}GB of space, leaving you with {freeSpaceInGB} of free space. {MoreThan90Perccent}";
     }
 
 
