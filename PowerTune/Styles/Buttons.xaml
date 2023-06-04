@@ -26,7 +26,7 @@
         <Setter Property="BackgroundSizing"
                 Value="InnerBorderEdge" />
         <Setter Property="Foreground"
-                Value="White" />
+                Value="{ThemeResource CustomButtonForeground}" />
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="Padding"

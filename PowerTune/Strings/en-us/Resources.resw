@@ -196,4 +196,10 @@
   <data name="Boost_Now_Button.Text" xml:space="preserve">
     <value>Boost</value>
   </data>
+  <data name="Tweaks_NoSelection.Text" xml:space="preserve">
+    <value>Select an item from the list.</value>
+  </data>
+  <data name="ShellMenuItem_Views_Tweaks.Text" xml:space="preserve">
+    <value>Tweaks</value>
+  </data>
 </root>

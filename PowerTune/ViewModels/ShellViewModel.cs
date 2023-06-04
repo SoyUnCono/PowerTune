@@ -1,7 +1,10 @@
 ﻿using System.Windows.Input;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using Microsoft.UI.Xaml.Navigation;
+
 using PowerTune.Contracts.Services;
 using PowerTune.Services;
 
@@ -28,14 +31,11 @@ public partial class ShellViewModel : ObservableRecipient
         get;
     }
 
-
-
     // ProgressBar
     [ObservableProperty][NotifyPropertyChangedFor(nameof(IsNotSplashScreenBusy))] private bool isSplashScreenBusy;
     [ObservableProperty] private bool isVisible = false;
     public bool IsNotSplashScreenBusy => !IsSplashScreenBusy;
    
-
     public ShellViewModel(INavigationService navigationService)
     {
         NavigationService = navigationService;
@@ -63,7 +63,6 @@ public partial class ShellViewModel : ObservableRecipient
             IsSplashScreenBusy = false;
         }
     }
-
    
 
     // Updates the value of IsBackEnabled based on whether the NavigationService can go back

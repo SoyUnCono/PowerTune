@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
@@ -8,6 +7,7 @@ using Microsoft.Win32;
 using PowerTune.Contracts.Services;
 using PowerTune.CustomCommands;
 using PowerTune.Services;
+using PowerTune.Views;
 using Windows.System;
 
 namespace PowerTune.ViewModels;
@@ -30,7 +30,6 @@ public partial class MainViewModel : ObservableRecipient
     [ObservableProperty] private string? lastchecked;
     [ObservableProperty] private string? fulldatastorage;
     [ObservableProperty] private int index;
-    [ObservableProperty] private bool uacToggleSwitchValue;
     [ObservableProperty][NotifyPropertyChangedFor(nameof(IsNotBusy))] private bool isBusy;
 
     // Notifications && Checks
@@ -47,19 +46,30 @@ public partial class MainViewModel : ObservableRecipient
     {
         get;
     }
+    public ICommand OnNavigateToTweaksSettingsPageCommand
+    {
+
+        get;
+    }
+
     public bool IsNotBusy => !IsBusy;
 
-    public INavigationService NavigationService => _navigationService;
+    // ToggleSwitch
+    [ObservableProperty] private bool uacToggleSwitchValue;
+    [ObservableProperty] private bool startUp_Time_ToggleSwitchValue;
+
 
     public MainViewModel()
     {
         _ = StartupAsyncTasks();
 
-        // Opens the Windows Updates settings page asynchronously
+        // Commands
         OpenWindowsUpdatesCommand = new RelayCommand(OnWindowsUpdatesAsync);
+        OnNavigateToTweaksSettingsPageCommand = new RelayCommand(OnNavigateToTweaksSettingsPage);
 
         // Navigation Services
         _navigationService = App.GetService<INavigationService>();
+
 
     }
 
@@ -88,6 +98,8 @@ public partial class MainViewModel : ObservableRecipient
     // Opens the Windows Updates settings page asynchronously
     private async void OnWindowsUpdatesAsync() => await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsupdate"));
 
+    private void OnNavigateToTweaksSettingsPage() => _navigationService.NavigateTo(typeof(MainViewModel).FullName!);
+
     /// <summary>
     /// Retrieves disk information including total space, free space, and used space percentage
     /// </summary>
@@ -112,11 +124,11 @@ public partial class MainViewModel : ObservableRecipient
 
         // Determine the appropriate message based on the used space percentage
         if (usedSpacePercentage < 75)
-            Fulldatastorage = $"Your storage device is currently utilizing {Storage}GB of space, leaving you with {freeSpaceInGB} of free space. {LessThan75Perccent}";
+            Fulldatastorage = $"Your storage device is currently utilizing {Storage} of space, leaving you with {freeSpaceInGB}GB of free space. {LessThan75Perccent}";
         if (usedSpacePercentage >= 75 && usedSpacePercentage < 90)
-            Fulldatastorage = $"Your storage device is currently utilizing {Storage}GB of space, leaving you with {freeSpaceInGB} of free space. {MoreThan75Perccent}";
+            Fulldatastorage = $"Your storage device is currently utilizing {Storage} of space, leaving you with {freeSpaceInGB}GB of free space. {MoreThan75Perccent}";
         if (usedSpacePercentage >= 90)
-            Fulldatastorage = $"Your storage device is currently utilizing {Storage}GB of space, leaving you with {freeSpaceInGB} of free space. {MoreThan90Perccent}";
+            Fulldatastorage = $"Your storage device is currently utilizing {Storage} of space, leaving you with {freeSpaceInGB}GB of free space. {MoreThan90Perccent}";
     }
 
     /// <summary>
@@ -175,14 +187,18 @@ public partial class MainViewModel : ObservableRecipient
     // Method to set the initial values of the toggle switch
     private void SetToggleStateInitialValues()
     {
+
         // Assign the custom registry command to a variable.
         var CustomCommand = CustomCommands.RegistryCommands.GetToggleSwitchInitialValue;
 
         // Create the registry key path
         var registryKeyPath_UAC = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.uacPath}";
+        var registryKeyPath_StartUp_Time = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.startUpTimePath}";
 
         // Call the custom command with the specified parameters to set the toggle value.
         UacToggleSwitchValue = CustomCommand(registryKeyPath_UAC, Constants.uacValue, 0);
+        StartUp_Time_ToggleSwitchValue = CustomCommand(registryKeyPath_StartUp_Time, Constants.startUpTimeValue, 1);
+
     }
 
     // Method to set the Windows Registry value based on the ToggleSwitch state
@@ -202,12 +218,16 @@ public partial class MainViewModel : ObservableRecipient
             case "UAC":
                 CustomCommand(Constants.HKEY_LOCAL_MACHINE, Constants.uacPath, Constants.uacValue, toggleSwitch.IsOn ? 0 : 1);
                 break;
+            case "Start_Up_Time":
+                CustomCommand(Constants.HKEY_LOCAL_MACHINE, Constants.startUpTimePath, Constants.startUpTimeValue, toggleSwitch.IsOn ? 1 : 0);
+                CustomCommand(Constants.HKEY_LOCAL_MACHINE, Constants.verbosePath, Constants.verboseValue, toggleSwitch.IsOn ? 1 : 0);
+                CustomCommand(Constants.HKEY_LOCAL_MACHINE, Constants.SerializePath, Constants.SerializeValue, toggleSwitch.IsOn ? 0 : 1);
+                break;
 
             // Default Case
             default:
                 break;
         }
     }
-
 
 }

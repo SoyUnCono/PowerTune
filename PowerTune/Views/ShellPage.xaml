@@ -64,6 +64,7 @@
         <Grid Grid.Row="2"
               Canvas.ZIndex="23"
               Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
+           
               Background="{StaticResource ControlBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -74,7 +75,6 @@
                         Margin="10 0 10 0">
                 <AppBarButton x:Uid="ShellMenuItem_Views_Main"
                               Icon="Home"
-                              Foreground="Turquoise"
                               Command="{x:Bind ViewModel.MenuViewsMainCommand}">
                     <AppBarButton.Shadow>
                         <ThemeShadow />
@@ -84,7 +84,6 @@
             <AppBarButton Grid.Column="1"
                           x:Name="ShellMenuBarSettingsButton"
                           x:Uid="ShellMenuBarSettingsButton"
-                          Foreground="Turquoise"
                           AnimatedIcon.State="Normal"
                           PointerEntered="ShellMenuBarSettingsButton_PointerEntered"
                           PointerExited="ShellMenuBarSettingsButton_PointerExited"

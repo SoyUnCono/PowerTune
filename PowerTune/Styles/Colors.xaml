@@ -1,12 +1,12 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="using:PowerTune.Styles">
+                    >
     <SolidColorBrush x:Key="MainWindowBackground"
-                     Color="#111B21" />
-    <SolidColorBrush x:Key="ControlBackground"
                      Color="#0B141A" />
-    <SolidColorBrush x:Key="HoverEffect"
-                     Color="#060C10" />
+    <SolidColorBrush x:Key="ControlBackground"
+                     Color="#111B21" />
+    <SolidColorBrush x:Key="IconsColor"
+                     Color="#221223" />
     <SolidColorBrush x:Key="SecundaryHoverEffect"
                      Color="#080F12" />
     <SolidColorBrush x:Key="GreenColor"

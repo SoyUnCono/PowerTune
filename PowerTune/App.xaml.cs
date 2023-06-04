@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-
 using PowerTune.Activation;
 using PowerTune.Contracts.Services;
 using PowerTune.Core.Contracts.Services;
@@ -13,6 +11,8 @@ using PowerTune.Notifications;
 using PowerTune.Services;
 using PowerTune.ViewModels;
 using PowerTune.Views;
+using PowerTune.Views.Controls;
+using PowerTune.Views.Controls.ViewModels;
 
 namespace PowerTune;
 
@@ -68,6 +68,7 @@ public partial class App : Application
             services.AddSingleton<INavigationService, NavigationService>();
 
             // Core Services
+            services.AddSingleton<ISampleDataService, SampleDataService>();
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
@@ -77,6 +78,8 @@ public partial class App : Application
             services.AddTransient<MainPage>();
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
+            services.AddTransient<CustomHeaderViewModel>();
+            services.AddTransient<CustomHeader>();
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));

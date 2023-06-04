@@ -3,6 +3,7 @@
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using PowerTune.Views.Controls.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -54,5 +55,15 @@ public sealed partial class CustomHeader : UserControl
         get => GetValue(HeaderRightContentProperty);
         set => SetValue(HeaderRightContentProperty, value);
     }
-    public CustomHeader() => this.InitializeComponent();
+
+    public CustomHeaderViewModel ViewModel
+    {
+        get;
+    }
+    public CustomHeader()
+    {
+        this.InitializeComponent();
+        ViewModel = App.GetService<CustomHeaderViewModel>();
+
+    }
 }

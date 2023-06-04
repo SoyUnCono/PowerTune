@@ -17,11 +17,11 @@
     </Page.Resources>
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
-            <RowDefinition Height="78" />
+            <RowDefinition Height="120" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:CustomHeader HeaderImage="ms-appx:///Assets/NavigationViewIcons/Home.png"
+        <controls:CustomHeader HeaderImage="ms-appx:///Assets/NavigationViewPagesIcons/Rocket.png"
                                HeaderTitle="Home"
                                IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}"
                                SubHeaderTitle="Welcome Back! We are glad to see you again."
@@ -36,11 +36,12 @@
             <controls:CustomHeader.HeaderRightContent>
                 <StackPanel Orientation="Horizontal"
                             Canvas.ZIndex="2"
-                            BorderBrush="{StaticResource MainWindowBackground}"
+                            BorderBrush="#221223"
                             BorderThickness="2"
+                            VerticalAlignment="Top"
                             CornerRadius="{StaticResource ControlCornerRadius}">
                     <ProgressRing IsIndeterminate="{x:Bind ViewModel.IsBusy}"
-                                  Visibility="{x:Bind ViewModel.IsBusy, Converter={StaticResource BooleanToVisibilityConverter},Mode=OneWay}"/>
+                                  Visibility="{x:Bind ViewModel.IsBusy, Converter={StaticResource BooleanToVisibilityConverter},Mode=OneWay}" />
                     <Button Style="{StaticResource HeaderButtons}"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
@@ -55,8 +56,10 @@
                     <Button Style="{StaticResource HeaderButtons}"
                             VerticalAlignment="Stretch"
                             BorderThickness="2 0 0 0"
+                            BorderBrush="#221223"
                             CornerRadius="0"
                             HorizontalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.OnNavigateToTweaksSettingsPageCommand}"
                             ToolTipService.ToolTip="Tweaks Settings">
                         <FontIcon Glyph="&#xE713;" />
                     </Button>
@@ -82,32 +85,36 @@
             <StackPanel>
                 <models:Groups Header="About your PC"
                                IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
-                    <!--Check windows updates -->
-                    <labs:SettingsExpander Header="Check Windows Updates"
-                                           Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
-                        <labs:SettingsExpander.HeaderIcon>
-                            <FontIcon Glyph="&#xE895;" />
-                        </labs:SettingsExpander.HeaderIcon>
-                        <labs:SettingsExpander.Items>
-                            <!-- System Information -->
-                            <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
-                                               Margin="0"
-                                               IsClickEnabled="True"
-                                               Padding="15 20 20 30"
-                                               HorizontalContentAlignment="Left"
-                                               Command="{x:Bind ViewModel.OpenWindowsUpdatesCommand}"
-                                               CornerRadius="{StaticResource ControlCornerRadius}">
-                                <labs:SettingsCard.ActionIcon>
-                                    <FontIcon Glyph="&#xE8A7;" />
-                                </labs:SettingsCard.ActionIcon>
-                            </labs:SettingsCard>
-                        </labs:SettingsExpander.Items>
-                    </labs:SettingsExpander>
+                    <StackPanel Spacing="0"
+                                Margin="0">
+                        <!--Check windows updates -->
+                        <labs:SettingsExpander Header="Check Windows Updates"
+                                               Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
+                            <labs:SettingsExpander.HeaderIcon>
+                                <FontIcon Glyph="&#xE895;" />
+                            </labs:SettingsExpander.HeaderIcon>
+                            <labs:SettingsExpander.Items>
+                                <!-- System Information -->
+                                <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
+                                                   IsClickEnabled="True"
+                                                   Padding="15 20 20 30"
+                                                   Command="{x:Bind ViewModel.OpenWindowsUpdatesCommand}"
+                                                   CornerRadius="{StaticResource RadiusExpander}">
+                                    <labs:SettingsCard.ActionIcon>
+                                        <FontIcon Glyph="&#xE8A7;" />
+                                    </labs:SettingsCard.ActionIcon>
+                                </labs:SettingsCard>
+                            </labs:SettingsExpander.Items>
+                        </labs:SettingsExpander>
+                    </StackPanel>
                     <!-- Launch Start Apps Labs -->
                     <labs:SettingsCard Header="Start-up Time"
                                        Description="See details"
                                        IsClickEnabled="True">
-                        <ToggleSwitch ToolTipService.ToolTip="Disable or enable our Boost Startup Service." />
+                        <ToggleSwitch ToolTipService.ToolTip="Disable or enable our Boost Startup Service."
+                                      Tag="Start_Up_Time"
+                                      IsOn="{x:Bind ViewModel.StartUp_Time_ToggleSwitchValue}"
+                                      Toggled="{x:Bind ViewModel.SetWindowsRegistry}" />
                         <labs:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE835;" />
                         </labs:SettingsCard.HeaderIcon>
@@ -140,9 +147,30 @@
                                       Toggled="{x:Bind ViewModel.SetWindowsRegistry}"
                                       Tag="UAC" />
                     </labs:SettingsCard>
+                    <!-- Enable Classic Windows Style -->
+                    <labs:SettingsExpander Header="Enable Classic Windows Style"
+                                           Description="Revitalize your Alt + Tab and Windows Sound experience with our 'Enable Old Windows Style' feature."
+                                           HorizontalContentAlignment="Left">
+                        <ToggleSwitch />
+                        <labs:SettingsExpander.Items>
+                            <labs:SettingsCard Description="Taskbar Alignment">
+                                <ComboBox SelectedIndex="0">
+                                    <ComboBoxItem Content="Center" />
+                                    <ComboBoxItem Content="Left" />
+                                </ComboBox>
+                            </labs:SettingsCard>
+                            <labs:SettingsCard Description="Enable Alt + Tab Style">
+                                <CheckBox IsChecked="True" />
+                            </labs:SettingsCard>
+                            <labs:SettingsCard CornerRadius="{StaticResource RadiusExpander}"
+                                               Description="Enable old Sound Mixer Style">
+                                <CheckBox IsChecked="True" />
+                            </labs:SettingsCard>
+                        </labs:SettingsExpander.Items>
+                    </labs:SettingsExpander>
                     <!-- Set Windows Color -->
                     <labs:SettingsCard Header="Set Windows Color"
-                                       Description="fffffafafa"
+                                       Description="Choose vibrant or soothing tones to reflect your style. Redefine your digital world with 'Set Windows Color'."
                                        IsClickEnabled="False">
                         <SplitButton x:Name="myColorButton"
                                      AutomationProperties.Name="Font color"
@@ -153,7 +181,7 @@
                             <Border x:Name="CurrentColor"
                                     Width="32"
                                     Height="32"
-                                    Background="Green"
+                                    Background="{StaticResource AccentAAFillColorDefaultBrush}"
                                     Margin="0"
                                     CornerRadius="4,0,0,4" />
                             <SplitButton.Flyout>

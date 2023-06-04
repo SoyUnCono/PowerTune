@@ -24,7 +24,6 @@ public class RestorePointService : IRestorePointService
     /// <summary>
     /// Main Constructor
     /// </summary>
-    /// TODO: Remove Bug duplicate RestorePoint
     public RestorePointService() => EnableSystemRestoreForDrive("C:\\");
 
     /// <summary>
