@@ -1,5 +1,4 @@
 ﻿using Microsoft.UI.Xaml;
-
 using PowerTune.Contracts.Services;
 using PowerTune.Helpers;
 

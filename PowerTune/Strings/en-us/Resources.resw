@@ -202,4 +202,17 @@
   <data name="ShellMenuItem_Views_Tweaks.Text" xml:space="preserve">
     <value>Tweaks</value>
   </data>
+  <data name="ShellMenuItem_Views_TweaksView.Text" xml:space="preserve">
+    <value>TweaksView</value>
+  </data>
+  <data name="TweaksView_Title.Text" xml:space="preserve">
+    <value>TweaksView</value>
+    <comment>Page title for TweaksViewPage</comment>
+  </data>
+  <data name="Infomessage_windows.Text" xml:space="preserve">
+    <value>This feature is only available on Windows 11.</value>
+  </data>
+  <data name="Taskbar_alignment.Text" xml:space="preserve">
+    <value>Taskbar Aligment</value>
+  </data>
 </root>

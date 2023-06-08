@@ -6,6 +6,7 @@
       xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
       xmlns:Pages="using:PowerTune.Views.Pages"
       xmlns:helpers="using:FixMeUP.Helpers"
+      xmlns:controls="using:PowerTune.Views.Controls"
       Loaded="OnLoaded"
       Background="{StaticResource MainWindowBackground}"
       Unloaded="OnUnloaded"
@@ -16,6 +17,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="28" />
+            <RowDefinition Height="120" />
             <RowDefinition Height="*" />
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
@@ -36,6 +38,47 @@
                        Style="{StaticResource CaptionTextBlockStyle}"
                        Margin="32, 0, 0, 0" />
         </Grid>
+        <!--Header Component-->
+        <controls:CustomHeader HeaderImage="ms-appx:///Assets/NavigationViewPagesIcons/Rocket.png"
+                               HeaderTitle="Home"
+                               SubHeaderTitle="Welcome Back! We are glad to see you again."
+                               Canvas.ZIndex="8"
+                               Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
+                               VerticalContentAlignment="Center"
+                               Canvas.Top="0"
+                               Grid.Row="1"
+                               HorizontalAlignment="Stretch">
+            <controls:CustomHeader.HeaderRightContent>
+                <StackPanel Orientation="Horizontal"
+                            Canvas.ZIndex="2"
+                            BorderBrush="#221223"
+                            BorderThickness="2"
+                            VerticalAlignment="Top"
+                            CornerRadius="{StaticResource ControlCornerRadius}">
+                    <Button Style="{StaticResource HeaderButtons}"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            CornerRadius="0"
+                            ToolTipService.ToolTip="Boost Your performance with only OneClick!">
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="15">
+                            <FontIcon Glyph="&#xEC4A;" />
+                            <TextBlock x:Uid="Boost_now_button" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource HeaderButtons}"
+                            VerticalAlignment="Stretch"
+                            BorderThickness="2 0 0 0"
+                            BorderBrush="#221223"
+                            CornerRadius="0"
+                            Command="{x:Bind ViewModel.OnNavigateToTweaksSettingsPageCommand}"
+                            HorizontalAlignment="Stretch"
+                            ToolTipService.ToolTip="Tweaks Settings">
+                        <FontIcon Glyph="&#xE713;" />
+                    </Button>
+                </StackPanel>
+            </controls:CustomHeader.HeaderRightContent>
+        </controls:CustomHeader>
         <!--SplashScreen-->
         <Pages:SplashScreen VerticalAlignment="Stretch"
                             Grid.RowSpan="3"
@@ -43,7 +86,7 @@
                             Visibility="{x:Bind ViewModel.IsSplashScreenBusy,Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
                             Margin="{StaticResource NavigationViewPageContentMargin}" />
         <!--AppFrame-->
-        <Grid Grid.Row="1"
+        <Grid Grid.Row="2"
               Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}">
             <Frame x:Name="NavigationFrame"
                    Margin="0 0 0 10">
@@ -58,13 +101,11 @@
                     </TransitionCollection>
                 </Frame.ContentTransitions>
             </Frame>
-           
         </Grid>
         <!--NavigationView-->
-        <Grid Grid.Row="2"
+        <Grid Grid.Row="3"
               Canvas.ZIndex="23"
               Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
-           
               Background="{StaticResource ControlBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

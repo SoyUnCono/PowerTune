@@ -14,71 +14,25 @@
     <Page.Resources>
         <converter:ToggleSwitchToStatusConverter x:Key="ToggleSwitchToStatusConverter" />
         <converter1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converter:BoolToIntConverter x:Key="BoolToIntConverter" />
     </Page.Resources>
-    <Grid x:Name="ContentArea">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="120" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <controls:CustomHeader HeaderImage="ms-appx:///Assets/NavigationViewPagesIcons/Rocket.png"
-                               HeaderTitle="Home"
-                               IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}"
-                               SubHeaderTitle="Welcome Back! We are glad to see you again."
-                               Canvas.ZIndex="8"
-                               VerticalContentAlignment="Center"
-                               Canvas.Top="0"
-                               Grid.Row="0"
-                               HorizontalAlignment="Stretch">
-            <controls:CustomHeader.Shadow>
-                <ThemeShadow />
-            </controls:CustomHeader.Shadow>
-            <controls:CustomHeader.HeaderRightContent>
-                <StackPanel Orientation="Horizontal"
-                            Canvas.ZIndex="2"
-                            BorderBrush="#221223"
-                            BorderThickness="2"
-                            VerticalAlignment="Top"
-                            CornerRadius="{StaticResource ControlCornerRadius}">
-                    <ProgressRing IsIndeterminate="{x:Bind ViewModel.IsBusy}"
-                                  Visibility="{x:Bind ViewModel.IsBusy, Converter={StaticResource BooleanToVisibilityConverter},Mode=OneWay}" />
-                    <Button Style="{StaticResource HeaderButtons}"
-                            VerticalAlignment="Stretch"
-                            HorizontalAlignment="Stretch"
-                            CornerRadius="0"
-                            ToolTipService.ToolTip="Boost Your performance with only OneClick!">
-                        <StackPanel Orientation="Horizontal"
-                                    Spacing="15">
-                            <FontIcon Glyph="&#xEC4A;" />
-                            <TextBlock x:Uid="Boost_now_button" />
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource HeaderButtons}"
-                            VerticalAlignment="Stretch"
-                            BorderThickness="2 0 0 0"
-                            BorderBrush="#221223"
-                            CornerRadius="0"
-                            HorizontalAlignment="Stretch"
-                            Command="{x:Bind ViewModel.OnNavigateToTweaksSettingsPageCommand}"
-                            ToolTipService.ToolTip="Tweaks Settings">
-                        <FontIcon Glyph="&#xE713;" />
-                    </Button>
-                </StackPanel>
-            </controls:CustomHeader.HeaderRightContent>
-        </controls:CustomHeader>
+    <Grid x:Name="ContentArea"
+          RowDefinitions="Auto, *">
+        <!--Infobar-->
         <InfoBar IsOpen='{x:Bind ViewModel.IsNotificationOpen,Mode=OneWay}'
                  IsClosable='{x:Bind ViewModel.CanCloseNotification,Mode=OneWay}'
                  Title='{x:Bind ViewModel.NotificationTitle,Mode=OneWay}'
                  Message="{x:Bind ViewModel.NotificationMessage,Mode=OneWay}"
                  IsIconVisible="{x:Bind ViewModel.NotificationIconsVisible,Mode=OneWay}"
                  CornerRadius="0"
-                 Grid.Row="1"
+                 Grid.Row="0"
                  Background="{StaticResource ControlBackground}"
                  Severity="Warning"
                  Canvas.ZIndex="2"
                  HorizontalAlignment="Stretch"
                  VerticalAlignment="Top" />
-        <ScrollViewer Grid.Row="2"
+        <!--Content-->
+        <ScrollViewer Grid.Row="1"
                       Transitions="{StaticResource SettingsCardsAnimations}"
                       Margin="{StaticResource MenuBarContentMargin}"
                       VerticalScrollBarVisibility="Hidden">
@@ -141,6 +95,7 @@
                     <!-- UAC SettingsCard -->
                     <labs:SettingsCard Header="Disable UAC"
                                        IsClickEnabled="True"
+                                       IsActionIconVisible="False"
                                        Description="{Binding IsOn, ElementName=_ToggleSwitchUAC,Converter={StaticResource ToggleSwitchToStatusConverter}}">
                         <ToggleSwitch x:Name="_ToggleSwitchUAC"
                                       IsOn="{x:Bind ViewModel.UacToggleSwitchValue}"
@@ -149,12 +104,23 @@
                     </labs:SettingsCard>
                     <!-- Enable Classic Windows Style -->
                     <labs:SettingsExpander Header="Enable Classic Windows Style"
-                                           Description="Revitalize your Alt + Tab and Windows Sound experience with our 'Enable Old Windows Style' feature."
+                                           Description="Revitalize your Windows Style experience."
+                                           IsExpanded="True"
                                            HorizontalContentAlignment="Left">
-                        <ToggleSwitch />
                         <labs:SettingsExpander.Items>
-                            <labs:SettingsCard Description="Taskbar Alignment">
-                                <ComboBox SelectedIndex="0">
+                            <labs:SettingsCard IsEnabled="{x:Bind ViewModel.IsWindows11, Mode=OneWay}">
+                                <labs:SettingsCard.Description>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock x:Uid="Taskbar_alignment" />
+                                        <TextBlock x:Uid="Infomessage_windows"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Bottom"
+                                                   Visibility="{x:Bind ViewModel.IsNotWindows11,Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    </StackPanel>
+                                </labs:SettingsCard.Description>
+                                <ComboBox SelectedIndex="{x:Bind ViewModel.ComboboxIndex,Mode=OneWay,Converter={StaticResource BoolToIntConverter}}"
+                                          SelectionChanged="{x:Bind ViewModel.TaskBarFunctions, Mode=OneWay}"
+                                          HorizontalAlignment="Right">
                                     <ComboBoxItem Content="Center" />
                                     <ComboBoxItem Content="Left" />
                                 </ComboBox>
@@ -170,7 +136,7 @@
                     </labs:SettingsExpander>
                     <!-- Set Windows Color -->
                     <labs:SettingsCard Header="Set Windows Color"
-                                       Description="Choose vibrant or soothing tones to reflect your style. Redefine your digital world with 'Set Windows Color'."
+                                       Description="Choose vibrant or soothing tones to reflect your style."
                                        IsClickEnabled="False">
                         <SplitButton x:Name="myColorButton"
                                      AutomationProperties.Name="Font color"

@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="using:PowerTune.Views.Controls.Models">
+                    xmlns:controls="using:PowerTune.Views.Controls.Models"
+                    xmlns:local="using:PowerTune.Views.Controls">
     
     <Style TargetType="controls:Groups">
         <Setter Property="ItemsPanel">
@@ -78,4 +79,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+   
 </ResourceDictionary>

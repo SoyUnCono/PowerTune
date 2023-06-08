@@ -7,7 +7,6 @@ using Microsoft.Win32;
 using PowerTune.Contracts.Services;
 using PowerTune.CustomCommands;
 using PowerTune.Services;
-using PowerTune.Views;
 using Windows.System;
 
 namespace PowerTune.ViewModels;
@@ -40,24 +39,21 @@ public partial class MainViewModel : ObservableRecipient
     [ObservableProperty] private bool isNotificationOpen = false;
     [ObservableProperty] private bool canCloseNotification = false;
     [ObservableProperty] private bool notificationIconsVisible = false;
+    [ObservableProperty][NotifyPropertyChangedFor(nameof(IsNotWindows11))] private bool isWindows11;
 
     //Dependecy Injection && Commands
     public ICommand OpenWindowsUpdatesCommand
     {
         get;
     }
-    public ICommand OnNavigateToTweaksSettingsPageCommand
-    {
-
-        get;
-    }
 
     public bool IsNotBusy => !IsBusy;
+    public bool IsNotWindows11 => !IsWindows11;
 
-    // ToggleSwitch
+    // ToggleSwitch && Checkboxes Initials Values
     [ObservableProperty] private bool uacToggleSwitchValue;
     [ObservableProperty] private bool startUp_Time_ToggleSwitchValue;
-
+    [ObservableProperty] private bool comboboxIndex;
 
     public MainViewModel()
     {
@@ -65,12 +61,9 @@ public partial class MainViewModel : ObservableRecipient
 
         // Commands
         OpenWindowsUpdatesCommand = new RelayCommand(OnWindowsUpdatesAsync);
-        OnNavigateToTweaksSettingsPageCommand = new RelayCommand(OnNavigateToTweaksSettingsPage);
 
         // Navigation Services
         _navigationService = App.GetService<INavigationService>();
-
-
     }
 
     private async Task StartupAsyncTasks()
@@ -98,7 +91,6 @@ public partial class MainViewModel : ObservableRecipient
     // Opens the Windows Updates settings page asynchronously
     private async void OnWindowsUpdatesAsync() => await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsupdate"));
 
-    private void OnNavigateToTweaksSettingsPage() => _navigationService.NavigateTo(typeof(MainViewModel).FullName!);
 
     /// <summary>
     /// Retrieves disk information including total space, free space, and used space percentage
@@ -148,6 +140,48 @@ public partial class MainViewModel : ObservableRecipient
         NotificationMessage = $"{(restorePointExists ? "Restore point already detected, operation aborted." : $"The restore point has been successfully created at {DateTime.Now}.")}";
     }
 
+    /// <summary>
+    /// Method to handle the selection changed event of the ComboBox
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public void TaskBarFunctions(object sender, SelectionChangedEventArgs e)
+    {
+        // Get the ComboBox and selected item
+        // Assign the SetRegistryValue method of the CustomCommands.RegistryCommands object to the CustomCommand variable
+        var comboBox = (ComboBox)sender;
+        var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+
+        var CustomCommand = CustomCommands.RegistryCommands.SetRegistryValue;
+
+        // Check if an item is selected
+        if (selectedItem == null)
+            return;
+
+        // Get the user's choice from the selected item
+        var userChoice = selectedItem.Content.ToString();
+
+        // Apply logic based on the user's choice
+        switch (userChoice)
+        {
+            case "Center":
+                // Logic for center alignment
+                // Call a custom command with the appropriate parameters for center alignment
+                CustomCommand(Constants.HKEY_CURRENT_USER, Constants.TaskbarPositionPath, Constants.TaskbarPositionValue, 1);
+                break;
+
+            case "Left":
+                // Logic for left alignment
+                // Call a custom command with the appropriate parameters for left alignment
+                CustomCommand(Constants.HKEY_CURRENT_USER, Constants.TaskbarPositionPath, Constants.TaskbarPositionValue, 0);
+                break;
+
+            default:
+                // Default case (optional)
+                // Handle any additional cases or provide a default behavior
+                break;
+        }
+    }
 
     /// <summary>
     /// Retrieves the system information including the operating system version and edition ID
@@ -161,11 +195,11 @@ public partial class MainViewModel : ObservableRecipient
 
         // Check if the operating system version is Windows 10
         if (osVersion.Major == 10 && osVersion.Minor == 0)
-            Systeminformation = $"You're currently running Windows 10 {editionID} ({osVersion})";
+            Systeminformation = $"You're currently running Windows 10 {editionID} ({osVersion})"; IsWindows11 = false;
 
         // Check if the operating system version is Windows 11 (build 22000 or higher)
         if (osVersion.Major == 10 && osVersion.Minor == 0 && osVersion.Build >= 22000)
-            Systeminformation = $"You're currently running Windows 11 {editionID} ({osVersion})";
+            Systeminformation = $"You're currently running Windows 11 {editionID} ({osVersion})"; IsWindows11 = true;
     }
 
     /// <summary>
@@ -187,18 +221,17 @@ public partial class MainViewModel : ObservableRecipient
     // Method to set the initial values of the toggle switch
     private void SetToggleStateInitialValues()
     {
-
         // Assign the custom registry command to a variable.
         var CustomCommand = CustomCommands.RegistryCommands.GetToggleSwitchInitialValue;
 
         // Create the registry key path
         var registryKeyPath_UAC = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.uacPath}";
         var registryKeyPath_StartUp_Time = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.startUpTimePath}";
-
+        var registryKeyPath_TaskbarAligment = $"{Constants.HKEY_CURRENT_USER}\\{Constants.TaskbarPositionPath}";
         // Call the custom command with the specified parameters to set the toggle value.
         UacToggleSwitchValue = CustomCommand(registryKeyPath_UAC, Constants.uacValue, 0);
         StartUp_Time_ToggleSwitchValue = CustomCommand(registryKeyPath_StartUp_Time, Constants.startUpTimeValue, 1);
-
+        ComboboxIndex = CustomCommand(registryKeyPath_TaskbarAligment, Constants.TaskbarPositionValue, 0);
     }
 
     // Method to set the Windows Registry value based on the ToggleSwitch state

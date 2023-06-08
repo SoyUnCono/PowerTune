@@ -11,10 +11,11 @@ public class Constants
     /// <summary>
     /// Path Strings
     /// </summary>
-    public const string uacPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
-    public const string startUpTimePath = "SOFTWARE\\RegisteredApplications\\PowerTune";
-    public const string verbosePath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
+    public const string uacPath = "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
+    public const string startUpTimePath = "Software\\RegisteredApplications\\PowerTune";
+    public const string verbosePath = "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
     public const string SerializePath = "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize";
+    public const string TaskbarPositionPath = "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced";
 
     /// <summary>
     /// Value Strings
@@ -23,6 +24,7 @@ public class Constants
     public const string startUpTimeValue = "EnableBoostStartUp";
     public const string verboseValue = "VerboseStatus";
     public const string SerializeValue = "StartupDelayInMSec";
+    public const string TaskbarPositionValue = "TaskbarAl";
 
     /// <summary>
     /// Important Constants

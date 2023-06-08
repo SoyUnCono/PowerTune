@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
+using System.Windows.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using PowerTune.Views.Controls.ViewModels;
@@ -33,6 +34,24 @@ public sealed partial class CustomHeader : UserControl
     /// </summary>
     public static readonly DependencyProperty SubHeaderTitleProperty =
         DependencyProperty.Register(nameof(SubHeaderTitle), typeof(string), typeof(CustomHeader), new PropertyMetadata(DependencyProperty.UnsetValue));
+
+    public static readonly DependencyProperty IsRightContentVisibleProperty =
+    DependencyProperty.RegisterAttached(
+        "IsRightContentVisible",
+        typeof(bool),
+        typeof(CustomHeader),
+        new PropertyMetadata(true));
+
+    public static bool GetIsRightContentVisible(DependencyObject obj)
+    {
+        return (bool)obj.GetValue(IsRightContentVisibleProperty);
+    }
+
+    public static void SetIsRightContentVisible(DependencyObject obj, bool value)
+    {
+        obj.SetValue(IsRightContentVisibleProperty, value);
+    }
+
     public string HeaderImage
     {
         get => (string)GetValue(HeaderImageProperty);

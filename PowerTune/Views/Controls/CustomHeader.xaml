@@ -4,7 +4,11 @@
              xmlns:local="using:PowerTune.Views.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="using:FixMeUP.Helpers"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid x:Name="controlRoot"
           Background="{StaticResource ControlBackground}"
           CornerRadius="{StaticResource ControlCornerRadius}">
@@ -48,7 +52,7 @@
         </StackPanel>
         <ContentPresenter x:Name="RightContentPresenter"
                           Content="{x:Bind HeaderRightContent, Mode=OneWay}"
-                          VerticalAlignment="Center"
+                          Visibility="{Binding Path=(local:CustomHeader.IsRightContentVisible), RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}"
                           Margin="19"
                           VerticalContentAlignment="Top"
                           HorizontalContentAlignment="Center"

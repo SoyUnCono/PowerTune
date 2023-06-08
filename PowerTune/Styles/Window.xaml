@@ -100,15 +100,15 @@
                                 <VisualState x:Name="WindowInactive">
                                     <VisualState.Setters>
                                         <Setter Target="MinimizeButton.Foreground"
-                                                Value="{ThemeResource WindowCaptionForegroundDisabled}" />
+                                                Value="{ThemeResource WindowCaptionForeground}" />
                                         <Setter Target="MinimizeButton.Background"
                                                 Value="{ThemeResource WindowCaptionButtonBackground}" />
                                         <Setter Target="MaximizeButton.Foreground"
-                                                Value="{ThemeResource WindowCaptionForegroundDisabled}" />
+                                                Value="{ThemeResource WindowCaptionForeground}" />
                                         <Setter Target="MaximizeButton.Background"
                                                 Value="{ThemeResource WindowCaptionButtonBackground}" />
                                         <Setter Target="CloseButton.Foreground"
-                                                Value="{ThemeResource WindowCaptionForegroundDisabled}" />
+                                                Value="{ThemeResource WindowCaptionForeground}" />
                                         <Setter Target="CloseButton.Background"
                                                 Value="{ThemeResource WindowCaptionButtonBackground}" />
                                     </VisualState.Setters>

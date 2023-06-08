@@ -26,10 +26,17 @@ public partial class ShellViewModel : ObservableRecipient
     {
         get;
     }
+    public ICommand OnNavigateToTweaksSettingsPageCommand
+    {
+
+        get;
+    }
+
     public INavigationService NavigationService
     {
         get;
     }
+
 
     // ProgressBar
     [ObservableProperty][NotifyPropertyChangedFor(nameof(IsNotSplashScreenBusy))] private bool isSplashScreenBusy;
@@ -43,6 +50,7 @@ public partial class ShellViewModel : ObservableRecipient
 
         MenuSettingsCommand = new RelayCommand(OnMenuSettings);
         MenuViewsMainCommand = new RelayCommand(OnMenuViewsMain);
+        OnNavigateToTweaksSettingsPageCommand = new RelayCommand(OnNavigateToTweaksViewPage);
 
         // Load Tasks After activation
         StartupTask();
@@ -73,5 +81,7 @@ public partial class ShellViewModel : ObservableRecipient
 
     // Navigates to the MainViewModel by using the NavigationService and passing the full name of the MainViewModel type
     private void OnMenuViewsMain() => NavigationService.NavigateTo(typeof(MainViewModel).FullName!);
+    // Navigates to the TweaksViewViewModel by using the NavigationService and passing the full name of the TweaksViewViewModel type
+    private void OnNavigateToTweaksViewPage() => NavigationService.NavigateTo(typeof(TweaksViewViewModel).FullName!);
 
 }
