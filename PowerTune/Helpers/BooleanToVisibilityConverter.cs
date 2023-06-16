@@ -2,7 +2,7 @@
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml;
 
-namespace FixMeUP.Helpers;
+namespace PowerTune.Helpers;
 public class BooleanToVisibilityConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)

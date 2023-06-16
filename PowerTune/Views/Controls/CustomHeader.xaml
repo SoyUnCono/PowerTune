@@ -4,14 +4,13 @@
              xmlns:local="using:PowerTune.Views.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:helpers="using:FixMeUP.Helpers"
+             xmlns:helpers="using:PowerTune.Helpers"
              mc:Ignorable="d">
     <UserControl.Resources>
         <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <Grid x:Name="controlRoot"
-          Background="{StaticResource ControlBackground}"
-          CornerRadius="{StaticResource ControlCornerRadius}">
+          Background="{StaticResource ControlBackground}">
         <StackPanel Orientation='Horizontal'
                     Spacing='1'
                     HorizontalAlignment='Left'
@@ -33,7 +32,7 @@
                            VerticalAlignment="Center" />
                 <NavigationViewItemSeparator VerticalAlignment="Center"
                                              Margin="0 10 0 0"
-                                             Height="50"/>
+                                             Height="50" />
                 <StackPanel Orientation="Vertical"
                             VerticalAlignment="Center"
                             Margin="0 50 0 0"

@@ -16,7 +16,7 @@ public partial class ShellViewModel : ObservableRecipient
     [ObservableProperty]
     private bool isBackEnabled;
 
-    //Dependecy Injection && Commands
+    //Dependency Injection && Commands
     private readonly IRestorePointService _restorePointService = new RestorePointService();
     public ICommand MenuSettingsCommand
     {
@@ -50,13 +50,12 @@ public partial class ShellViewModel : ObservableRecipient
 
         MenuSettingsCommand = new RelayCommand(OnMenuSettings);
         MenuViewsMainCommand = new RelayCommand(OnMenuViewsMain);
-        OnNavigateToTweaksSettingsPageCommand = new RelayCommand(OnNavigateToTweaksViewPage);
 
         // Load Tasks After activation
         StartupTask();
     }
 
-    // Performs startup tasks asynchronously
+    // Performs start up tasks asynchronously
     private async void StartupTask()
     {
         // Set IsSplashScreenBusy property to true to indicate that the splash screen is busy
@@ -72,7 +71,6 @@ public partial class ShellViewModel : ObservableRecipient
         }
     }
    
-
     // Updates the value of IsBackEnabled based on whether the NavigationService can go back
     private void OnNavigated(object sender, NavigationEventArgs e) => IsBackEnabled = NavigationService.CanGoBack;
 
@@ -82,6 +80,5 @@ public partial class ShellViewModel : ObservableRecipient
     // Navigates to the MainViewModel by using the NavigationService and passing the full name of the MainViewModel type
     private void OnMenuViewsMain() => NavigationService.NavigateTo(typeof(MainViewModel).FullName!);
     // Navigates to the TweaksViewViewModel by using the NavigationService and passing the full name of the TweaksViewViewModel type
-    private void OnNavigateToTweaksViewPage() => NavigationService.NavigateTo(typeof(TweaksViewViewModel).FullName!);
 
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using PowerTune.Helpers;
-
 using Windows.UI.ViewManagement;
 using WinRT.Interop;
 
@@ -17,7 +16,7 @@ public sealed partial class MainWindow : WindowEx
     {
         InitializeComponent();
 
-        AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
+        AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.gif"));
         Content = null;
         Title = "AppDisplayName".GetLocalized();
 

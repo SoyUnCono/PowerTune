@@ -5,7 +5,7 @@ namespace PowerTune.Views.Controls.Peers;
 
 public class SettingsGroupAutomationPeer : FrameworkElementAutomationPeer
 {
-    public SettingsGroupAutomationPeer(Groups owner)
+    public SettingsGroupAutomationPeer(Groups owner) 
         : base(owner)
     {
     }

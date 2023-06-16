@@ -5,8 +5,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
       xmlns:Pages="using:PowerTune.Views.Pages"
-      xmlns:helpers="using:FixMeUP.Helpers"
       xmlns:controls="using:PowerTune.Views.Controls"
+      xmlns:helpers="using:PowerTune.Helpers"
       Loaded="OnLoaded"
       Background="{StaticResource MainWindowBackground}"
       Unloaded="OnUnloaded"
@@ -25,7 +25,7 @@
         <Grid Grid.Row="0"
               x:Name="AppTitleBar"
               Background="{StaticResource ControlBackground}">
-            <Image Source="/Assets/WindowIcon.ico"
+            <Image Source="/Assets/WindowIcon.gif"
                    HorizontalAlignment="Left"
                    Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
                    Width="16"
@@ -51,14 +51,15 @@
             <controls:CustomHeader.HeaderRightContent>
                 <StackPanel Orientation="Horizontal"
                             Canvas.ZIndex="2"
-                            BorderBrush="#221223"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="2"
                             VerticalAlignment="Top"
                             CornerRadius="{StaticResource ControlCornerRadius}">
-                    <Button Style="{StaticResource HeaderButtons}"
+                    <Button 
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
-                            CornerRadius="0"
+                            CornerRadius="4 0 0 4"
+                            Style="{ThemeResource AccentButtonStyle}"
                             ToolTipService.ToolTip="Boost Your performance with only OneClick!">
                         <StackPanel Orientation="Horizontal"
                                     Spacing="15">
@@ -66,11 +67,20 @@
                             <TextBlock x:Uid="Boost_now_button" />
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource HeaderButtons}"
-                            VerticalAlignment="Stretch"
-                            BorderThickness="2 0 0 0"
-                            BorderBrush="#221223"
-                            CornerRadius="0"
+                    <!--Content Dialog-->
+                    <ContentDialog x:Name="Dialog"
+                                   Title="Tweaks Settings"
+                                   Content="Prueba 1"
+                                   Background="{StaticResource ControlBackground}"
+                                   PrimaryButtonText="Apply Settings"
+                                   CloseButtonText="close"
+                                   FullSizeDesired="False" />
+                    <Button VerticalAlignment="Stretch"
+                           Style="{ThemeResource AccentButtonStyle}"
+                            BorderThickness="1 0 0 0"
+                            Click="Button_Click"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            CornerRadius="0 4 4 0"
                             Command="{x:Bind ViewModel.OnNavigateToTweaksSettingsPageCommand}"
                             HorizontalAlignment="Stretch"
                             ToolTipService.ToolTip="Tweaks Settings">
@@ -89,7 +99,7 @@
         <Grid Grid.Row="2"
               Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}">
             <Frame x:Name="NavigationFrame"
-                   Margin="0 0 0 10">
+                   Margin="0 0 0 2">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition FromHorizontalOffset="100" />

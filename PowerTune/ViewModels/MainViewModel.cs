@@ -47,13 +47,17 @@ public partial class MainViewModel : ObservableRecipient
         get;
     }
 
+    // Public bool's
     public bool IsNotBusy => !IsBusy;
     public bool IsNotWindows11 => !IsWindows11;
 
     // ToggleSwitch && Checkboxes Initials Values
     [ObservableProperty] private bool uacToggleSwitchValue;
     [ObservableProperty] private bool startUp_Time_ToggleSwitchValue;
+    [ObservableProperty] private bool alt_TabValue;
     [ObservableProperty] private bool comboboxIndex;
+    [ObservableProperty] private bool old_Sound_Mixer;
+    [ObservableProperty] private bool checkBox_Dialog;
 
     public MainViewModel()
     {
@@ -70,13 +74,13 @@ public partial class MainViewModel : ObservableRecipient
     {
         try
         {
-            // Startup Tasks and Set IsBusy to True
+            // Start up Tasks and Set IsBusy to True
             IsBusy = true;
             GetUsernamePC();
             GetSystemInformation();
             GetDiskInformation();
             GetLastChecked();
-            SetToggleStateInitialValues();
+            SetStateInitialValues();
             await NotificationTask();
         }
         finally
@@ -86,11 +90,14 @@ public partial class MainViewModel : ObservableRecipient
         }
     }
 
-    // Retrieves the username of the current PC user
+    /// <summary>
+    /// Retrieves the username of the current PC user
+    /// </summary>
     private void GetUsernamePC() => Username = Environment.UserName;
-    // Opens the Windows Updates settings page asynchronously
+    /// <summary>
+    /// Opens the Windows Updates settings page asynchronously
+    /// </summary>
     private async void OnWindowsUpdatesAsync() => await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsupdate"));
-
 
     /// <summary>
     /// Retrieves disk information including total space, free space, and used space percentage
@@ -218,24 +225,36 @@ public partial class MainViewModel : ObservableRecipient
         Lastchecked = $"The last time the system was updated was: {lastUpdate}";
     }
 
-    // Method to set the initial values of the toggle switch
-    private void SetToggleStateInitialValues()
+    /// <summary>
+    /// Method to set the initial values
+    /// </summary>
+    private void SetStateInitialValues()
     {
         // Assign the custom registry command to a variable.
         var CustomCommand = CustomCommands.RegistryCommands.GetToggleSwitchInitialValue;
 
         // Create the registry key path
         var registryKeyPath_UAC = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.uacPath}";
-        var registryKeyPath_StartUp_Time = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.startUpTimePath}";
+        var registryKeyPath_AplicationPath = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.ApplicationPath}";
         var registryKeyPath_TaskbarAligment = $"{Constants.HKEY_CURRENT_USER}\\{Constants.TaskbarPositionPath}";
+        var registryKeyPath_Alt_Tab = $"{Constants.HKEY_CURRENT_USER}\\{Constants.Alt_TabPath}";
+        var registryKeyPath_Old_Sound_Mixer = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.Old_Sound_MixerPath}";
+
         // Call the custom command with the specified parameters to set the toggle value.
         UacToggleSwitchValue = CustomCommand(registryKeyPath_UAC, Constants.uacValue, 0);
-        StartUp_Time_ToggleSwitchValue = CustomCommand(registryKeyPath_StartUp_Time, Constants.startUpTimeValue, 1);
+        StartUp_Time_ToggleSwitchValue = CustomCommand(registryKeyPath_AplicationPath, Constants.startUpTimeValue, 1);
         ComboboxIndex = CustomCommand(registryKeyPath_TaskbarAligment, Constants.TaskbarPositionValue, 0);
+        Alt_TabValue = CustomCommand(registryKeyPath_Alt_Tab, Constants.Alt_TabValue, 1);
+        Old_Sound_Mixer = CustomCommand(registryKeyPath_Old_Sound_Mixer, Constants.Old_Sound_MixerValue, 1);
+        CheckBox_Dialog = CustomCommand(registryKeyPath_AplicationPath, Constants.DialogStatus, 1);
     }
 
-    // Method to set the Windows Registry value based on the ToggleSwitch state
-    public void SetWindowsRegistry(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// Method to set the Windows Registry value based on the ToggleSwitch state
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public void SetWindowsRegistryToggle(object sender, RoutedEventArgs e)
     {
         // Cast the sender object to a ToggleSwitch
         // Retrieve the Tag property of the toggleSwitch control and assign it to toggleSwitchId as a string
@@ -243,21 +262,57 @@ public partial class MainViewModel : ObservableRecipient
         var toggleSwitchId = toggleSwitch.Tag as string;
 
         // Assign the SetRegistryValue method of the CustomCommands.RegistryCommands object to the CustomCommand variable
-        var CustomCommand = CustomCommands.RegistryCommands.SetRegistryValue;
+        var customCommand = CustomCommands.RegistryCommands.SetRegistryValue;
 
         // Call the custom command to set the registry value based on the ToggleSwitch state
         switch (toggleSwitchId)
         {
             case "UAC":
-                CustomCommand(Constants.HKEY_LOCAL_MACHINE, Constants.uacPath, Constants.uacValue, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.uacPath, Constants.uacValue, toggleSwitch.IsOn ? 0 : 1);
                 break;
+
             case "Start_Up_Time":
-                CustomCommand(Constants.HKEY_LOCAL_MACHINE, Constants.startUpTimePath, Constants.startUpTimeValue, toggleSwitch.IsOn ? 1 : 0);
-                CustomCommand(Constants.HKEY_LOCAL_MACHINE, Constants.verbosePath, Constants.verboseValue, toggleSwitch.IsOn ? 1 : 0);
-                CustomCommand(Constants.HKEY_LOCAL_MACHINE, Constants.SerializePath, Constants.SerializeValue, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.ApplicationPath, Constants.startUpTimeValue, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.verbosePath, Constants.verboseValue, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.SerializePath, Constants.SerializeValue, toggleSwitch.IsOn ? 0 : 1);
                 break;
 
             // Default Case
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Method to set the Windows Registry value based on the CheckBox status
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public void SetWindowsRegistryCheckBox(object sender, RoutedEventArgs e)
+    {
+        // Cast the sender object to a CheckBox
+        // Retrieve the Tag property of the checkBox control and assign it to checkBoxId as a string
+        var checkBox = (CheckBox)sender;
+        var checkBoxId = checkBox.Tag as string;
+
+        //Get the checked status of the checkBox
+        var checkStatus = (bool)checkBox.IsChecked!;
+
+        // Assign the SetRegistryValue method of the CustomCommands.RegistryCommands object to the CustomCommand variable
+        var customCommand = CustomCommands.RegistryCommands.SetRegistryValue;
+
+        // Call the custom command to set the registry value based on the CheckBox status
+        switch (checkBoxId)
+        {
+            case "Alt_Tab":
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.Alt_TabPath, Constants.Alt_TabValue, checkStatus ? 1 : 0);
+                break;
+            case "Old_Sound_Mixer":
+                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.Old_Sound_MixerPath, Constants.Old_Sound_MixerValue, checkStatus ? 1 : 0);
+                break;
+            case "Dialog_Visibility":
+                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.ApplicationPath, Constants.DialogStatus, checkStatus ? 1 : 0);
+                break;
             default:
                 break;
         }

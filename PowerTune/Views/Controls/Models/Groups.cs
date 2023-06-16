@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml;
-using System.Xml.Linq;
 using PowerTune.Views.Controls.Peers;
 
 namespace PowerTune.Views.Controls.Models;
@@ -52,50 +46,49 @@ public partial class Groups : ItemsControl
         typeof(Groups),
         new PropertyMetadata(null, OnDescriptionChanged));
 
+    // Override the OnApplyTemplate method to handle the application of the control's template
     protected override void OnApplyTemplate()
     {
+        // Unsubscribe from the IsEnabledChanged event to avoid duplicate event handlers
         IsEnabledChanged -= SettingsGroup_IsEnabledChanged;
+
+        // Get references to the control's template parts
         _settingsGroup = (Groups)this;
         _descriptionPresenter = (ContentPresenter)_settingsGroup.GetTemplateChild(PartDescriptionPresenter);
+
+        // Set the enabled state of the control
         SetEnabledState();
+
+        // Subscribe to the IsEnabledChanged event to handle changes in the control's enabled state
         IsEnabledChanged += SettingsGroup_IsEnabledChanged;
+
+        // Call the base implementation of OnApplyTemplate
         base.OnApplyTemplate();
     }
 
-    private static void OnDescriptionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        ((Groups)d).Update();
-    }
+    // Event handler for the DescriptionProperty changed event
+    private static void OnDescriptionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => ((Groups)d).Update();
 
-    private void SettingsGroup_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-    {
-        SetEnabledState();
-    }
+    // Event handler for the IsEnabledChanged event
+    private void SettingsGroup_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e) => SetEnabledState();
 
-    private void SetEnabledState()
-    {
-        VisualStateManager.GoToState(this, IsEnabled ? "Normal" : "Disabled", true);
-    }
+    // Set the enabled state of the control based on the IsEnabled property
+    private void SetEnabledState() => VisualStateManager.GoToState(this, IsEnabled ? "Normal" : "Disabled", true);
 
+    // Update the control based on changes to the Description property
     private void Update()
     {
+        // Check if the control and its template parts are available
         if (_settingsGroup == null)
-        {
             return;
-        }
 
+        // Set the visibility of the description presenter based on the Description property
         if (_settingsGroup.Description == null)
-        {
             _settingsGroup._descriptionPresenter!.Visibility = Visibility.Collapsed;
-        }
         else
-        {
             _settingsGroup._descriptionPresenter!.Visibility = Visibility.Visible;
-        }
     }
 
-    protected override AutomationPeer OnCreateAutomationPeer()
-    {
-        return new SettingsGroupAutomationPeer(this);
-    }
+    // Override the OnCreateAutomationPeer method to provide an automation peer for the control
+    protected override AutomationPeer OnCreateAutomationPeer() =>  new SettingsGroupAutomationPeer(this);
 }
