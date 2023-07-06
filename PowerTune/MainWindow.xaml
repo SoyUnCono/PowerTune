@@ -5,18 +5,16 @@
                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                    xmlns:windowex="using:WinUIEx"
-                   MinWidth="500"
-                   Width="570"
-                   Height="750"
-                   MinHeight="750"
+                   MinWidth="726"
+                   Width="726"
+                   Height="650"
+                   MinHeight="650"
                    IsResizable="False"
-                   MaxHeight="750"
-                   MaxWidth="570"
+                   MaxHeight="650"
+                   MaxWidth="526"
                    IsMaximizable="False"
                    IsAlwaysOnTop="True"
                    PersistenceId="MainWindow"
                    mc:Ignorable="d">
-    <Grid Background="{StaticResource ControlBackground}">
-        
-    </Grid>
+
 </windowex:WindowEx>

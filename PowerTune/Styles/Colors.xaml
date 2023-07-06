@@ -2,15 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     >
     <SolidColorBrush x:Key="MainWindowBackground"
-                     Color="#0B141A" />
+                     Color="#F2F2F2" />
     <SolidColorBrush x:Key="ControlBackground"
-                     Color="#111B21" />
+                     Color="#FFFFFF" />
     <SolidColorBrush x:Key="IconsColor"
-                     Color="#221223" />
+                     Color="#555555" />
     <SolidColorBrush x:Key="SecundaryHoverEffect"
-                     Color="#080F12" />
+                     Color="#EFEFEF" />
     <SolidColorBrush x:Key="GreenColor"
-                     Color="#00A884" />
+                     Color="#00CC99" />
     <SolidColorBrush x:Key='BlueColor'
-                     Color='#215A9D' />
+                     Color="#66A3D2" />
 </ResourceDictionary>

@@ -31,20 +31,23 @@
                            FontSize="10"
                            VerticalAlignment="Center" />
                 <NavigationViewItemSeparator VerticalAlignment="Center"
-                                             Margin="0 10 0 0"
+                                             Margin="0 2 0 0"
                                              Height="50" />
                 <StackPanel Orientation="Vertical"
                             VerticalAlignment="Center"
                             Margin="0 50 0 0"
                             HorizontalAlignment="Left">
                     <TextBlock Text="{x:Bind ViewModel.SystemInformationLabel}"
-                               FontSize="7"
+                               FontSize="8"
                                CharacterSpacing="44" />
                     <TextBlock Text="{x:Bind ViewModel.NameInformationLabel}"
-                               FontSize="7"
+                               FontSize="8"
                                CharacterSpacing="44" />
                     <TextBlock Text="{x:Bind ViewModel.MotherBoardInformationLabel}"
-                               FontSize="7"
+                               FontSize="8"
+                               CharacterSpacing="44" />
+                    <TextBlock Text="{x:Bind ViewModel.LaptopOrDesktop}"
+                               FontSize="8"
                                CharacterSpacing="44" />
                 </StackPanel>
             </Grid>

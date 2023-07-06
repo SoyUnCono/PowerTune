@@ -19,6 +19,7 @@ public sealed partial class MainWindow : WindowEx
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.gif"));
         Content = null;
         Title = "AppDisplayName".GetLocalized();
+        IsAlwaysOnTop = true;
 
         // Theme change code picked from https://github.com/microsoft/WinUI-Gallery/pull/1239
         dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
@@ -55,7 +56,11 @@ public sealed partial class MainWindow : WindowEx
         }
     }
 
-    // this handles updating the caption button colors correctly when indows system theme is changed
+    /// <summary>
+    /// /this handles updating the caption button colours correctly when windows system theme is changed
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
     // while the app is open
     private void Settings_ColorValuesChanged(UISettings sender, object args)
     {

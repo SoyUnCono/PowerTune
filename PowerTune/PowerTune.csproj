@@ -19,27 +19,22 @@
 	<ItemGroup>
 		<Content Include="Assets\*.jpg" />
 		<Content Include="Assets\*.png" />
+		<Content Include="Assets\*.svg" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="Assets\NavigationViewIcons\*.png" />
 		<Content Include="Assets\NavigationViewPagesIcons\*.png" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Remove="Assets\FullLogo.png" />
-		<None Remove="Styles\Buttons.xaml" />
-		<None Remove="Styles\Colors.xaml" />
-		<None Remove="Styles\CustomControls.xaml" />
-		<None Remove="Styles\Window.xaml" />
-		<None Remove="Views\Controls\CustomHeader.xaml" />
-		<None Remove="Views\Pages\SplashScreen.xaml" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Manifest Include="$(ApplicationManifest)" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Labs.WinUI.RivePlayer" Version="0.0.4" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.SettingsControls" Version="0.0.18" />
+		<PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.0.1" />
+		<PackageReference Include="CommunityToolkit.Labs.WinUI.StackedNotificationsBehavior" Version="0.0.2" />
+		<PackageReference Include="CommunityToolkit.Labs.WinUI.TransitionHelper" Version="0.0.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
 		<PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
@@ -56,6 +51,9 @@
 		<None Update="appsettings.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<Page Update="Views\Controls\CustomNotificationMessage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 		<Page Update="Styles\CustomControls.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</Page>

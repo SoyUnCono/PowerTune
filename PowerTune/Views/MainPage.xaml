@@ -10,30 +10,15 @@
       xmlns:models="using:PowerTune.Views.Controls.Models"
       Loaded="Page_Loaded"
       xmlns:converter="using:PowerTune.Helpers"
-      Background="{StaticResource MainWindowBackground}">
+      xmlns:brushes="using:CommunityToolkit.Common">
     <Page.Resources>
         <converter:ToggleSwitchToStatusConverter x:Key="ToggleSwitchToStatusConverter" />
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converter:BoolToIntConverter x:Key="BoolToIntConverter" />
     </Page.Resources>
-    <Grid x:Name="ContentArea"
-          RowDefinitions="Auto, *">
-        <!--Infobar-->
-        <InfoBar IsOpen='{x:Bind ViewModel.IsNotificationOpen,Mode=OneWay}'
-                 IsClosable='{x:Bind ViewModel.CanCloseNotification,Mode=OneWay}'
-                 Title='{x:Bind ViewModel.NotificationTitle,Mode=OneWay}'
-                 Message="{x:Bind ViewModel.NotificationMessage,Mode=OneWay}"
-                 IsIconVisible="{x:Bind ViewModel.NotificationIconsVisible,Mode=OneWay}"
-                 CornerRadius="0 0 2 2"
-                 Grid.Row="0"
-                 Background="{StaticResource ControlBackground}"
-                 Severity="Warning"
-                 Canvas.ZIndex="2"
-                 HorizontalAlignment="Stretch"
-                 VerticalAlignment="Top" />
+    <Grid x:Name="ContentArea">
         <!--Content-->
-        <ScrollViewer Grid.Row="1"
-                      Transitions="{StaticResource SettingsCardsAnimations}"
+        <ScrollViewer Transitions="{StaticResource SettingsCardsAnimations}"
                       Margin="{StaticResource MenuBarContentMargin}"
                       VerticalScrollBarVisibility="Hidden">
             <StackPanel>
@@ -94,52 +79,68 @@
                                   Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
                     </StackPanel>
                 </ContentDialog>
+                <!--Groups Page-->
                 <models:Groups Header="About your PC"
                                IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
                     <StackPanel Spacing="0"
                                 Margin="0">
-                        <!--Check windows updates -->
-                        <labs:SettingsExpander Header="Check Windows Updates"
-                                               Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
-                            <labs:SettingsExpander.HeaderIcon>
-                                <FontIcon Glyph="&#xE895;" />
-                            </labs:SettingsExpander.HeaderIcon>
-                            <labs:SettingsExpander.Items>
-                                <!-- System Information -->
-                                <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
-                                                   IsClickEnabled="True"
-                                                   Padding="15 20 20 30"
-                                                   Command="{x:Bind ViewModel.OpenWindowsUpdatesCommand}"
-                                                   CornerRadius="{StaticResource RadiusExpander}">
-                                    <labs:SettingsCard.ActionIcon>
-                                        <FontIcon Glyph="&#xE8A7;" />
-                                    </labs:SettingsCard.ActionIcon>
-                                </labs:SettingsCard>
-                            </labs:SettingsExpander.Items>
-                        </labs:SettingsExpander>
+                        <!--Infobar-->
+                        <InfoBar IsOpen='{x:Bind ViewModel.IsNotificationOpen,Mode=OneWay}'
+                                 IsClosable='False'
+                                 Title='{x:Bind ViewModel.NotificationTitle,Mode=OneWay}'
+                                 Message="{x:Bind ViewModel.NotificationMessage,Mode=OneWay}"
+                                 IsIconVisible="{x:Bind ViewModel.NotificationIconsVisible,Mode=OneWay}"
+                                 Background="{StaticResource CardBackgroundFillColorSecondary}"
+                                 CornerRadius="4 4 0 0"
+                                 Severity="Informational"
+                                 Canvas.ZIndex="2"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Top" />
+                        <!-- Launch Start Apps Labs -->
+                        <labs:SettingsCard Header="Start-up Time"
+                                           Description="See details"
+                                           CornerRadius="{StaticResource RadiusExpander}"
+                                           IsClickEnabled="True">
+                            <ToggleSwitch ToolTipService.ToolTip="Disable or enable our Boost Startup Service."
+                                          Tag="Start_Up_Time"
+                                          IsOn="{x:Bind ViewModel.StartUp_Time_ToggleSwitchValue}"
+                                          Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle}" />
+                            <labs:SettingsCard.HeaderIcon>
+                                <FontIcon Glyph="&#xE835;" />
+                            </labs:SettingsCard.HeaderIcon>
+                        </labs:SettingsCard>
                     </StackPanel>
-                    <!-- Launch Start Apps Labs -->
-                    <labs:SettingsCard Header="Start-up Time"
-                                       Description="See details"
-                                       IsClickEnabled="True">
-                        <ToggleSwitch ToolTipService.ToolTip="Disable or enable our Boost Startup Service."
-                                      Tag="Start_Up_Time"
-                                      IsOn="{x:Bind ViewModel.StartUp_Time_ToggleSwitchValue}"
-                                      Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle}" />
-                        <labs:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE835;" />
-                        </labs:SettingsCard.HeaderIcon>
-                    </labs:SettingsCard>
+                    <!--Check windows updates -->
+                    <labs:SettingsExpander Header="Check Windows Updates"
+                                           Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
+                        <labs:SettingsExpander.HeaderIcon>
+                            <FontIcon Glyph="&#xE895;" />
+                        </labs:SettingsExpander.HeaderIcon>
+                        <labs:SettingsExpander.Items>
+                            <!-- System Information -->
+                            <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
+                                               IsClickEnabled="True"
+                                               Padding="15 20 20 30"
+                                               Command="{x:Bind ViewModel.OpenWindowsUpdatesCommand}"
+                                               CornerRadius="{StaticResource RadiusExpander}">
+                                <labs:SettingsCard.ActionIcon>
+                                    <FontIcon Glyph="&#xE8A7;" />
+                                </labs:SettingsCard.ActionIcon>
+                            </labs:SettingsCard>
+                        </labs:SettingsExpander.Items>
+                    </labs:SettingsExpander>
                     <StackPanel Spacing="0"
                                 Padding="0">
                         <!-- Information Storage -->
                         <InfoBar IsOpen="True"
                                  Title="{x:Bind ViewModel.Fulldatastorage}"
                                  Severity="Warning"
+                                 CornerRadius="4 4 0 0"
                                  IsClosable="False" />
                         <!-- Storage Capacity Labs -->
                         <labs:SettingsCard Header="Storage Capacity"
                                            Description="{x:Bind ViewModel.Storage}"
+                                           CornerRadius="0 0 4 4"
                                            IsClickEnabled="True">
                             <labs:SettingsCard.HeaderIcon>
                                 <FontIcon Glyph="&#xE96A;" />
@@ -147,15 +148,17 @@
                         </labs:SettingsCard>
                     </StackPanel>
                 </models:Groups>
-                <models:Groups Header="Personalization"
+                <models:Groups Header="Apperance and Personalization"
                                IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
                     <!-- UAC SettingsCard -->
                     <labs:SettingsCard Header="Disable UAC"
-                                       IsClickEnabled="True"
+                                       IsClickEnabled="False"
                                        IsActionIconVisible="False"
                                        Description="{Binding IsOn, ElementName=_ToggleSwitchUAC,Converter={StaticResource ToggleSwitchToStatusConverter}}">
-                        <ToggleSwitch x:Name="_ToggleSwitchUAC"
-                                      IsOn="{x:Bind ViewModel.UacToggleSwitchValue}"
+                        <labs:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE7EE;" />
+                        </labs:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.UacToggleSwitchValue}"
                                       Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle}"
                                       Tag="UAC" />
                     </labs:SettingsCard>
@@ -164,6 +167,9 @@
                                            Description="Revitalize your Windows Style experience."
                                            IsExpanded="True"
                                            HorizontalContentAlignment="Left">
+                        <labs:SettingsExpander.HeaderIcon>
+                            <FontIcon Glyph="&#xEE40;" />
+                        </labs:SettingsExpander.HeaderIcon>
                         <labs:SettingsExpander.Items>
                             <labs:SettingsCard IsEnabled="{x:Bind ViewModel.IsWindows11, Mode=OneWay}">
                                 <labs:SettingsCard.Description>
@@ -204,59 +210,52 @@
                             </labs:SettingsCard>
                         </labs:SettingsExpander.Items>
                     </labs:SettingsExpander>
-                    <!-- Set Windows Color -->
-                    <labs:SettingsCard Header="Set Windows Color"
-                                       Description="Choose vibrant or soothing tones to reflect your style."
-                                       IsClickEnabled="False">
-                        <SplitButton x:Name="myColorButton"
-                                     AutomationProperties.Name="Font color"
-                                     Padding="0"
-                                     MinHeight="0"
-                                     MinWidth="0"
-                                     VerticalAlignment="Top">
-                            <Border x:Name="CurrentColor"
-                                    Width="32"
-                                    Height="32"
-                                    Background="{StaticResource AccentAAFillColorDefaultBrush}"
-                                    Margin="0"
-                                    CornerRadius="4,0,0,4" />
-                            <SplitButton.Flyout>
-                                <Flyout Placement="Bottom">
-                                    <GridView SelectionMode="None"
-                                              IsItemClickEnabled="True">
-                                        <GridView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <ItemsWrapGrid MaximumRowsOrColumns="3"
-                                                               Orientation="Horizontal" />
-                                            </ItemsPanelTemplate>
-                                        </GridView.ItemsPanel>
-                                        <GridView.Resources>
-                                            <Style TargetType="Rectangle">
-                                                <Setter Property="RadiusX"
-                                                        Value="4" />
-                                                <Setter Property="Width"
-                                                        Value="32" />
-                                                <Setter Property="Height"
-                                                        Value="32" />
-                                                <Setter Property="RadiusY"
-                                                        Value="4" />
-                                            </Style>
-                                        </GridView.Resources>
-                                        <GridView.Items>
-                                            <Rectangle Fill="Red" />
-                                            <Rectangle Fill="Orange" />
-                                            <Rectangle Fill="Yellow" />
-                                            <Rectangle Fill="Green" />
-                                            <Rectangle Fill="Blue" />
-                                            <Rectangle Fill="Indigo" />
-                                            <Rectangle Fill="Violet" />
-                                            <Rectangle Fill="Gray" />
-                                        </GridView.Items>
-                                    </GridView>
-                                </Flyout>
-                            </SplitButton.Flyout>
-                        </SplitButton>
-                    </labs:SettingsCard>
+                    <!--Personalized Settings-->
+                    <labs:SettingsExpander Header="Personalized Settings"
+                                           Description="Adjust privacy preferences, accessibility options, and other options">
+                        <labs:SettingsExpander.HeaderIcon>
+                            <FontIcon Glyph="&#xE771;" />
+                        </labs:SettingsExpander.HeaderIcon>
+                        <labs:SettingsExpander.Items>
+                            <labs:SettingsCard Header="Configure Privacy"
+                                               Description="Disable apps running in the background">
+                                <ToggleSwitch Tag="Backgrounds_Apps"
+                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}"
+                                              IsOn="{x:Bind ViewModel.Disable_Apps_Background, Mode=OneWay}" />
+                            </labs:SettingsCard>
+                            <labs:SettingsCard Header="Ease of access"
+                                               Description="Modifying Ease of Access settings appropriately.">
+                                <ToggleSwitch Tag="Ease_of_Access"
+                                              IsOn="{x:Bind ViewModel.Ease_of_Access, Mode=OneWay}"
+                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
+                            </labs:SettingsCard>
+                            <labs:SettingsCard Header="Account"
+                                               Description="Disable automatically finish setting up my device after an update.">
+                                <ToggleSwitch Tag="Account"
+                                              IsOn="{x:Bind ViewModel.Account, Mode=OneWay}"
+                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
+                            </labs:SettingsCard>
+                            <labs:SettingsCard Header="Apps"
+                                               Description="Disable automatic updates for pre-installed applications.">
+                                <ToggleSwitch Tag="Apps"
+                                              IsOn="{x:Bind ViewModel.Apps, Mode=OneWay}"
+                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
+                            </labs:SettingsCard>
+                            <labs:SettingsCard Header="Personalization"
+                                               Description="Hide recently added apps on the Start-Menu">
+                                <ToggleSwitch Tag="Personalization"
+                                              IsOn="{x:Bind ViewModel.Personalization, Mode=OneWay}"
+                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
+                            </labs:SettingsCard>
+                            <labs:SettingsCard Header="Notifications"
+                                               Description="Disable Notifications System"
+                                               CornerRadius="{StaticResource RadiusExpander}">
+                                <ToggleSwitch Tag="Notifications"
+                                              IsOn="{x:Bind ViewModel.Notifications, Mode=OneWay}"
+                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
+                            </labs:SettingsCard>
+                        </labs:SettingsExpander.Items>
+                    </labs:SettingsExpander>
                 </models:Groups>
                 <models:Groups Header="App Features"
                                IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">

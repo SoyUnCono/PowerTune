@@ -55,11 +55,10 @@
                             BorderThickness="2"
                             VerticalAlignment="Top"
                             CornerRadius="{StaticResource ControlCornerRadius}">
-                    <Button 
-                            VerticalAlignment="Stretch"
+                    <Button VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             CornerRadius="4 0 0 4"
-                            Style="{ThemeResource AccentButtonStyle}"
+                            Style="{ThemeResource HeaderButtons}"
                             ToolTipService.ToolTip="Boost Your performance with only OneClick!">
                         <StackPanel Orientation="Horizontal"
                                     Spacing="15">
@@ -76,7 +75,7 @@
                                    CloseButtonText="close"
                                    FullSizeDesired="False" />
                     <Button VerticalAlignment="Stretch"
-                           Style="{ThemeResource AccentButtonStyle}"
+                            Style="{ThemeResource HeaderButtons}"
                             BorderThickness="1 0 0 0"
                             Click="Button_Click"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -94,7 +93,7 @@
                             Grid.RowSpan="3"
                             HorizontalAlignment="Stretch"
                             Visibility="{x:Bind ViewModel.IsSplashScreenBusy,Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
-                            Margin="{StaticResource NavigationViewPageContentMargin}" />
+                            Margin="32" />
         <!--AppFrame-->
         <Grid Grid.Row="2"
               Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -115,8 +114,8 @@
         <!--NavigationView-->
         <Grid Grid.Row="3"
               Canvas.ZIndex="23"
-              Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
-              Background="{StaticResource ControlBackground}">
+              Background="{StaticResource MainWindowBackground}"
+              Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -124,12 +123,35 @@
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         Margin="10 0 10 0">
+                <!--Home-->
                 <AppBarButton x:Uid="ShellMenuItem_Views_Main"
                               Icon="Home"
+                              Command="{x:Bind ViewModel.MenuViewsMainCommand}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="50 0 0 0">
+                <!--Health-->
+                <AppBarButton x:Uid="ShellMenuItem_Views_Health"
+                              VerticalAlignment="Stretch"
                               Command="{x:Bind ViewModel.MenuViewsMainCommand}">
-                    <AppBarButton.Shadow>
-                        <ThemeShadow />
-                    </AppBarButton.Shadow>
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE7FC;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <!--AutoGame-->
+                <AppBarButton x:Uid="ShellMenuItem_Views_AutoGames"
+                              Command="{x:Bind ViewModel.MenuViewsMainCommand}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xEB51;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <!--JunkRemoval-->
+                <AppBarButton x:Uid="ShellMenuItem_Views_JunkRemoval"
+                              Command="{x:Bind ViewModel.MenuViewsMainCommand}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE74D;" />
+                    </AppBarButton.Icon>
                 </AppBarButton>
             </StackPanel>
             <AppBarButton Grid.Column="1"

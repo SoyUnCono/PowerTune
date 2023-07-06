@@ -29,7 +29,7 @@ public static class RegistryCommands
         // Open the main key in the registry, with write access.
         var mainKey = registryRoot.OpenSubKey(mainKeyPath, true);
         if (mainKey == null)
-            throw new ArgumentException("Invalid root key specified.");
+            throw new ArgumentException("Invalid path key specified.");
 
         // Open the sub key under the main key, with write access.
         var subKey = mainKey.OpenSubKey(subKeyPath, true);
@@ -59,6 +59,24 @@ public static class RegistryCommands
 
         // If the retrieved value is not of type int, return false.
         return false;
+    }
+
+    // This method removes a registry key.
+    // Parameters:
+    //   - rootKey: The root registry key (either "HKEY_LOCAL_MACHINE" or "HKEY_CURRENT_USER").
+    //   - keyPath: The path to the registry key to be removed.
+    public static void RemoveRegistryKey(string rootKey, string keyPath)
+    {
+        // Convert the rootKey to uppercase and select the appropriate registry root based on its value.
+        var registryRoot = rootKey.ToUpper() switch
+        {
+            "HKEY_LOCAL_MACHINE" => Registry.LocalMachine,
+            "HKEY_CURRENT_USER" => Registry.CurrentUser,
+            _ => throw new ArgumentException("Invalid root key specified."),
+        };
+
+        // Delete the registry key.
+        registryRoot.DeleteSubKeyTree(keyPath, false);
     }
 
 }

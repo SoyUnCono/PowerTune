@@ -1,13 +1,16 @@
-﻿using System.Windows.Input;
+﻿using Windows.UI;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.Win32;
 using PowerTune.Contracts.Services;
 using PowerTune.CustomCommands;
 using PowerTune.Services;
 using Windows.System;
+using Windows.UI.ViewManagement;
 
 namespace PowerTune.ViewModels;
 
@@ -41,7 +44,7 @@ public partial class MainViewModel : ObservableRecipient
     [ObservableProperty] private bool notificationIconsVisible = false;
     [ObservableProperty][NotifyPropertyChangedFor(nameof(IsNotWindows11))] private bool isWindows11;
 
-    //Dependecy Injection && Commands
+    //Dependency Injection && Commands
     public ICommand OpenWindowsUpdatesCommand
     {
         get;
@@ -50,6 +53,7 @@ public partial class MainViewModel : ObservableRecipient
     // Public bool's
     public bool IsNotBusy => !IsBusy;
     public bool IsNotWindows11 => !IsWindows11;
+    public bool DontShowHeader => !HeaderViewContent;
 
     // ToggleSwitch && Checkboxes Initials Values
     [ObservableProperty] private bool uacToggleSwitchValue;
@@ -58,8 +62,15 @@ public partial class MainViewModel : ObservableRecipient
     [ObservableProperty] private bool comboboxIndex;
     [ObservableProperty] private bool old_Sound_Mixer;
     [ObservableProperty] private bool checkBox_Dialog;
+    [ObservableProperty] private bool disable_Apps_Background;
+    [ObservableProperty] private bool ease_of_Access;
+    [ObservableProperty] private bool account;
+    [ObservableProperty] private bool apps;
+    [ObservableProperty] private bool personalization;
+    [ObservableProperty] private bool notifications;
+    [ObservableProperty][NotifyPropertyChangedFor(nameof(DontShowHeader))] private bool headerViewContent;
 
-    public MainViewModel()
+    public MainViewModel(INavigationService navigationService)
     {
         _ = StartupAsyncTasks();
 
@@ -68,6 +79,8 @@ public partial class MainViewModel : ObservableRecipient
 
         // Navigation Services
         _navigationService = App.GetService<INavigationService>();
+        _navigationService = navigationService;
+
     }
 
     private async Task StartupAsyncTasks()
@@ -239,6 +252,13 @@ public partial class MainViewModel : ObservableRecipient
         var registryKeyPath_TaskbarAligment = $"{Constants.HKEY_CURRENT_USER}\\{Constants.TaskbarPositionPath}";
         var registryKeyPath_Alt_Tab = $"{Constants.HKEY_CURRENT_USER}\\{Constants.Alt_TabPath}";
         var registryKeyPath_Old_Sound_Mixer = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.Old_Sound_MixerPath}";
+        var registryKeyPath_Background_apps = $"{Constants.HKEY_CURRENT_USER}\\{Constants.BackgroundAccessApplicationsPath}";
+        var registryKeyPath_Ease_of_Access = $"{Constants.HKEY_CURRENT_USER}\\{Constants.NarratorPath}";
+        var registryKeyPath_Account = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.AutoFinishSetupPath}";
+        var registryKeyPath_Apps = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.AutoUpdateMapsPath}";
+        var registryKeyPath_Personalization = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.RecentlyAddedAppsPath1}";
+        var registryKeyPath_Notifications = $"{Constants.HKEY_CURRENT_USER}\\{Constants.NotificationsPath1}";
+
 
         // Call the custom command with the specified parameters to set the toggle value.
         UacToggleSwitchValue = CustomCommand(registryKeyPath_UAC, Constants.uacValue, 0);
@@ -247,6 +267,13 @@ public partial class MainViewModel : ObservableRecipient
         Alt_TabValue = CustomCommand(registryKeyPath_Alt_Tab, Constants.Alt_TabValue, 1);
         Old_Sound_Mixer = CustomCommand(registryKeyPath_Old_Sound_Mixer, Constants.Old_Sound_MixerValue, 1);
         CheckBox_Dialog = CustomCommand(registryKeyPath_AplicationPath, Constants.DialogStatus, 1);
+        HeaderViewContent = CustomCommand(registryKeyPath_AplicationPath, Constants.headerViewContentValue, 1);
+        Disable_Apps_Background = CustomCommand(registryKeyPath_Background_apps, Constants.GlobalUserDisabledValue, 1);
+        Ease_of_Access = CustomCommand(registryKeyPath_Ease_of_Access, Constants.WinEnterLaunchEnabledValue, 0);
+        Account = CustomCommand(registryKeyPath_Account, Constants.DisableAutomaticRestartSignOnValue, 1);
+        Apps = CustomCommand(registryKeyPath_Apps, Constants.AutoUpdateEnabledValue, 0);
+        Personalization = CustomCommand(registryKeyPath_Personalization, Constants.HideRecentlyAddedAppsValue1, 1);
+        Notifications = CustomCommand(registryKeyPath_Notifications, Constants.NotificationsValue1, 0);
     }
 
     /// <summary>
@@ -263,6 +290,7 @@ public partial class MainViewModel : ObservableRecipient
 
         // Assign the SetRegistryValue method of the CustomCommands.RegistryCommands object to the CustomCommand variable
         var customCommand = CustomCommands.RegistryCommands.SetRegistryValue;
+        var removeCommand = CustomCommands.RegistryCommands.RemoveRegistryKey;
 
         // Call the custom command to set the registry value based on the ToggleSwitch state
         switch (toggleSwitchId)
@@ -275,6 +303,50 @@ public partial class MainViewModel : ObservableRecipient
                 customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.ApplicationPath, Constants.startUpTimeValue, toggleSwitch.IsOn ? 1 : 0);
                 customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.verbosePath, Constants.verboseValue, toggleSwitch.IsOn ? 1 : 0);
                 customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.SerializePath, Constants.SerializeValue, toggleSwitch.IsOn ? 0 : 1);
+                break;
+            case "Backgrounds_Apps":
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.BackgroundAccessApplicationsPath, Constants.GlobalUserDisabledValue, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.SearchPath, Constants.BackgroundAppGlobalToggleValue, toggleSwitch.IsOn ? 0 : 1);
+                break;
+            case "Ease_of_Access":
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.NarratorPath, Constants.WinEnterLaunchEnabledValue, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.StickyKeysPath, Constants.StickyKeysFlagsValue, toggleSwitch.IsOn ? 506 : 0);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.ToggleKeysPath, Constants.ToggleKeysFlagsValue, toggleSwitch.IsOn ? 34 : 0);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.KeyboardResponsePath, Constants.KeyboardResponseFlagsValue, toggleSwitch.IsOn ? 2 : 0);
+                break;
+            case "Account":
+                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.AutoFinishSetupPath, Constants.DisableAutomaticRestartSignOnValue, toggleSwitch.IsOn ? 1 : 0);
+                break;
+            case "Apps":
+                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.AutoUpdateMapsPath, Constants.AutoUpdateEnabledValue, toggleSwitch.IsOn ? 0 : 1);
+                removeCommand(Constants.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
+                removeCommand(Constants.HKEY_CURRENT_USER, @"Software\Microsoft\Windows\CurrentVersion\Run");
+                break;
+            case "Personalization":
+                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.RecentlyAddedAppsPath1, Constants.HideRecentlyAddedAppsValue1, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.RecentlyAddedAppsPath2, Constants.HideRecentlyAddedAppsValue2, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.AlwaysShowIconsPath, Constants.EnableAutoTrayValue, toggleSwitch.IsOn ? 0 : 1);
+                break;
+            case "Notifications":
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath1, Constants.NotificationsValue1, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath1, Constants.NotificationsValue2, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath1, Constants.NotificationsValue8, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath2, Constants.NotificationsPath3, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath2, Constants.NotificationsPath4, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath3, Constants.NotificationsValue5, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath4, Constants.NotificationsValue6, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath5, Constants.NotificationsValue7, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath6, Constants.NotificationsValue7, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath1, Constants.TabletModeValue1, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath1, Constants.TabletModeValue2, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath1, Constants.TabletModeValue3, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath2, Constants.TabletModeValue4, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath2, Constants.TabletModeValue5, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath2, Constants.VirtualDesktopsValue1, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath2, Constants.VirtualDesktopsValue2, toggleSwitch.IsOn ? 1 : 0);
+                break;
+            case "HeaderView":
+                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.ApplicationPath, Constants.headerViewContentValue, toggleSwitch.IsOn ? 1 : 0);
                 break;
 
             // Default Case

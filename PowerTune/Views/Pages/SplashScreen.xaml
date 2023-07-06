@@ -4,24 +4,15 @@
              xmlns:local="using:PowerTune.Views.Pages"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:rive="using:CommunityToolkit.Labs.WinUI.Rive"
              mc:Ignorable="d"
              Background="{StaticResource MainWindowBackground}">
-    <Grid>
-        <StackPanel Orientation="Vertical"
-                    VerticalAlignment="Center">
-            <Image VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Source="ms-appx:///Assets/FullLogo.png"
-                   Width="440"
-                   />
-            <TextBlock x:Uid="SplasScreen_Title"
-                       Style="{StaticResource TitleTextBlockStyle}" />
-            <TextBlock x:Uid="SplasScreen_Description"
-                       Style="{StaticResource SubtitleTextBlockStyle}" />
-        </StackPanel>
-        <ProgressBar IsIndeterminate="True"
-                     VerticalAlignment="Bottom"
-                     Margin="0 0 0 1" 
-                     HorizontalAlignment="Stretch"/>
-    </Grid>
+    <rive:RivePlayer Source="https://public.rive.app/community/runtime-files/3264-6879-tree-loading-bar.riv"
+                     Width="726"
+                     Artboard="Artboard"
+                     VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     StateMachine="Thumbnail"
+                     Height="620"
+                     DrawInBackground="True" />
 </UserControl>

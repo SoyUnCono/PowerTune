@@ -22,7 +22,7 @@
     <Style x:Key="HeaderButtons"
            TargetType="Button">
         <Setter Property="Background"
-                Value="{ThemeResource ControlBackground}" />
+                Value="{ThemeResource MainWindowBackground}" />
         <Setter Property="BackgroundSizing"
                 Value="InnerBorderEdge" />
         <Setter Property="Foreground"

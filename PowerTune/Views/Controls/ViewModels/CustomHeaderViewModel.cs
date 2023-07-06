@@ -10,11 +10,16 @@ public partial class CustomHeaderViewModel : ObservableRecipient
     [ObservableProperty] private string? systemInformationLabel;
     [ObservableProperty] private string? nameInformationLabel;
     [ObservableProperty] private string? motherBoardInformationLabel;
+    [ObservableProperty] private string? laptopOrDesktop;
 
     /// <summary>
     /// Main constructor
     /// </summary>
-    public CustomHeaderViewModel() => GetSystemInfo();
+    public CustomHeaderViewModel()
+    {
+        GetSystemInfo();
+        CheckIfDesktopOrLaptop();
+    }
 
     /// <summary>
     /// Fill the systemInformationLabel property with system information
@@ -53,6 +58,21 @@ public partial class CustomHeaderViewModel : ObservableRecipient
             return string.Empty; // Return an empty string if the motherboard information is not available
 
         return motherboard["Product"].ToString()!;
+    }
+
+    // Method to check if the system is a desktop or a laptop
+    private void CheckIfDesktopOrLaptop()
+    {
+        // Query system information for battery adapters
+        // Query to search for battery devices
+        // Object to perform the search
+        // Get the found battery devices
+        var batteryQuery = new SelectQuery("Win32_Battery");
+        var batterySearcher = new ManagementObjectSearcher(batteryQuery);
+        var batteryDevices = batterySearcher.Get();
+
+        // Assign the value based on the presence of battery devices
+        LaptopOrDesktop = (batteryDevices.Count > 0) ? "Device: Laptop" : "Device: Desktop";
     }
 }
 

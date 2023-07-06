@@ -230,4 +230,13 @@
   <data name="DisplayName.Text" xml:space="preserve">
     <value>PowerTune</value>
   </data>
+  <data name="ShellMenuItem_Views_AutoGames.Content" xml:space="preserve">
+    <value>Detect Automatically Your games, and apply optimization for them</value>
+  </data>
+  <data name="ShellMenuItem_Views_Health.Content" xml:space="preserve">
+    <value>Check System Health</value>
+  </data>
+  <data name="ShellMenuItem_Views_JunkRemoval.Content" xml:space="preserve">
+    <value>Remove Trash and unnecesary windows apps</value>
+  </data>
 </root>
