@@ -13,255 +13,252 @@
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converter:BoolToIntConverter x:Key="BoolToIntConverter" />
     </Page.Resources>
-    <Grid x:Name="ContentArea">
-        <!--Content-->
-        <ScrollViewer Transitions="{StaticResource SettingsCardsAnimations}"
-                      Margin="{StaticResource MenuBarContentMargin}"
-                      VerticalScrollBarVisibility="Hidden">
-            <StackPanel>
-                <!--Content Dialog Splash-->
-                <!--TODO:BUG FOUND -->
-                <ContentDialog x:Name="SplashWarningDialog"
-                               CloseButtonText="Close">
-                    <ContentDialog.TitleTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal"
-                                        VerticalAlignment="Top"
-                                        HorizontalAlignment="Stretch">
-                                <Image Source="/Assets/WindowIcon.gif"
-                                       HorizontalAlignment="Left"
-                                       VerticalAlignment="Center"
-                                       Width="66"
-                                       Height="66"
-                                       Margin="8,0" />
-                                <TextBlock x:Uid="DisplayName"
-                                           FontWeight="Bold"
-                                           FontSize="22"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ContentDialog.TitleTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock x:Uid="AppDescriptionTextDialog"
-                                   TextWrapping="Wrap"
-                                   Margin="0,0,0,8"
-                                   VerticalAlignment="Top" />
-                        <CheckBox x:Uid="DialogTextCheckBox"
-                                  Margin="10 20 0 0"
-                                  Tag="Dialog_Visibility"
-                                  IsChecked="{x:Bind ViewModel.CheckBox_Dialog, Mode=OneWay}"
-                                  Checked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}"
-                                  Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
-                    </StackPanel>
-                </ContentDialog>
-                <!--Groups Page-->
-                <models:Groups Header="About your PC"
-                               IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
-                    <StackPanel Spacing="0"
-                                Margin="0">
-                        <!--Infobar-->
-                        <InfoBar IsOpen='{x:Bind ViewModel.IsNotificationOpen,Mode=OneWay}'
-                                 IsClosable='False'
-                                 Title='{x:Bind ViewModel.NotificationTitle,Mode=OneWay}'
-                                 Message="{x:Bind ViewModel.NotificationMessage,Mode=OneWay}"
-                                 IsIconVisible="{x:Bind ViewModel.NotificationIconsVisible,Mode=OneWay}"
-                                 CornerRadius="4 4 0 0"
-                                 Severity="Informational"
-                                 Canvas.ZIndex="2"
-                                 HorizontalAlignment="Stretch"
-                                 VerticalAlignment="Top" />
-                        <!-- Launch Start Apps Labs -->
-                        <labs:SettingsCard Header="Start-up Time"
-                                           Description="See details"
-                                           CornerRadius="{StaticResource RadiusExpander}"
-                                           IsClickEnabled="True">
-                            <ToggleSwitch ToolTipService.ToolTip="Disable or enable our Boost Startup Service."
-                                          Tag="Start_Up_Time"
-                                          IsOn="{x:Bind ViewModel.StartUp_Time_ToggleSwitchValue}"
-                                          Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle}" />
-                            <labs:SettingsCard.HeaderIcon>
-                                <FontIcon Glyph="&#xE835;" />
-                            </labs:SettingsCard.HeaderIcon>
+    <ScrollViewer Transitions="{StaticResource SettingsCardsAnimations}"
+                  Margin="{StaticResource MenuBarContentMargin}"
+                  VerticalScrollBarVisibility="Hidden">
+        <StackPanel>
+            <!--Content Dialog Splash-->
+            <!--TODO:BUG FOUND -->
+            <ContentDialog x:Name="SplashWarningDialog"
+                           CloseButtonText="Close">
+                <ContentDialog.TitleTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Stretch">
+                            <Image Source="/Assets/WindowIcon.gif"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Width="66"
+                                   Height="66"
+                                   Margin="8,0" />
+                            <TextBlock x:Uid="DisplayName"
+                                       FontWeight="Bold"
+                                       FontSize="22"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ContentDialog.TitleTemplate>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock x:Uid="AppDescriptionTextDialog"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,8"
+                               VerticalAlignment="Top" />
+                    <CheckBox x:Uid="DialogTextCheckBox"
+                              Margin="10 20 0 0"
+                              Tag="Dialog_Visibility"
+                              IsChecked="{x:Bind ViewModel.CheckBox_Dialog, Mode=OneWay}"
+                              Checked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}"
+                              Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
+                </StackPanel>
+            </ContentDialog>
+            <!--Groups Page-->
+            <models:Groups Header="About your PC"
+                           IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
+                <StackPanel Spacing="0"
+                            Margin="0">
+                    <!--Infobar-->
+                    <InfoBar IsOpen='{x:Bind ViewModel.IsNotificationOpen,Mode=OneWay}'
+                             IsClosable='False'
+                             Title='{x:Bind ViewModel.NotificationTitle,Mode=OneWay}'
+                             Message="{x:Bind ViewModel.NotificationMessage,Mode=OneWay}"
+                             IsIconVisible="{x:Bind ViewModel.NotificationIconsVisible,Mode=OneWay}"
+                             CornerRadius="4 4 0 0"
+                             Severity="Informational"
+                             Canvas.ZIndex="2"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Top" />
+                    <!-- Launch Start Apps Labs -->
+                    <labs:SettingsCard Header="Start-up Time"
+                                       Description="See details"
+                                       CornerRadius="{StaticResource RadiusExpander}"
+                                       IsClickEnabled="True">
+                        <ToggleSwitch ToolTipService.ToolTip="Disable or enable our Boost Startup Service."
+                                      Tag="Start_Up_Time"
+                                      IsOn="{x:Bind ViewModel.StartUp_Time_ToggleSwitchValue}"
+                                      Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle}" />
+                        <labs:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE835;" />
+                        </labs:SettingsCard.HeaderIcon>
+                    </labs:SettingsCard>
+                </StackPanel>
+                <!--Check windows updates -->
+                <labs:SettingsExpander Header="Check Windows Updates"
+                                       Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xE895;" />
+                    </labs:SettingsExpander.HeaderIcon>
+                    <labs:SettingsExpander.Items>
+                        <!-- System Information -->
+                        <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
+                                           IsClickEnabled="True"
+                                           Padding="15 20 20 30"
+                                           Command="{x:Bind ViewModel.OpenWindowsUpdatesCommand}"
+                                           CornerRadius="{StaticResource RadiusExpander}">
+                            <labs:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;" />
+                            </labs:SettingsCard.ActionIcon>
                         </labs:SettingsCard>
-                    </StackPanel>
-                    <!--Check windows updates -->
-                    <labs:SettingsExpander Header="Check Windows Updates"
-                                           Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
-                        <labs:SettingsExpander.HeaderIcon>
-                            <FontIcon Glyph="&#xE895;" />
-                        </labs:SettingsExpander.HeaderIcon>
-                        <labs:SettingsExpander.Items>
-                            <!-- System Information -->
-                            <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
-                                               IsClickEnabled="True"
-                                               Padding="15 20 20 30"
-                                               Command="{x:Bind ViewModel.OpenWindowsUpdatesCommand}"
-                                               CornerRadius="{StaticResource RadiusExpander}">
-                                <labs:SettingsCard.ActionIcon>
-                                    <FontIcon Glyph="&#xE8A7;" />
-                                </labs:SettingsCard.ActionIcon>
-                            </labs:SettingsCard>
-                        </labs:SettingsExpander.Items>
-                    </labs:SettingsExpander>
-                    <StackPanel Spacing="0"
-                                Padding="0">
-                        <!-- Information Storage -->
-                        <InfoBar IsOpen="True"
-                                 Title="{x:Bind ViewModel.Fulldatastorage}"
-                                 Severity="Warning"
-                                 CornerRadius="4 4 0 0"
-                                 IsClosable="False" />
-                        <!-- Storage Capacity Labs -->
-                        <labs:SettingsCard Header="Storage Capacity"
-                                           Description="{x:Bind ViewModel.Storage}"
-                                           CornerRadius="0 0 4 4"
-                                           IsClickEnabled="True">
-                            <labs:SettingsCard.HeaderIcon>
-                                <FontIcon Glyph="&#xE96A;" />
-                            </labs:SettingsCard.HeaderIcon>
+                    </labs:SettingsExpander.Items>
+                </labs:SettingsExpander>
+                <StackPanel Spacing="0"
+                            Padding="0">
+                    <!-- Information Storage -->
+                    <InfoBar IsOpen="True"
+                             Title="{x:Bind ViewModel.Fulldatastorage}"
+                             Severity="Warning"
+                             CornerRadius="4 4 0 0"
+                             IsClosable="False" />
+                    <!-- Storage Capacity Labs -->
+                    <labs:SettingsCard Header="Storage Capacity"
+                                       Description="{x:Bind ViewModel.Storage}"
+                                       CornerRadius="0 0 4 4"
+                                       IsClickEnabled="True">
+                        <labs:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE96A;" />
+                        </labs:SettingsCard.HeaderIcon>
+                    </labs:SettingsCard>
+                </StackPanel>
+            </models:Groups>
+            <models:Groups Header="Apperance and Personalization"
+                           IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
+                <!-- UAC SettingsCard -->
+                <labs:SettingsCard Header="Disable UAC"
+                                   IsClickEnabled="False"
+                                   IsActionIconVisible="False"
+                                   Description="{Binding IsOn, ElementName=_ToggleSwitchUAC,Converter={StaticResource ToggleSwitchToStatusConverter}}">
+                    <labs:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE7EE;" />
+                    </labs:SettingsCard.HeaderIcon>
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.UacToggleSwitchValue}"
+                                  Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle}"
+                                  Tag="UAC" />
+                </labs:SettingsCard>
+                <!-- Enable Classic Windows Style -->
+                <labs:SettingsExpander Header="Enable Classic Windows Style"
+                                       Description="Revitalize your Windows Style experience."
+                                       IsExpanded="True"
+                                       HorizontalContentAlignment="Left">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xEE40;" />
+                    </labs:SettingsExpander.HeaderIcon>
+                    <labs:SettingsExpander.Items>
+                        <labs:SettingsCard IsEnabled="{x:Bind ViewModel.IsWindows11, Mode=OneWay}">
+                            <labs:SettingsCard.Description>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock x:Uid="Taskbar_alignment" />
+                                    <TextBlock x:Uid="Infomessage_windows"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Bottom"
+                                               Visibility="{x:Bind ViewModel.IsNotWindows11,Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                </StackPanel>
+                            </labs:SettingsCard.Description>
+                            <ComboBox SelectedIndex="{x:Bind ViewModel.ComboboxIndex,Mode=OneWay,Converter={StaticResource BoolToIntConverter}}"
+                                      SelectionChanged="{x:Bind ViewModel.TaskBarFunctions, Mode=OneWay}"
+                                      HorizontalAlignment="Right">
+                                <ComboBoxItem Content="Center" />
+                                <ComboBoxItem Content="Left" />
+                            </ComboBox>
                         </labs:SettingsCard>
-                    </StackPanel>
-                </models:Groups>
-                <models:Groups Header="Apperance and Personalization"
-                               IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
-                    <!-- UAC SettingsCard -->
-                    <labs:SettingsCard Header="Disable UAC"
-                                       IsClickEnabled="False"
-                                       IsActionIconVisible="False"
-                                       Description="{Binding IsOn, ElementName=_ToggleSwitchUAC,Converter={StaticResource ToggleSwitchToStatusConverter}}">
-                        <labs:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE7EE;" />
-                        </labs:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.UacToggleSwitchValue}"
-                                      Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle}"
-                                      Tag="UAC" />
-                    </labs:SettingsCard>
-                    <!-- Enable Classic Windows Style -->
-                    <labs:SettingsExpander Header="Enable Classic Windows Style"
-                                           Description="Revitalize your Windows Style experience."
-                                           IsExpanded="True"
-                                           HorizontalContentAlignment="Left">
-                        <labs:SettingsExpander.HeaderIcon>
-                            <FontIcon Glyph="&#xEE40;" />
-                        </labs:SettingsExpander.HeaderIcon>
-                        <labs:SettingsExpander.Items>
-                            <labs:SettingsCard IsEnabled="{x:Bind ViewModel.IsWindows11, Mode=OneWay}">
-                                <labs:SettingsCard.Description>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock x:Uid="Taskbar_alignment" />
-                                        <TextBlock x:Uid="Infomessage_windows"
-                                                   HorizontalAlignment="Left"
-                                                   VerticalAlignment="Bottom"
-                                                   Visibility="{x:Bind ViewModel.IsNotWindows11,Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                    </StackPanel>
-                                </labs:SettingsCard.Description>
-                                <ComboBox SelectedIndex="{x:Bind ViewModel.ComboboxIndex,Mode=OneWay,Converter={StaticResource BoolToIntConverter}}"
-                                          SelectionChanged="{x:Bind ViewModel.TaskBarFunctions, Mode=OneWay}"
-                                          HorizontalAlignment="Right">
-                                    <ComboBoxItem Content="Center" />
-                                    <ComboBoxItem Content="Left" />
-                                </ComboBox>
-                            </labs:SettingsCard>
-                            <labs:SettingsCard Description="Enable Alt + Tab Style">
-                                <CheckBox Tag="Alt_Tab"
-                                          IsChecked="{x:Bind ViewModel.Alt_TabValue, Mode=OneWay}"
-                                          Checked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}"
-                                          Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
-                            </labs:SettingsCard>
-                            <labs:SettingsCard CornerRadius="{StaticResource RadiusExpander}"
-                                               IsEnabled="{x:Bind ViewModel.IsNotWindows11, Mode=OneWay}">
-                                <labs:SettingsCard.Description>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock x:Uid="Old_Volume_Mixer" />
-                                        <TextBlock x:Uid="Windows10_Only"
-                                                   Visibility="{x:Bind ViewModel.IsWindows11, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                    </StackPanel>
-                                </labs:SettingsCard.Description>
-                                <CheckBox Tag="Old_Sound_Mixer"
-                                          IsChecked="{x:Bind ViewModel.Old_Sound_Mixer, Mode=OneWay}"
-                                          Checked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}"
-                                          Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
-                            </labs:SettingsCard>
-                        </labs:SettingsExpander.Items>
-                    </labs:SettingsExpander>
-                    <!--Personalized Settings-->
-                    <labs:SettingsExpander Header="Personalized Settings"
-                                           Description="Adjust privacy preferences, accessibility options, and other options">
-                        <labs:SettingsExpander.HeaderIcon>
-                            <FontIcon Glyph="&#xE771;" />
-                        </labs:SettingsExpander.HeaderIcon>
-                        <labs:SettingsExpander.Items>
-                            <labs:SettingsCard Header="Configure Privacy"
-                                               Description="Disable apps running in the background">
-                                <ToggleSwitch Tag="Backgrounds_Apps"
-                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}"
-                                              IsOn="{x:Bind ViewModel.Disable_Apps_Background, Mode=OneWay}" />
-                            </labs:SettingsCard>
-                            <labs:SettingsCard Header="Ease of access"
-                                               Description="Modifying Ease of Access settings appropriately.">
-                                <ToggleSwitch Tag="Ease_of_Access"
-                                              IsOn="{x:Bind ViewModel.Ease_of_Access, Mode=OneWay}"
-                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
-                            </labs:SettingsCard>
-                            <labs:SettingsCard Header="Account"
-                                               Description="Disable automatically finish setting up my device after an update.">
-                                <ToggleSwitch Tag="Account"
-                                              IsOn="{x:Bind ViewModel.Account, Mode=OneWay}"
-                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
-                            </labs:SettingsCard>
-                            <labs:SettingsCard Header="Apps"
-                                               Description="Disable automatic updates for pre-installed applications.">
-                                <ToggleSwitch Tag="Apps"
-                                              IsOn="{x:Bind ViewModel.Apps, Mode=OneWay}"
-                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
-                            </labs:SettingsCard>
-                            <labs:SettingsCard Header="Personalization"
-                                               Description="Hide recently added apps on the Start-Menu">
-                                <ToggleSwitch Tag="Personalization"
-                                              IsOn="{x:Bind ViewModel.Personalization, Mode=OneWay}"
-                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
-                            </labs:SettingsCard>
-                            <labs:SettingsCard Header="Notifications"
-                                               Description="Disable Notifications System"
-                                               CornerRadius="{StaticResource RadiusExpander}">
-                                <ToggleSwitch Tag="Notifications"
-                                              IsOn="{x:Bind ViewModel.Notifications, Mode=OneWay}"
-                                              Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
-                            </labs:SettingsCard>
-                        </labs:SettingsExpander.Items>
-                    </labs:SettingsExpander>
-                </models:Groups>
-                <models:Groups Header="App Features"
-                               IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
-                    <!-- Auto Game -->
-                    <labs:SettingsCard Header="Auto Game"
-                                       IsClickEnabled="True"
-                                       Description="Auto Game automatically detects and optimizes your games for you. Enjoy enhanced performance and smoother gameplay with just one click."
-                                       IsActionIconVisible="True">
-                        <labs:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE7FC;" />
-                        </labs:SettingsCard.HeaderIcon>
-                    </labs:SettingsCard>
-                    <!-- Junk Removal -->
-                    <labs:SettingsCard Header="Junk Removal"
-                                       IsClickEnabled="True"
-                                       Description="Cleanse your system from junk files with a single click. Optimize your computer's performance and free up valuable storage space. Try it now!"
-                                       IsActionIconVisible="True">
-                        <labs:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE74D;" />
-                        </labs:SettingsCard.HeaderIcon>
-                    </labs:SettingsCard>
-                    <!-- Check System Health -->
-                    <labs:SettingsCard Header="Check System Health"
-                                       IsClickEnabled="True"
-                                       Description="Get a comprehensive assessment of your PC's performance in seconds. Discover potential issues and optimize your system for peak efficiency. Try it now!"
-                                       IsActionIconVisible="True">
-                        <labs:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xEB51;" />
-                        </labs:SettingsCard.HeaderIcon>
-                    </labs:SettingsCard>
-                </models:Groups>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+                        <labs:SettingsCard Description="Enable Alt + Tab Style">
+                            <CheckBox Tag="Alt_Tab"
+                                      IsChecked="{x:Bind ViewModel.Alt_TabValue, Mode=OneWay}"
+                                      Checked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}"
+                                      Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
+                        </labs:SettingsCard>
+                        <labs:SettingsCard CornerRadius="{StaticResource RadiusExpander}"
+                                           IsEnabled="{x:Bind ViewModel.IsNotWindows11, Mode=OneWay}">
+                            <labs:SettingsCard.Description>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock x:Uid="Old_Volume_Mixer" />
+                                    <TextBlock x:Uid="Windows10_Only"
+                                               Visibility="{x:Bind ViewModel.IsWindows11, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                </StackPanel>
+                            </labs:SettingsCard.Description>
+                            <CheckBox Tag="Old_Sound_Mixer"
+                                      IsChecked="{x:Bind ViewModel.Old_Sound_Mixer, Mode=OneWay}"
+                                      Checked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}"
+                                      Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
+                        </labs:SettingsCard>
+                    </labs:SettingsExpander.Items>
+                </labs:SettingsExpander>
+                <!--Personalized Settings-->
+                <labs:SettingsExpander Header="Personalized Settings"
+                                       Description="Adjust privacy preferences, accessibility options, and other options">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xE771;" />
+                    </labs:SettingsExpander.HeaderIcon>
+                    <labs:SettingsExpander.Items>
+                        <labs:SettingsCard Header="Configure Privacy"
+                                           Description="Disable apps running in the background">
+                            <ToggleSwitch Tag="Backgrounds_Apps"
+                                          Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}"
+                                          IsOn="{x:Bind ViewModel.Disable_Apps_Background, Mode=OneWay}" />
+                        </labs:SettingsCard>
+                        <labs:SettingsCard Header="Ease of access"
+                                           Description="Modifying Ease of Access settings appropriately.">
+                            <ToggleSwitch Tag="Ease_of_Access"
+                                          IsOn="{x:Bind ViewModel.Ease_of_Access, Mode=OneWay}"
+                                          Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
+                        </labs:SettingsCard>
+                        <labs:SettingsCard Header="Account"
+                                           Description="Disable automatically finish setting up my device after an update.">
+                            <ToggleSwitch Tag="Account"
+                                          IsOn="{x:Bind ViewModel.Account, Mode=OneWay}"
+                                          Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
+                        </labs:SettingsCard>
+                        <labs:SettingsCard Header="Apps"
+                                           Description="Disable automatic updates for pre-installed applications.">
+                            <ToggleSwitch Tag="Apps"
+                                          IsOn="{x:Bind ViewModel.Apps, Mode=OneWay}"
+                                          Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
+                        </labs:SettingsCard>
+                        <labs:SettingsCard Header="Personalization"
+                                           Description="Hide recently added apps on the Start-Menu">
+                            <ToggleSwitch Tag="Personalization"
+                                          IsOn="{x:Bind ViewModel.Personalization, Mode=OneWay}"
+                                          Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
+                        </labs:SettingsCard>
+                        <labs:SettingsCard Header="Notifications"
+                                           Description="Disable Notifications System"
+                                           CornerRadius="{StaticResource RadiusExpander}">
+                            <ToggleSwitch Tag="Notifications"
+                                          IsOn="{x:Bind ViewModel.Notifications, Mode=OneWay}"
+                                          Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
+                        </labs:SettingsCard>
+                    </labs:SettingsExpander.Items>
+                </labs:SettingsExpander>
+            </models:Groups>
+            <models:Groups Header="App Features"
+                           IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
+                <!-- Auto Game -->
+                <labs:SettingsCard Header="Auto Game"
+                                   IsClickEnabled="True"
+                                   Description="Auto Game automatically detects and optimizes your games for you. Enjoy enhanced performance and smoother gameplay with just one click."
+                                   IsActionIconVisible="True">
+                    <labs:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE7FC;" />
+                    </labs:SettingsCard.HeaderIcon>
+                </labs:SettingsCard>
+                <!-- Junk Removal -->
+                <labs:SettingsCard Header="Junk Removal"
+                                   IsClickEnabled="True"
+                                   Description="Cleanse your system from junk files with a single click. Optimize your computer's performance and free up valuable storage space. Try it now!"
+                                   IsActionIconVisible="True">
+                    <labs:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE74D;" />
+                    </labs:SettingsCard.HeaderIcon>
+                </labs:SettingsCard>
+                <!-- Check System Health -->
+                <labs:SettingsCard Header="Check System Health"
+                                   IsClickEnabled="True"
+                                   Description="Get a comprehensive assessment of your PC's performance in seconds. Discover potential issues and optimize your system for peak efficiency. Try it now!"
+                                   IsActionIconVisible="True">
+                    <labs:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xEB51;" />
+                    </labs:SettingsCard.HeaderIcon>
+                </labs:SettingsCard>
+            </models:Groups>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

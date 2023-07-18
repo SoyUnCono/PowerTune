@@ -26,6 +26,14 @@
 		<Content Include="Assets\NavigationViewPagesIcons\*.png" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Assets\NavigationViewIcons\icons8-cloud-firewall-48.png" />
+	  <None Remove="Assets\NavigationViewIcons\icons8-control-panel-48.png" />
+	  <None Remove="Assets\NavigationViewIcons\icons8-home-48.png" />
+	  <None Remove="Assets\NavigationViewIcons\icons8-news-48.png" />
+	  <None Remove="Assets\NavigationViewIcons\icons8-setting-48.png" />
+	  <None Remove="Views\NewsPage.xaml" />
+	</ItemGroup>
+	<ItemGroup>
 		<Manifest Include="$(ApplicationManifest)" />
 	</ItemGroup>
 
@@ -51,6 +59,9 @@
 		<None Update="appsettings.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<Page Update="Views\NewsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</Page>
 		<Page Update="Views\Controls\CustomNotificationMessage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</Page>

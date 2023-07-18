@@ -41,19 +41,34 @@
                         IsBackButtonVisible="Visible"
                         IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
                         SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
-                        IsSettingsVisible="True"
                         PaneDisplayMode="LeftCompact"
+                        IsPaneToggleButtonVisible="False"
+                        IsSettingsVisible="False"
                         ExpandedModeThresholdWidth="1280"
                         DisplayModeChanged="NavigationViewControl_DisplayModeChanged">
             <NavigationView.MenuItems>
                 <NavigationViewItem x:Uid="ShellMenuItem_Views_Main.Content"
-                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.MainViewModel">
+                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.MainViewModel"
+                                    Margin="0 15 0 0">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                  Glyph="&#xe7c3;" />
+                        <ImageIcon Source="/Assets/NavigationViewIcons/icons8-home-48.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="ShellMenuItem_Views_Main.Content"
+                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.NewsViewModel">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="/Assets/NavigationViewIcons/icons8-news-48.png" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem x:Uid="Shell_Settings"
+                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.SettingsViewModel">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="/Assets/NavigationViewIcons/icons8-setting-48.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
             <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
                 <Frame x:Name="NavigationFrame" />
             </Grid>

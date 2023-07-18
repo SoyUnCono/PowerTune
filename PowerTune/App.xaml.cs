@@ -70,10 +70,16 @@ public partial class App : Application
             // Views and ViewModels
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
+
             services.AddTransient<MainViewModel>();
             services.AddTransient<MainPage>();
+
+            services.AddTransient<NewsPage>();
+            services.AddTransient<NewsViewModel>();
+
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
+
             services.AddTransient<CustomHeaderViewModel>();
             services.AddTransient<CustomHeader>();
 

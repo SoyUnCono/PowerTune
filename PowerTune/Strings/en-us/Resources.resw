@@ -239,4 +239,7 @@
   <data name="ShellMenuItem_Views_JunkRemoval.Content" xml:space="preserve">
     <value>Remove Trash and unnecesary windows apps</value>
   </data>
+  <data name="Shell_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
 </root>

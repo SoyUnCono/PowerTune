@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-
 using Microsoft.UI.Xaml.Controls;
-
 using PowerTune.Contracts.Services;
 using PowerTune.ViewModels;
 using PowerTune.Views;
@@ -16,6 +14,7 @@ public class PageService : IPageService
     {
         Configure<MainViewModel, MainPage>();
         Configure<SettingsViewModel, SettingsPage>();
+        Configure<NewsViewModel, NewsPage>();
     }
 
     public Type GetPageType(string key)

@@ -22,14 +22,6 @@ public partial class ShellViewModel : ObservableRecipient
 
     //Dependency Injection && Commands
     private readonly IRestorePointService _restorePointService = new RestorePointService();
-    public ICommand MenuSettingsCommand
-    {
-        get;
-    } 
-    public ICommand MenuViewsMainCommand
-    {
-        get;
-    }
     public INavigationService NavigationService
     {
         get;
@@ -49,9 +41,6 @@ public partial class ShellViewModel : ObservableRecipient
         NavigationService = navigationService;
         NavigationService.Navigated += OnNavigated;
         NavigationViewService = navigationViewService;
-
-        MenuSettingsCommand = new RelayCommand(OnMenuSettings);
-        MenuViewsMainCommand = new RelayCommand(OnMenuViewsMain);
 
         // Load Tasks After activation
         StartupTask();
@@ -90,12 +79,4 @@ public partial class ShellViewModel : ObservableRecipient
             Selected = selectedItem;
         }
     }
-
-    // Navigates to the SettingsViewModel by using the NavigationService and passing the full name of the SettingsViewModel type
-    private void OnMenuSettings() => NavigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
-
-    // Navigates to the MainViewModel by using the NavigationService and passing the full name of the MainViewModel type
-    private void OnMenuViewsMain() => NavigationService.NavigateTo(typeof(MainViewModel).FullName!);
-    // Navigates to the TweaksViewViewModel by using the NavigationService and passing the full name of the TweaksViewViewModel type
-
 }
