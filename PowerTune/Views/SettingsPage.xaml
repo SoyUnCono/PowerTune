@@ -12,7 +12,7 @@
     <ScrollViewer Transitions="{StaticResource SettingsCardsAnimations}"
                   Margin="{StaticResource NavigationViewPageContentMargin}"
                   VerticalScrollBarVisibility="Hidden">
-        <StackPanel x:Name="ContentArea" 
+        <StackPanel x:Name="ContentArea">
             <TextBlock x:Uid="Settings_Personalization"
                        Style="{ThemeResource SubtitleTextBlockStyle}" />
             <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
