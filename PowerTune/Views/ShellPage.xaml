@@ -14,26 +14,20 @@
         <!--TitleBar-->
         <Grid x:Name="AppTitleBar"
               Canvas.ZIndex="1"
+              Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
               Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
               IsHitTestVisible="True"
               VerticalAlignment="Top">
-            <Image Source="/Assets/WindowIcon.ico"
+            <Image Source="/Assets/WindowIcon.gif"
                    HorizontalAlignment="Left"
-                   Width="16"
-                   Height="16" />
+                   Width="24"
+                   Height="24" />
             <TextBlock x:Name="AppTitleBarText"
                        VerticalAlignment="Center"
                        TextWrapping="NoWrap"
                        Style="{StaticResource CaptionTextBlockStyle}"
                        Margin="28,0,0,0" />
         </Grid>
-        <!--Content Dialog-->
-        <ContentDialog x:Name="Dialog"
-                       Title="Tweaks Settings"
-                       Content="Prueba 1"
-                       PrimaryButtonText="Apply Settings"
-                       CloseButtonText="close"
-                       FullSizeDesired="False" />
         <!--SplashScreen-->
         <Pages:SplashScreen VerticalAlignment="Stretch"
                             Grid.RowSpan="3"

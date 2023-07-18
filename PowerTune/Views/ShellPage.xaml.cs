@@ -40,9 +40,6 @@ public sealed partial class ShellPage : Page
         App.AppTitlebar = AppTitleBarText as UIElement;
     }
 
-    // Event handler for the Click event of a button, shows an asynchronous custom dialog
-    private async void Button_Click(object sender, RoutedEventArgs e) => await Dialog.ShowAsync();
-
     private void NavigationViewControl_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
     {
         AppTitleBar.Margin = new Thickness()

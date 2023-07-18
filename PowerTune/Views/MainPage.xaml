@@ -20,9 +20,9 @@
                       VerticalScrollBarVisibility="Hidden">
             <StackPanel>
                 <!--Content Dialog Splash-->
+                <!--TODO:BUG FOUND -->
                 <ContentDialog x:Name="SplashWarningDialog"
-                               CloseButtonText="Close"
-                               FullSizeDesired="False">
+                               CloseButtonText="Close">
                     <ContentDialog.TitleTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal"
@@ -41,14 +41,6 @@
                             </StackPanel>
                         </DataTemplate>
                     </ContentDialog.TitleTemplate>
-                    <ContentDialog.CloseButtonStyle>
-                        <Style TargetType="Button">
-                            <Setter Property="Background"
-                                    Value="{ThemeResource SystemAccentColorDark1}" />
-                            <Setter Property="CornerRadius"
-                                    Value="{ThemeResource ControlCornerRadius}" />
-                        </Style>
-                    </ContentDialog.CloseButtonStyle>
                     <StackPanel Orientation="Vertical">
                         <TextBlock x:Uid="AppDescriptionTextDialog"
                                    TextWrapping="Wrap"

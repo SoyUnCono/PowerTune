@@ -22,6 +22,6 @@ See [README.md](https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI
 
 See [releases](https://github.com/microsoft/TemplateStudio/releases) and [milestones](https://github.com/microsoft/TemplateStudio/milestones).
 
-## Feedback
+## Bugs 
 
-Bugs and feature requests should be filed at https://aka.ms/templatestudio.
+I have found a bug in the program when displaying the welcome and risk dialog. It is important to fix the bug before launching the application as it can break the UI of the window.
