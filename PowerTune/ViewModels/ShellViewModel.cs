@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Navigation;
 
 using PowerTune.Contracts.Services;
 using PowerTune.Services;
+using PowerTune.Views;
 
 namespace PowerTune.ViewModels;
 
@@ -15,6 +16,9 @@ public partial class ShellViewModel : ObservableRecipient
     // NavigationView
     [ObservableProperty]
     private bool isBackEnabled;
+
+    [ObservableProperty]
+    private object? selected;
 
     //Dependency Injection && Commands
     private readonly IRestorePointService _restorePointService = new RestorePointService();
@@ -26,27 +30,25 @@ public partial class ShellViewModel : ObservableRecipient
     {
         get;
     }
-    public ICommand OnNavigateToTweaksSettingsPageCommand
-    {
-
-        get;
-    }
-
     public INavigationService NavigationService
     {
         get;
     }
-
+    public INavigationViewService NavigationViewService
+    {
+        get;
+    }
 
     // ProgressBar
     [ObservableProperty][NotifyPropertyChangedFor(nameof(IsNotSplashScreenBusy))] private bool isSplashScreenBusy;
     [ObservableProperty] private bool isVisible = false;
     public bool IsNotSplashScreenBusy => !IsSplashScreenBusy;
    
-    public ShellViewModel(INavigationService navigationService)
+    public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
     {
         NavigationService = navigationService;
         NavigationService.Navigated += OnNavigated;
+        NavigationViewService = navigationViewService;
 
         MenuSettingsCommand = new RelayCommand(OnMenuSettings);
         MenuViewsMainCommand = new RelayCommand(OnMenuViewsMain);
@@ -70,9 +72,24 @@ public partial class ShellViewModel : ObservableRecipient
             IsSplashScreenBusy = false;
         }
     }
-   
+
     // Updates the value of IsBackEnabled based on whether the NavigationService can go back
-    private void OnNavigated(object sender, NavigationEventArgs e) => IsBackEnabled = NavigationService.CanGoBack;
+    private void OnNavigated(object sender, NavigationEventArgs e)
+    {
+        IsBackEnabled = NavigationService.CanGoBack;
+
+        if (e.SourcePageType == typeof(SettingsPage))
+        {
+            Selected = NavigationViewService.SettingsItem;
+            return;
+        }
+
+        var selectedItem = NavigationViewService.GetSelectedItem(e.SourcePageType);
+        if (selectedItem != null)
+        {
+            Selected = selectedItem;
+        }
+    }
 
     // Navigates to the SettingsViewModel by using the NavigationService and passing the full name of the SettingsViewModel type
     private void OnMenuSettings() => NavigationService.NavigateTo(typeof(SettingsViewModel).FullName!);

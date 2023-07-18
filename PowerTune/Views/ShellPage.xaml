@@ -3,177 +3,69 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
       xmlns:Pages="using:PowerTune.Views.Pages"
       xmlns:controls="using:PowerTune.Views.Controls"
-      xmlns:helpers="using:PowerTune.Helpers"
-      Loaded="OnLoaded"
+      xmlns:helpers="using:PowerTune.Helpers" xmlns:i="using:Microsoft.Xaml.Interactivity"
       Background="{StaticResource MainWindowBackground}"
-      Unloaded="OnUnloaded"
       mc:Ignorable="d">
     <Page.Resources>
         <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Page.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="28" />
-            <RowDefinition Height="120" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="48" />
-        </Grid.RowDefinitions>
         <!--TitleBar-->
-        <Grid Grid.Row="0"
-              x:Name="AppTitleBar"
-              Background="{StaticResource ControlBackground}">
-            <Image Source="/Assets/WindowIcon.gif"
+        <Grid x:Name="AppTitleBar"
+              Canvas.ZIndex="1"
+              Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
+              IsHitTestVisible="True"
+              VerticalAlignment="Top">
+            <Image Source="/Assets/WindowIcon.ico"
                    HorizontalAlignment="Left"
-                   Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
                    Width="16"
-                   Height="16"
-                   Margin="8,0" />
+                   Height="16" />
             <TextBlock x:Name="AppTitleBarText"
                        VerticalAlignment="Center"
                        TextWrapping="NoWrap"
-                       Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
                        Style="{StaticResource CaptionTextBlockStyle}"
-                       Margin="32, 0, 0, 0" />
+                       Margin="28,0,0,0"/>
         </Grid>
-        <!--Header Component-->
-        <controls:CustomHeader HeaderImage="ms-appx:///Assets/NavigationViewPagesIcons/Rocket.png"
-                               HeaderTitle="Home"
-                               SubHeaderTitle="Welcome Back! We are glad to see you again."
-                               Canvas.ZIndex="8"
-                               Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
-                               VerticalContentAlignment="Center"
-                               Canvas.Top="0"
-                               Grid.Row="1"
-                               HorizontalAlignment="Stretch">
-            <controls:CustomHeader.HeaderRightContent>
-                <StackPanel Orientation="Horizontal"
-                            Canvas.ZIndex="2"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="2"
-                            VerticalAlignment="Top"
-                            CornerRadius="{StaticResource ControlCornerRadius}">
-                    <Button VerticalAlignment="Stretch"
-                            HorizontalAlignment="Stretch"
-                            CornerRadius="4 0 0 4"
-                            Style="{ThemeResource HeaderButtons}"
-                            ToolTipService.ToolTip="Boost Your performance with only OneClick!">
-                        <StackPanel Orientation="Horizontal"
-                                    Spacing="15">
-                            <FontIcon Glyph="&#xEC4A;" />
-                            <TextBlock x:Uid="Boost_now_button" />
-                        </StackPanel>
-                    </Button>
-                    <!--Content Dialog-->
-                    <ContentDialog x:Name="Dialog"
+        <!--Content Dialog-->
+        <ContentDialog x:Name="Dialog"
                                    Title="Tweaks Settings"
                                    Content="Prueba 1"
                                    Background="{StaticResource ControlBackground}"
                                    PrimaryButtonText="Apply Settings"
                                    CloseButtonText="close"
                                    FullSizeDesired="False" />
-                    <Button VerticalAlignment="Stretch"
-                            Style="{ThemeResource HeaderButtons}"
-                            BorderThickness="1 0 0 0"
-                            Click="Button_Click"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            CornerRadius="0 4 4 0"
-                            Command="{x:Bind ViewModel.OnNavigateToTweaksSettingsPageCommand}"
-                            HorizontalAlignment="Stretch"
-                            ToolTipService.ToolTip="Tweaks Settings">
-                        <FontIcon Glyph="&#xE713;" />
-                    </Button>
-                </StackPanel>
-            </controls:CustomHeader.HeaderRightContent>
-        </controls:CustomHeader>
         <!--SplashScreen-->
         <Pages:SplashScreen VerticalAlignment="Stretch"
                             Grid.RowSpan="3"
                             HorizontalAlignment="Stretch"
                             Visibility="{x:Bind ViewModel.IsSplashScreenBusy,Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
                             Margin="32" />
-        <!--AppFrame-->
-        <Grid Grid.Row="2"
-              Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Frame x:Name="NavigationFrame"
-                   Margin="0 0 0 2">
-                <Frame.ContentTransitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition FromHorizontalOffset="100" />
-                        <NavigationThemeTransition>
-                            <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                <EntranceNavigationTransitionInfo />
-                            </NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                        </NavigationThemeTransition>
-                    </TransitionCollection>
-                </Frame.ContentTransitions>
-            </Frame>
-        </Grid>
         <!--NavigationView-->
-        <Grid Grid.Row="3"
-              Canvas.ZIndex="23"
-              Background="{StaticResource MainWindowBackground}"
-              Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Left"
-                        Margin="10 0 10 0">
-                <!--Home-->
-                <AppBarButton x:Uid="ShellMenuItem_Views_Main"
-                              Icon="Home"
-                              Command="{x:Bind ViewModel.MenuViewsMainCommand}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Center"
-                        Margin="50 0 0 0">
-                <!--Health-->
-                <AppBarButton x:Uid="ShellMenuItem_Views_Health"
-                              VerticalAlignment="Stretch"
-                              Command="{x:Bind ViewModel.MenuViewsMainCommand}">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE7FC;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <!--AutoGame-->
-                <AppBarButton x:Uid="ShellMenuItem_Views_AutoGames"
-                              Command="{x:Bind ViewModel.MenuViewsMainCommand}">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xEB51;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <!--JunkRemoval-->
-                <AppBarButton x:Uid="ShellMenuItem_Views_JunkRemoval"
-                              Command="{x:Bind ViewModel.MenuViewsMainCommand}">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE74D;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </StackPanel>
-            <AppBarButton Grid.Column="1"
-                          x:Name="ShellMenuBarSettingsButton"
-                          x:Uid="ShellMenuBarSettingsButton"
-                          AnimatedIcon.State="Normal"
-                          PointerEntered="ShellMenuBarSettingsButton_PointerEntered"
-                          PointerExited="ShellMenuBarSettingsButton_PointerExited"
-                          Command="{x:Bind ViewModel.MenuSettingsCommand}">
-                <AnimatedIcon x:Name="ShellMenuBarSettingsButtonIcon">
-                    <AnimatedIcon.Source>
-                        <animatedvisuals:AnimatedSettingsVisualSource />
-                    </AnimatedIcon.Source>
-                    <AnimatedIcon.FallbackIconSource>
-                        <FontIconSource FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                        Glyph="&#xE713;" />
-                    </AnimatedIcon.FallbackIconSource>
-                </AnimatedIcon>
-                <AppBarButton.Shadow>
-                    <ThemeShadow />
-                </AppBarButton.Shadow>
-            </AppBarButton>
-        </Grid>
+        <NavigationView
+            x:Name="NavigationViewControl"
+            Grid.Row="3"
+                   Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
+            Canvas.ZIndex="0"
+            IsBackButtonVisible="Visible"
+            IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
+            SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
+            IsSettingsVisible="True"
+            PaneDisplayMode="LeftCompact"
+            ExpandedModeThresholdWidth="1280"
+            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+            >
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Uid="ShellMenuItem_Views_Main.Content" helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.MainViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
+                <Frame x:Name="NavigationFrame"/>
+            </Grid>
+        </NavigationView>
     </Grid>
 </Page>

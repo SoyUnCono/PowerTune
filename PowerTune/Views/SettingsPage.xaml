@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:PowerTune.Helpers"
     xmlns:xaml="using:Microsoft.UI.Xaml"
-    Background="{StaticResource MainWindowBackground}"
     mc:Ignorable="d">
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
