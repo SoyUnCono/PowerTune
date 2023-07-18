@@ -7,12 +7,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              Height="150">
-    <Grid Background="{StaticResource MainWindowBackground}"
-          Margin="0 20 0 0"
+    <Grid Margin="0 20 0 0"
           Transitions="{StaticResource SettingsCardsAnimations}"
           CornerRadius="{StaticResource ControlCornerRadius}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -20,8 +19,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <!--Notifications Icon-->
-        <StackPanel 
-                    MaxWidth="120"
+        <StackPanel MaxWidth="120"
                     MaxHeight="45"
                     Margin="0 3 0 0"
                     Orientation="Horizontal"
@@ -34,16 +32,16 @@
                       Width="35"
                       Foreground="{StaticResource BlueColor}"
                       HorizontalAlignment="Center" />
-            <TextBlock Text="Quick Actions" 
-                       FontWeight="SemiBold"/>
+            <TextBlock Text="Quick Actions"
+                       FontWeight="SemiBold" />
         </StackPanel>
-        <MenuFlyoutSeparator Grid.Row="0" 
+        <MenuFlyoutSeparator Grid.Row="0"
                              Grid.RowSpan="2"
                              Grid.ColumnSpan="2"
                              BorderThickness="2"
                              Margin="0 40 0 0"
-                             VerticalAlignment="Top"/>
+                             VerticalAlignment="Top" />
         <!-- Quick Actions Buttons -->
-        
+
     </Grid>
 </UserControl>

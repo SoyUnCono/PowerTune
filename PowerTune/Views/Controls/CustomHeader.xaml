@@ -9,8 +9,7 @@
     <UserControl.Resources>
         <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    <Grid x:Name="controlRoot"
-          Background="{StaticResource ControlBackground}">
+    <Grid x:Name="controlRoot">
         <StackPanel Orientation='Horizontal'
                     Spacing='1'
                     HorizontalAlignment='Left'

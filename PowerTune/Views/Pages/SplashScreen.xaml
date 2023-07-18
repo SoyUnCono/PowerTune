@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:rive="using:CommunityToolkit.Labs.WinUI.Rive"
-             mc:Ignorable="d"
-             Background="{StaticResource MainWindowBackground}">
+             mc:Ignorable="d">
     <rive:RivePlayer Source="https://public.rive.app/community/runtime-files/3264-6879-tree-loading-bar.riv"
                      Width="726"
                      Artboard="Artboard"

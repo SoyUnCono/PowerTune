@@ -4,9 +4,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:Pages="using:PowerTune.Views.Pages"
-      xmlns:controls="using:PowerTune.Views.Controls"
-      xmlns:helpers="using:PowerTune.Helpers" xmlns:i="using:Microsoft.Xaml.Interactivity"
-      Background="{StaticResource MainWindowBackground}"
+      Loaded="OnLoaded"
+      xmlns:helpers="using:PowerTune.Helpers"
       mc:Ignorable="d">
     <Page.Resources>
         <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -26,16 +25,15 @@
                        VerticalAlignment="Center"
                        TextWrapping="NoWrap"
                        Style="{StaticResource CaptionTextBlockStyle}"
-                       Margin="28,0,0,0"/>
+                       Margin="28,0,0,0" />
         </Grid>
         <!--Content Dialog-->
         <ContentDialog x:Name="Dialog"
-                                   Title="Tweaks Settings"
-                                   Content="Prueba 1"
-                                   Background="{StaticResource ControlBackground}"
-                                   PrimaryButtonText="Apply Settings"
-                                   CloseButtonText="close"
-                                   FullSizeDesired="False" />
+                       Title="Tweaks Settings"
+                       Content="Prueba 1"
+                       PrimaryButtonText="Apply Settings"
+                       CloseButtonText="close"
+                       FullSizeDesired="False" />
         <!--SplashScreen-->
         <Pages:SplashScreen VerticalAlignment="Stretch"
                             Grid.RowSpan="3"
@@ -43,28 +41,27 @@
                             Visibility="{x:Bind ViewModel.IsSplashScreenBusy,Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
                             Margin="32" />
         <!--NavigationView-->
-        <NavigationView
-            x:Name="NavigationViewControl"
-            Grid.Row="3"
-                   Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
-            Canvas.ZIndex="0"
-            IsBackButtonVisible="Visible"
-            IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
-            SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
-            IsSettingsVisible="True"
-            PaneDisplayMode="LeftCompact"
-            ExpandedModeThresholdWidth="1280"
-            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
-            >
+        <NavigationView x:Name="NavigationViewControl"
+                        Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Canvas.ZIndex="0"
+                        IsBackButtonVisible="Visible"
+                        IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
+                        SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
+                        IsSettingsVisible="True"
+                        PaneDisplayMode="LeftCompact"
+                        ExpandedModeThresholdWidth="1280"
+                        DisplayModeChanged="NavigationViewControl_DisplayModeChanged">
             <NavigationView.MenuItems>
-                <NavigationViewItem x:Uid="ShellMenuItem_Views_Main.Content" helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.MainViewModel">
+                <NavigationViewItem x:Uid="ShellMenuItem_Views_Main.Content"
+                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.MainViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                  Glyph="&#xe7c3;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
             <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
-                <Frame x:Name="NavigationFrame"/>
+                <Frame x:Name="NavigationFrame" />
             </Grid>
         </NavigationView>
     </Grid>

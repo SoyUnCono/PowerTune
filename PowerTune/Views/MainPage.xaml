@@ -3,14 +3,11 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:controls="using:PowerTune.Views.Controls"
       mc:Ignorable="d"
       xmlns:labs="using:CommunityToolkit.Labs.WinUI"
-      xmlns:ui="using:CommunityToolkit.WinUI.UI"
       xmlns:models="using:PowerTune.Views.Controls.Models"
       Loaded="Page_Loaded"
-      xmlns:converter="using:PowerTune.Helpers"
-      xmlns:brushes="using:CommunityToolkit.Common">
+      xmlns:converter="using:PowerTune.Helpers">
     <Page.Resources>
         <converter:ToggleSwitchToStatusConverter x:Key="ToggleSwitchToStatusConverter" />
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -25,8 +22,7 @@
                 <!--Content Dialog Splash-->
                 <ContentDialog x:Name="SplashWarningDialog"
                                CloseButtonText="Close"
-                               FullSizeDesired="False"
-                               Background="{StaticResource MainWindowBackground}">
+                               FullSizeDesired="False">
                     <ContentDialog.TitleTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal"
@@ -41,23 +37,10 @@
                                 <TextBlock x:Uid="DisplayName"
                                            FontWeight="Bold"
                                            FontSize="22"
-                                           VerticalAlignment="Center"
-                                           Foreground="{StaticResource BlueColor}" />
+                                           VerticalAlignment="Center" />
                             </StackPanel>
                         </DataTemplate>
                     </ContentDialog.TitleTemplate>
-                    <ContentDialog.Resources>
-                        <ResourceDictionary>
-                            <ResourceDictionary.ThemeDictionaries>
-                                <ResourceDictionary x:Key="Dark">
-                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver"
-                                                     Color="White" />
-                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver"
-                                                     Color="{ThemeResource SystemAccentColorDark2}" />
-                                </ResourceDictionary>
-                            </ResourceDictionary.ThemeDictionaries>
-                        </ResourceDictionary>
-                    </ContentDialog.Resources>
                     <ContentDialog.CloseButtonStyle>
                         <Style TargetType="Button">
                             <Setter Property="Background"
@@ -90,7 +73,6 @@
                                  Title='{x:Bind ViewModel.NotificationTitle,Mode=OneWay}'
                                  Message="{x:Bind ViewModel.NotificationMessage,Mode=OneWay}"
                                  IsIconVisible="{x:Bind ViewModel.NotificationIconsVisible,Mode=OneWay}"
-                                 Background="{StaticResource CardBackgroundFillColorSecondary}"
                                  CornerRadius="4 4 0 0"
                                  Severity="Informational"
                                  Canvas.ZIndex="2"

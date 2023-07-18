@@ -1,13 +1,11 @@
 ﻿<Application x:Class="PowerTune.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             RequestedTheme="Light">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="/Styles/FontSizes.xaml" />
-                <ResourceDictionary Source="/Styles/Colors.xaml" />
                 <ResourceDictionary Source="/Styles/CustomControls.xaml" />
                 <ResourceDictionary Source="/Styles/Window.xaml" />
                 <ResourceDictionary Source="/Styles/Buttons.xaml" />
@@ -19,6 +17,6 @@
                 <RepositionThemeTransition  IsStaggeringEnabled="False" />
             </TransitionCollection>
         </ResourceDictionary>
-       
+
     </Application.Resources>
 </Application>
