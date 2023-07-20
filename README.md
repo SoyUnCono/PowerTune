@@ -2,7 +2,7 @@
 PowerTune is a powerful optimization and system repair tool for Windows operating systems, designed to provide users with a smoother and enhanced computing experience. With just one click, PowerTune can optimize your system, fix Windows errors, and improve overall performance.
 
 ## Features
-One-Click Optimization: With a single button press, PowerTune will perform a series of adjustments and optimizations on your system to enhance its performance and speed.
+ --> One-Click Optimization: With a single button press, PowerTune will perform a series of adjustments and optimizations on your system to enhance its performance and speed.
 
  --> Windows Error Repair: PowerTune can identify and fix various common Windows errors, helping to stabilize the system and prevent potential crashes or issues.
 
