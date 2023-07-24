@@ -242,4 +242,10 @@
   <data name="Shell_Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="Shell_TweaksPage.Text" xml:space="preserve">
+    <value>Optimize your PC with PowerTune</value>
+  </data>
+  <data name="ShellMenuItem_Views_Search.Content" xml:space="preserve">
+    <value>Search for Tweak</value>
+  </data>
 </root>

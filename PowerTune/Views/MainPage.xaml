@@ -7,7 +7,8 @@
       xmlns:labs="using:CommunityToolkit.Labs.WinUI"
       xmlns:models="using:PowerTune.Views.Controls.Models"
       Loaded="Page_Loaded"
-      xmlns:converter="using:PowerTune.Helpers">
+      xmlns:converter="using:PowerTune.Helpers"
+      xmlns:Controls="using:PowerTune.Views.Controls">
     <Page.Resources>
         <converter:ToggleSwitchToStatusConverter x:Key="ToggleSwitchToStatusConverter" />
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -52,6 +53,24 @@
                               Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
                 </StackPanel>
             </ContentDialog>
+            <!--Header -->
+            <Controls:CustomHeader HeaderImage="/Assets/NavigationViewPagesIcons/Rocket.png"
+                                   HeaderTitle="Boost your system with one click!">
+                <Controls:CustomHeader.HeaderRightContent>
+                    <Grid Width="90"
+                          Height="32"
+                          IsHitTestVisible="True"
+                          HorizontalAlignment="Center">
+                        <labs:Shimmer Foreground="Blue"
+                                      Duration="0:0:3"
+                                      Opacity="2"
+                                      Width="90" />
+                        <Button x:Name="Start_Optimization"
+                                Content="Let's Begin!" 
+                                Command="{x:Bind ViewModel.NavigateToTweaksPageCommand, Mode=OneWay}"/>
+                    </Grid>
+                </Controls:CustomHeader.HeaderRightContent>
+            </Controls:CustomHeader>
             <!--Groups Page-->
             <models:Groups Header="About your PC"
                            IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">

@@ -55,7 +55,7 @@
                           Content="{x:Bind HeaderRightContent, Mode=OneWay}"
                           Visibility="{Binding Path=(local:CustomHeader.IsRightContentVisible), RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}"
                           Margin="19"
-                          VerticalContentAlignment="Top"
+                          VerticalContentAlignment="Center"
                           HorizontalContentAlignment="Center"
                           HorizontalAlignment="Right" />
     </Grid>

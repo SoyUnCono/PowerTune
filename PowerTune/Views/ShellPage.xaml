@@ -60,6 +60,13 @@
                         <ImageIcon Source="/Assets/NavigationViewIcons/icons8-news-48.png" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItem x:Uid="ShellMenuItem_Views_Search.Content"
+                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.SearchViewModel">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="/Assets/NavigationViewIcons/icons8-search-48.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItemSeparator />
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem x:Uid="Shell_Settings"
@@ -70,7 +77,9 @@
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
             <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
-                <Frame x:Name="NavigationFrame" />
+                <Frame x:Name="NavigationFrame"
+                       ContentTransitions="{StaticResource SettingsCardsAnimations}" />
+
             </Grid>
         </NavigationView>
     </Grid>

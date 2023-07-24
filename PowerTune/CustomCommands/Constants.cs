@@ -41,6 +41,17 @@ public class Constants
     public const string NotificationsPath6 = "Software\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\\Windows.SystemToast.AutoPlay";
     public const string TabletModePath1 = "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell";
     public const string TabletModePath2 = "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced";
+    public const string PowerThrottlingPath = "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling";
+    public const string SystemProfilePath = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile";
+    public const string GamesSchedulingPath = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games";
+    public const string SleepSettingsPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FlyoutMenuSettings";
+    public const string HibernateSettingsPath = "SYSTEM\\CurrentControlSet\\Control\\Power";
+    public const string AutomaticMaintenancePath = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\Maintenance";
+    public const string MenuShowDelayPath = "Control Panel\\Desktop";
+    public const string ClassicContextMenuPath = "Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32";
+    public const string BackgroundAppsPath = "Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications";
+    public const string DisableWindowsWidgetsPath = "SOFTWARE\\Policies\\Microsoft\\Dsh";
+
 
     /// <summary>
     /// Value Strings
@@ -82,6 +93,23 @@ public class Constants
     public const string TabletModeValue5 = "TaskbarAutoHideInTabletMode";
     public const string VirtualDesktopsValue1 = "VirtualDesktopTaskbarFilter";
     public const string VirtualDesktopsValue2 = "VirtualDesktopAltTabFilter";
+    public const string PowerThrottlingValue = "PowerThrottlingOff";
+    public const string NetworkThrottlingIndexValue = "NetworkThrottlingIndex";
+    public const string SystemResponsivenessValue = "SystemResponsiveness";
+    public const string GamesSchedulingAffinityValue = "Affinity";
+    public const string GamesSchedulingBackgroundOnlyValue = "Background Only";
+    public const string GamesSchedulingClockRateValue = "Clock Rate";
+    public const string GamesSchedulingGPUPriorityValue = "GPU Priority";
+    public const string GamesSchedulingPriorityValue = "Priority";
+    public const string GamesSchedulingSchedulingCategoryValue = "Scheduling Category";
+    public const string GamesSchedulingSFIOValue = "SFIO Priority";
+    public const string SleepSettingsValue = "ShowSleepOption";
+    public const string HibernateSettingsValue = "HibernateEnabled";
+    public const string AutomaticMaintenanceValue = "MaintenanceDisabled";
+    public const string MenuShowDelayValue = "MenuShowDelay";
+    public const string ClassicContextMenuValue = "@";
+    public const string BackgroundAppsValue = "GlobalUserDisabled";
+    public const string DisableWindowsWidgetsValue = "AllowNewsAndInterests";
 
     /// <summary>
     /// Important Constants

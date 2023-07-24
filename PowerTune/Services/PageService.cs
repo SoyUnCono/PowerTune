@@ -15,6 +15,8 @@ public class PageService : IPageService
         Configure<MainViewModel, MainPage>();
         Configure<SettingsViewModel, SettingsPage>();
         Configure<NewsViewModel, NewsPage>();
+        Configure<TweaksViewModel, TweaksPage>();
+        Configure<SearchViewModel, SearchPage>();
     }
 
     public Type GetPageType(string key)

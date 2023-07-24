@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="PowerTune.Views.TweaksPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+      xmlns:models="using:PowerTune.Views.Controls.Models"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:Controls="using:PowerTune.Views.Controls"
+      mc:Ignorable="d">
+
+    <ScrollViewer Transitions="{StaticResource SettingsCardsAnimations}"
+                  Margin="{StaticResource NavigationViewPageContentMargin}"
+                  VerticalScrollBarVisibility="Hidden">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <!-- Custom Optimize Bar -->
+            <Grid Background="{StaticResource CardBackgroundFillColorDefault}"
+                  Height="38"
+                  Grid.Row="1"
+                  Width="220"
+                  Margin="0 0 0 10"
+                  CornerRadius="{StaticResource ControlCornerRadius}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                        x:Name="ApplyBasicOptimizations"
+                        HorizontalAlignment="Stretch"
+                        IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
+                        VerticalAlignment="Stretch"
+                        CornerRadius="4 0 0 4"
+                        Command="{x:Bind ViewModel.OptimizeSystemSettingsCommand}">
+                    <FontIcon Glyph="&#xEC4A;" />
+                </Button>
+                <Button Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        CornerRadius="0"
+                        IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
+                        Command="{x:Bind ViewModel.ApplyDefaultValuesCommand}"
+                        VerticalAlignment="Stretch">
+                    <FontIcon Glyph="&#xEBC4;" />
+                </Button>
+                <Button Grid.Column="2"
+                        IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
+                        HorizontalAlignment="Stretch"
+                        CornerRadius="0 4 4 0"
+                        VerticalAlignment="Stretch">
+                    <FontIcon Glyph="&#xEA98;" />
+                </Button>
+            </Grid>
+            <StackPanel Orientation="Vertical"
+                        Grid.Row="0">
+
+                <TextBlock x:Uid="Shell_TweaksPage"
+                           Style="{ThemeResource SubtitleTextBlockStyle}" />
+
+                <models:Groups IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}">
+
+                </models:Groups>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>

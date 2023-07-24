@@ -5,7 +5,6 @@ using PowerTune.Activation;
 using PowerTune.Contracts.Services;
 using PowerTune.Core.Contracts.Services;
 using PowerTune.Core.Services;
-using PowerTune.Helpers;
 using PowerTune.Models;
 using PowerTune.Services;
 using PowerTune.ViewModels;
@@ -15,14 +14,8 @@ using PowerTune.Views.Controls.ViewModels;
 
 namespace PowerTune;
 
-// To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
 public partial class App : Application
 {
-    // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
-    // https://docs.microsoft.com/dotnet/core/extensions/generic-host
-    // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
-    // https://docs.microsoft.com/dotnet/core/extensions/configuration
-    // https://docs.microsoft.com/dotnet/core/extensions/logging
     public IHost Host
     {
         get;
@@ -79,6 +72,12 @@ public partial class App : Application
 
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
+
+            services.AddTransient<TweaksPage>();
+            services.AddTransient<TweaksViewModel>();
+
+            services.AddTransient<SearchPage>();
+            services.AddTransient<SearchViewModel>();
 
             services.AddTransient<CustomHeaderViewModel>();
             services.AddTransient<CustomHeader>();

@@ -49,6 +49,10 @@ public partial class MainViewModel : ObservableRecipient
     {
         get;
     }
+    public ICommand NavigateToTweaksPageCommand
+    {
+        get;
+    }
 
     // Public bool's
     public bool IsNotBusy => !IsBusy;
@@ -76,6 +80,7 @@ public partial class MainViewModel : ObservableRecipient
 
         // Commands
         OpenWindowsUpdatesCommand = new RelayCommand(OnWindowsUpdatesAsync);
+        NavigateToTweaksPageCommand = new RelayCommand(OnNavigateToTweaksPage);
 
         // Navigation Services
         _navigationService = App.GetService<INavigationService>();
@@ -111,6 +116,8 @@ public partial class MainViewModel : ObservableRecipient
     /// Opens the Windows Updates settings page asynchronously
     /// </summary>
     private async void OnWindowsUpdatesAsync() => await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsupdate"));
+
+    private void OnNavigateToTweaksPage() => _navigationService.NavigateTo(typeof(TweaksViewModel).FullName!);
 
     /// <summary>
     /// Retrieves disk information including total space, free space, and used space percentage

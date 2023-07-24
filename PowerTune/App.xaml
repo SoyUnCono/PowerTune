@@ -17,6 +17,5 @@
                 <RepositionThemeTransition  IsStaggeringEnabled="False" />
             </TransitionCollection>
         </ResourceDictionary>
-
     </Application.Resources>
 </Application>

@@ -30,8 +30,11 @@
 	  <None Remove="Assets\NavigationViewIcons\icons8-control-panel-48.png" />
 	  <None Remove="Assets\NavigationViewIcons\icons8-home-48.png" />
 	  <None Remove="Assets\NavigationViewIcons\icons8-news-48.png" />
+	  <None Remove="Assets\NavigationViewIcons\icons8-search-48.png" />
 	  <None Remove="Assets\NavigationViewIcons\icons8-setting-48.png" />
 	  <None Remove="Views\NewsPage.xaml" />
+	  <None Remove="Views\SearchPage.xaml" />
+	  <None Remove="Views\TweaksPage.xaml" />
 	</ItemGroup>
 	<ItemGroup>
 		<Manifest Include="$(ApplicationManifest)" />
@@ -59,6 +62,12 @@
 		<None Update="appsettings.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<Page Update="Views\SearchPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Update="Views\TweaksPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</Page>
 		<Page Update="Views\NewsPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</Page>

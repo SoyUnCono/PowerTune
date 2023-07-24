@@ -6,12 +6,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:rive="using:CommunityToolkit.Labs.WinUI.Rive"
              mc:Ignorable="d">
-    <rive:RivePlayer Source="https://public.rive.app/community/runtime-files/3264-6879-tree-loading-bar.riv"
-                     Width="726"
+    <rive:RivePlayer Source="https://public.rive.app/community/runtime-files/5449-10773-remastered-png-background-and-more-animation.riv"
                      Artboard="Artboard"
                      VerticalAlignment="Stretch"
                      HorizontalAlignment="Stretch"
                      StateMachine="Thumbnail"
-                     Height="620"
                      DrawInBackground="True" />
 </UserControl>
