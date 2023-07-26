@@ -7,10 +7,11 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.Win32;
 using PowerTune.Contracts.Services;
-using PowerTune.CustomCommands;
 using PowerTune.Services;
 using Windows.System;
 using Windows.UI.ViewManagement;
+using PowerTune.Strings;
+using PowerTune.Helpers;
 
 namespace PowerTune.ViewModels;
 
@@ -179,7 +180,7 @@ public partial class MainViewModel : ObservableRecipient
         var comboBox = (ComboBox)sender;
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
-        var CustomCommand = CustomCommands.RegistryCommands.SetRegistryValue;
+        var CustomCommand = RegistryHelper.SetRegistryValue;
 
         // Check if an item is selected
         if (selectedItem == null)
@@ -251,7 +252,7 @@ public partial class MainViewModel : ObservableRecipient
     private void SetStateInitialValues()
     {
         // Assign the custom registry command to a variable.
-        var CustomCommand = CustomCommands.RegistryCommands.GetToggleSwitchInitialValue;
+        var CustomCommand = RegistryHelper.GetToggleSwitchInitialValue;
 
         // Create the registry key path
         var registryKeyPath_UAC = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.uacPath}";
@@ -296,8 +297,8 @@ public partial class MainViewModel : ObservableRecipient
         var toggleSwitchId = toggleSwitch.Tag as string;
 
         // Assign the SetRegistryValue method of the CustomCommands.RegistryCommands object to the CustomCommand variable
-        var customCommand = CustomCommands.RegistryCommands.SetRegistryValue;
-        var removeCommand = CustomCommands.RegistryCommands.RemoveRegistryKey;
+        var customCommand = RegistryHelper.SetRegistryValue;
+        var removeCommand = RegistryHelper.RemoveRegistryKey;
 
         // Call the custom command to set the registry value based on the ToggleSwitch state
         switch (toggleSwitchId)
@@ -378,7 +379,7 @@ public partial class MainViewModel : ObservableRecipient
         var checkStatus = (bool)checkBox.IsChecked!;
 
         // Assign the SetRegistryValue method of the CustomCommands.RegistryCommands object to the CustomCommand variable
-        var customCommand = CustomCommands.RegistryCommands.SetRegistryValue;
+        var customCommand = RegistryHelper.SetRegistryValue;
 
         // Call the custom command to set the registry value based on the CheckBox status
         switch (checkBoxId)

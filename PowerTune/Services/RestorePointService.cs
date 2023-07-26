@@ -1,5 +1,5 @@
 ﻿using System.Management;
-using PowerTune.CustomCommands;
+using PowerTune.Strings;
 
 namespace PowerTune.Services;
 

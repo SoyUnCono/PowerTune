@@ -37,14 +37,13 @@
                         IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
                         VerticalAlignment="Stretch"
                         CornerRadius="4 0 0 4"
-                        Command="{x:Bind ViewModel.OptimizeSystemSettingsCommand}">
+                        Command="{x:Bind ViewModel.ImportAllBasicSettingsCommand}">
                     <FontIcon Glyph="&#xEC4A;" />
                 </Button>
                 <Button Grid.Column="1"
                         HorizontalAlignment="Stretch"
                         CornerRadius="0"
                         IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}"
-                        Command="{x:Bind ViewModel.ApplyDefaultValuesCommand}"
                         VerticalAlignment="Stretch">
                     <FontIcon Glyph="&#xEBC4;" />
                 </Button>
