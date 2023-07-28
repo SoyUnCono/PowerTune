@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Microsoft.Win32;
 
 namespace PowerTune.Helpers;
@@ -80,54 +81,102 @@ public static class RegistryHelper
         registryRoot.DeleteSubKeyTree(keyPath, false);
     }
 
-    // <summary>
-    // Imports registry keys and values from a string representation.
-    // </summary>
-    // <param name="regContent">The content of the registry to import.</param>
+    // This method imports a registry file content in string format.
+    // It splits the content into sections based on the "[HKEY_" tag, then processes each section separately.
     public static void ImportRegistryFromString(string regContent)
     {
-        // Divide the content into sections based on lines starting with "[HKEY_"
+        // Split the content into sections using "[HKEY_" as the delimiter and remove any empty entries.
         var sections = regContent.Split(new string[] { "[HKEY_" }, StringSplitOptions.RemoveEmptyEntries);
 
+        // Loop through each section to process them individually.
         foreach (var section in sections)
         {
-            // Find the end of the current key path
+            // Find the end of the key path by locating the first ']'.
             var keyEndIndex = section.IndexOf(']');
             if (keyEndIndex < 0)
                 continue;
 
-            // Extract the key path
+            // Extract the key path from the section.
             var keyPath = section[..keyEndIndex];
 
-            // Split the section into lines, ignoring empty entries
+            // Split the section into lines, removing empty entries and using '\r' and '\n' as delimiters.
             var lines = section[(keyEndIndex + 1)..].Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-            // Get or create the registry key for the current path
+            // Get or create the registry key based on the extracted key path.
             using var regKey = GetOrCreateRegistryKey(keyPath);
 
-            // Process each line in the section (representing name-value pairs)
+            // Process each line in the section to set registry values.
             foreach (var line in lines)
             {
-                // Find the position of the equals sign to split name and value
+                // Find the index of '=' to separate the name and value parts.
                 var equalsIndex = line.IndexOf('=');
                 if (equalsIndex < 0)
                     continue;
 
-                // Extract the name and value from the line
+                // Extract the name and value parts from the line.
                 var name = line[..equalsIndex].Trim();
                 var value = line[(equalsIndex + 1)..].Trim();
 
-                // Remove surrounding quotes from name and value if present
+                // If the name is enclosed in double quotes, remove the quotes.
                 if (name.StartsWith("\"") && name.EndsWith("\""))
                     name = name.Trim('"');
 
-                if (value.StartsWith("\"") && value.EndsWith("\""))
-                    value = value.Trim('"');
+                // Check for different value types using switch.
+                switch (value)
+                {
+                    // If the value starts with "dword:", it is a DWORD (32-bit integer) value.
+                    // Parse the integer value and set it in the registry key as a DWORD.
+                    case string dwordValue when dwordValue.StartsWith("dword:", StringComparison.OrdinalIgnoreCase):
+                        if (int.TryParse(dwordValue[6..], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var intValue))
+                            regKey.SetValue(name, intValue, RegistryValueKind.DWord);
+                        break;
 
-                // Set the registry value
-                regKey.SetValue(name, value);
+                    // If the value starts with "hex(", it is a hexadecimal string value.
+                    // Parse the hexadecimal value and set it in the registry key as binary data.
+                    case string hexValue when hexValue.StartsWith("hex(", StringComparison.OrdinalIgnoreCase):
+                        var parsedHexValue = ParseHexValue(hexValue);
+                        if (parsedHexValue != null)
+                            regKey.SetValue(name, parsedHexValue, RegistryValueKind.Binary);
+                        break;
+
+                    // If the value does not match any of the above types, it is a regular string value.
+                    // If the value is enclosed in double quotes, remove the quotes.
+                    default:
+                        if (value.StartsWith("\"") && value.EndsWith("\""))
+                            value = value.Trim('"');
+                        regKey.SetValue(name, value, RegistryValueKind.String);
+                        break;
+                }
             }
         }
+    }
+
+    // This method parses a hexadecimal value in the "hex(...)" format and returns the byte array represented by it.
+    // If the parsing fails, it returns null to indicate invalid hex data.
+    private static byte[]? ParseHexValue(string hexValue)
+    {
+        // Remove the "hex(" and ")" part to get the hex data only.
+        var hexData = hexValue[4..^1];
+
+        // Split the hex data by commas to get individual byte representations.
+        var hexBytes = hexData.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+        // Create a byte array to store the parsed bytes.
+        var buffer = new byte[hexBytes.Length];
+
+        // Loop through each byte representation and parse it into a byte value.
+        for (var i = 0; i < hexBytes.Length;)
+        {
+            // Try to parse each byte from hex string to a byte value.
+            if (byte.TryParse(hexBytes[i].Trim(), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var byteValue))
+                buffer[i] = byteValue;
+
+            // If the parsing fails, return null indicating invalid hex data.
+            return null;
+        }
+
+        // Return the byte array containing the parsed bytes.
+        return buffer;
     }
 
     // <summary>

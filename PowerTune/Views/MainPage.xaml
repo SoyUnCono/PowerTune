@@ -8,6 +8,7 @@
       xmlns:models="using:PowerTune.Views.Controls.Models"
       Loaded="Page_Loaded"
       xmlns:converter="using:PowerTune.Helpers"
+      xmlns:ui="using:CommunityToolkit.WinUI.UI"
       xmlns:Controls="using:PowerTune.Views.Controls">
     <Page.Resources>
         <converter:ToggleSwitchToStatusConverter x:Key="ToggleSwitchToStatusConverter" />
@@ -66,8 +67,9 @@
                                       Opacity="2"
                                       Width="90" />
                         <Button x:Name="Start_Optimization"
-                                Content="Let's Begin!" 
-                                Command="{x:Bind ViewModel.NavigateToTweaksPageCommand, Mode=OneWay}"/>
+                                Content="Let's Begin!"
+                                Background="{StaticResource CardBackgroundFillColorDefault}"
+                                Command="{x:Bind ViewModel.NavigateToTweaksPageCommand, Mode=OneWay}" />
                     </Grid>
                 </Controls:CustomHeader.HeaderRightContent>
             </Controls:CustomHeader>
@@ -103,21 +105,16 @@
                 </StackPanel>
                 <!--Check windows updates -->
                 <labs:SettingsExpander Header="Check Windows Updates"
-                                       Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
-                    <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xE895;" />
-                    </labs:SettingsExpander.HeaderIcon>
+                                       Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}"
+                                       HeaderIcon="{ui:FontIcon Glyph=&#xE895;}">
                     <labs:SettingsExpander.Items>
                         <!-- System Information -->
                         <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
                                            IsClickEnabled="True"
                                            Padding="15 20 20 30"
                                            Command="{x:Bind ViewModel.OpenWindowsUpdatesCommand}"
-                                           CornerRadius="{StaticResource RadiusExpander}">
-                            <labs:SettingsCard.ActionIcon>
-                                <FontIcon Glyph="&#xE8A7;" />
-                            </labs:SettingsCard.ActionIcon>
-                        </labs:SettingsCard>
+                                           CornerRadius="{StaticResource RadiusExpander}"
+                                           HeaderIcon="{ui:FontIcon Glyph=&#xE8A7;}" />
                     </labs:SettingsExpander.Items>
                 </labs:SettingsExpander>
                 <StackPanel Spacing="0"
@@ -131,12 +128,10 @@
                     <!-- Storage Capacity Labs -->
                     <labs:SettingsCard Header="Storage Capacity"
                                        Description="{x:Bind ViewModel.Storage}"
+                                       HeaderIcon="{ui:FontIcon Glyph=&#xE96A;}"
                                        CornerRadius="0 0 4 4"
-                                       IsClickEnabled="True">
-                        <labs:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE96A;" />
-                        </labs:SettingsCard.HeaderIcon>
-                    </labs:SettingsCard>
+                                       IsClickEnabled="True" />
+
                 </StackPanel>
             </models:Groups>
             <models:Groups Header="Apperance and Personalization"
@@ -145,10 +140,8 @@
                 <labs:SettingsCard Header="Disable UAC"
                                    IsClickEnabled="False"
                                    IsActionIconVisible="False"
-                                   Description="{Binding IsOn, ElementName=_ToggleSwitchUAC,Converter={StaticResource ToggleSwitchToStatusConverter}}">
-                    <labs:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xE7EE;" />
-                    </labs:SettingsCard.HeaderIcon>
+                                   Description="{Binding IsOn, ElementName=_ToggleSwitchUAC,Converter={StaticResource ToggleSwitchToStatusConverter}}"
+                                   HeaderIcon="{ui:FontIcon Glyph=&#xE7EE;}">
                     <ToggleSwitch IsOn="{x:Bind ViewModel.UacToggleSwitchValue}"
                                   Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle}"
                                   Tag="UAC" />
@@ -157,10 +150,8 @@
                 <labs:SettingsExpander Header="Enable Classic Windows Style"
                                        Description="Revitalize your Windows Style experience."
                                        IsExpanded="True"
-                                       HorizontalContentAlignment="Left">
-                    <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xEE40;" />
-                    </labs:SettingsExpander.HeaderIcon>
+                                       HorizontalContentAlignment="Left"
+                                       HeaderIcon="{ui:FontIcon Glyph=&#xEE40;}">
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard IsEnabled="{x:Bind ViewModel.IsWindows11, Mode=OneWay}">
                             <labs:SettingsCard.Description>
@@ -203,10 +194,8 @@
                 </labs:SettingsExpander>
                 <!--Personalized Settings-->
                 <labs:SettingsExpander Header="Personalized Settings"
-                                       Description="Adjust privacy preferences, accessibility options, and other options">
-                    <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xE771;" />
-                    </labs:SettingsExpander.HeaderIcon>
+                                       Description="Adjust privacy preferences, accessibility options, and other options"
+                                       HeaderIcon="{ui:FontIcon Glyph=&#xE771;}">
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Configure Privacy"
                                            Description="Disable apps running in the background">
@@ -254,29 +243,23 @@
                 <labs:SettingsCard Header="Auto Game"
                                    IsClickEnabled="True"
                                    Description="Auto Game automatically detects and optimizes your games for you. Enjoy enhanced performance and smoother gameplay with just one click."
-                                   IsActionIconVisible="True">
-                    <labs:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xE7FC;" />
-                    </labs:SettingsCard.HeaderIcon>
-                </labs:SettingsCard>
+                                   IsActionIconVisible="True"
+                                   HeaderIcon="{ui:FontIcon Glyph=&#xE7FC;}" />
+
                 <!-- Junk Removal -->
                 <labs:SettingsCard Header="Junk Removal"
                                    IsClickEnabled="True"
                                    Description="Cleanse your system from junk files with a single click. Optimize your computer's performance and free up valuable storage space. Try it now!"
-                                   IsActionIconVisible="True">
-                    <labs:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xE74D;" />
-                    </labs:SettingsCard.HeaderIcon>
-                </labs:SettingsCard>
+                                   IsActionIconVisible="True"
+                                   HeaderIcon="{ui:FontIcon Glyph=&#xE74D;}" />
+
                 <!-- Check System Health -->
                 <labs:SettingsCard Header="Check System Health"
                                    IsClickEnabled="True"
                                    Description="Get a comprehensive assessment of your PC's performance in seconds. Discover potential issues and optimize your system for peak efficiency. Try it now!"
-                                   IsActionIconVisible="True">
-                    <labs:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xEB51;" />
-                    </labs:SettingsCard.HeaderIcon>
-                </labs:SettingsCard>
+                                   IsActionIconVisible="True"
+                                   HeaderIcon="{ui:FontIcon Glyph=&#xEB51;}" />
+
             </models:Groups>
         </StackPanel>
     </ScrollViewer>

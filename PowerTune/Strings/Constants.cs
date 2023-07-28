@@ -121,12 +121,7 @@ public class Constants
     /// <summary>
     /// Raw Registry Content
     /// </summary>
-    public const string RawBasicsOptimizationsW11= @"[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell]
-""Path""=""C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe""
-""ExecutionPolicy""=""RemoteSigned""
-[HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell]
-""Path""=""C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe""
-""ExecutionPolicy""=""RemoteSigned""
+    public const string RawBasicsOptimizationsW11= @"
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
 ""StartupBoostEnabled""=dword:00000000
 ""HardwareAccelerationModeEnabled""=dword:00000000
@@ -189,21 +184,6 @@ public class Constants
 ""MenuShowDelay""=""0""
 [HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32]
 @=""""
-[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize]
-""AppsUseLightTheme""=dword:00000000
-""SystemUsesLightTheme""=dword:00000000
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize]
-""AppsUseLightTheme""=dword:00000000
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent]
-""StartColorMenu""=dword:ff3d3f41
-""AccentColorMenu""=dword:ff484a4c
-""AccentPalette""=hex(3):DF,DE,DC,00,A6,A5,A1,00,68,65,62,00,4C,4A,48,00,41,\
-3F,3D,00,27,25,24,00,10,0D,0D,00,10,7C,10,00
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM]
-""EnableWindowColorization""=dword:00000001
-""AccentColor""=dword:ff484a4c
-""ColorizationColor""=dword:c44c4a48
-""ColorizationAfterglow""=dword:c44c4a48
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Dsh] 
 ""AllowNewsAndInterests""=dword:00000000
 [HKEY_CURRENT_USER\Control Panel\Desktop]
@@ -574,7 +554,6 @@ E0,F6,C5,D5,0E,CA,50,00,00
     public const string RawBasicsOptimizationsW10 = @"[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell]
 ""Path""=""C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe""
 ""ExecutionPolicy""=""RemoteSigned""
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell]
 ""Path""=""C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe""
 ""ExecutionPolicy""=""RemoteSigned""

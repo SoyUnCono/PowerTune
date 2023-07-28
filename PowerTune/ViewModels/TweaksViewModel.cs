@@ -48,7 +48,7 @@ public partial class TweaksViewModel : ObservableRecipient
 
         // Check if the operating system version is Windows 11 (build 22000 or higher)
         // Import basic optimizations from the specified raw content using the RegistryHelper.
-        if (osVersion.Build >= 22000)
+        if (osVersion.Major >= 10 && osVersion.Build >= 22000)
             RegistryHelper.ImportRegistryFromString(Constants.RawBasicsOptimizationsW11);
 
         // Add a small delay to simulate processing time (remove this if unnecessary).

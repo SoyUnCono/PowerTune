@@ -28,10 +28,13 @@
 	<ItemGroup>
 	  <None Remove="Assets\NavigationViewIcons\icons8-cloud-firewall-48.png" />
 	  <None Remove="Assets\NavigationViewIcons\icons8-control-panel-48.png" />
+	  <None Remove="Assets\NavigationViewIcons\icons8-home-16.png" />
 	  <None Remove="Assets\NavigationViewIcons\icons8-home-48.png" />
 	  <None Remove="Assets\NavigationViewIcons\icons8-news-48.png" />
+	  <None Remove="Assets\NavigationViewIcons\icons8-search-16.png" />
 	  <None Remove="Assets\NavigationViewIcons\icons8-search-48.png" />
 	  <None Remove="Assets\NavigationViewIcons\icons8-setting-48.png" />
+	  <None Remove="Assets\NavigationViewIcons\icons8-settings-16.png" />
 	  <None Remove="Views\NewsPage.xaml" />
 	  <None Remove="Views\SearchPage.xaml" />
 	  <None Remove="Views\TweaksPage.xaml" />
@@ -93,6 +96,10 @@
 
 	<ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
 		<ProjectCapability Include="Msix" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Assets\SettingscardIcons\" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">

@@ -6,6 +6,7 @@
       xmlns:Pages="using:PowerTune.Views.Pages"
       Loaded="OnLoaded"
       xmlns:helpers="using:PowerTune.Helpers"
+      xmlns:ui="using:CommunityToolkit.WinUI.UI"
       mc:Ignorable="d">
     <Page.Resources>
         <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -38,43 +39,32 @@
         <NavigationView x:Name="NavigationViewControl"
                         Visibility="{x:Bind ViewModel.IsNotSplashScreenBusy, Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
                         Canvas.ZIndex="0"
-                        IsBackButtonVisible="Visible"
                         IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
                         SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
                         PaneDisplayMode="LeftCompact"
                         IsPaneToggleButtonVisible="False"
                         IsSettingsVisible="False"
-                        ExpandedModeThresholdWidth="1280"
+                        ShoulderNavigationEnabled="Always"
                         DisplayModeChanged="NavigationViewControl_DisplayModeChanged">
             <NavigationView.MenuItems>
+                
                 <NavigationViewItem x:Uid="ShellMenuItem_Views_Main.Content"
                                     helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.MainViewModel"
-                                    Margin="0 15 0 0">
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="/Assets/NavigationViewIcons/icons8-home-48.png" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                                    Margin="0 15 0 0"
+                                    Icon="{ui:BitmapIcon Source=/Assets/NavigationViewIcons/icons8-home-16.png,ShowAsMonochrome=False}" />
                 <NavigationViewItem x:Uid="ShellMenuItem_Views_Main.Content"
-                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.NewsViewModel">
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="/Assets/NavigationViewIcons/icons8-news-48.png" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.NewsViewModel"
+                                    Icon="{ui:BitmapIcon Source=/Assets/NavigationViewIcons/icons8-news-48.png,ShowAsMonochrome=False}" />
                 <NavigationViewItem x:Uid="ShellMenuItem_Views_Search.Content"
-                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.SearchViewModel">
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="/Assets/NavigationViewIcons/icons8-search-48.png" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.SearchViewModel"
+                                    Icon="{ui:BitmapIcon Source=/Assets/NavigationViewIcons/icons8-search-16.png,ShowAsMonochrome=False}" />
                 <NavigationViewItemSeparator />
             </NavigationView.MenuItems>
+            
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem x:Uid="Shell_Settings"
-                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.SettingsViewModel">
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="/Assets/NavigationViewIcons/icons8-setting-48.png" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                                    helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.SettingsViewModel"
+                                    Icon="{ui:BitmapIcon Source=/Assets/NavigationViewIcons/icons8-settings-16.png,ShowAsMonochrome=False}" />
             </NavigationView.FooterMenuItems>
             <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
                 <Frame x:Name="NavigationFrame"
