@@ -1,5 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace PowerTune.Helpers;
 
@@ -10,8 +10,7 @@ namespace PowerTune.Helpers;
 //
 // Usage in code:
 // NavigationHelper.SetNavigateTo(navigationViewItem, typeof(MainViewModel).FullName);
-public class NavigationHelper
-{
+public class NavigationHelper {
     public static string GetNavigateTo(NavigationViewItem item) => (string)item.GetValue(NavigateToProperty);
 
     public static void SetNavigateTo(NavigationViewItem item, string value) => item.SetValue(NavigateToProperty, value);

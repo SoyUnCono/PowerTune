@@ -1,6 +1,5 @@
 ﻿namespace PowerTune.Services;
 
-public interface IRestorePointService
-{
+public interface IRestorePointService {
     Task<bool> RunRestorePoint();
 }

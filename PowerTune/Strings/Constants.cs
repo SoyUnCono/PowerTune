@@ -1,10 +1,5 @@
-﻿
-using CommunityToolkit.WinUI.UI.Controls;
-using Windows.Web.AtomPub;
-
-namespace PowerTune.Strings;
-public class Constants
-{
+﻿namespace PowerTune.Strings;
+public class Constants {
     public const string restorePointServiceName = "PowerTune_RestorePoint";
 
     /// <summary>

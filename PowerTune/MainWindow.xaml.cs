@@ -1,20 +1,18 @@
-﻿using Microsoft.UI.Windowing;
-using Microsoft.UI;
+﻿using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using PowerTune.Extensions;
 using PowerTune.Helpers;
 using Windows.UI.ViewManagement;
 using WinRT.Interop;
-using PowerTune.Extensions;
 
 namespace PowerTune;
 
-public sealed partial class MainWindow : WindowEx
-{
-    private readonly Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
+public sealed partial class MainWindow : WindowEx {
+    readonly Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
 
-    private readonly UISettings settings;
+    readonly UISettings settings;
 
-    public MainWindow()
-    {
+    public MainWindow() {
         InitializeComponent();
 
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.gif"));
@@ -34,16 +32,14 @@ public sealed partial class MainWindow : WindowEx
     /// <summary>
     /// Moves the window to the right side of the screen.
     /// </summary>
-    private void MoveWindowToTheRight()
-    {
+    void MoveWindowToTheRight() {
         // Get the window ID
         // Get the window handle
         var hWnd = WindowNative.GetWindowHandle(this);
         var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
 
         // Check if the window ID corresponds to an AppWindow and a valid DisplayArea
-        if (AppWindow.GetFromWindowId(windowId) is AppWindow appWindow && DisplayArea.GetFromWindowId(windowId, DisplayAreaFallback.Nearest) is DisplayArea displayArea)
-        {
+        if (AppWindow.GetFromWindowId(windowId) is AppWindow appWindow && DisplayArea.GetFromWindowId(windowId, DisplayAreaFallback.Nearest) is DisplayArea displayArea) {
             // Create a new position for the window
             var newPosition = appWindow.Position;
 
@@ -63,11 +59,9 @@ public sealed partial class MainWindow : WindowEx
     /// <param name="sender"></param>
     /// <param name="args"></param>
     // while the app is open
-    private void Settings_ColorValuesChanged(UISettings sender, object args)
-    {
+    void Settings_ColorValuesChanged(UISettings sender, object args) {
         // This calls comes off-thread, hence we will need to dispatch it to current app's thread
-        dispatcherQueue.TryEnqueue(() =>
-        {
+        dispatcherQueue.TryEnqueue(() => {
             TitleBarHelper.ApplySystemThemeToCaptionButtons();
         });
     }

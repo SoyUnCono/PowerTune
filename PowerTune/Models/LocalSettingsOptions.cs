@@ -1,14 +1,11 @@
 ﻿namespace PowerTune.Models;
 
-public class LocalSettingsOptions
-{
-    public string? ApplicationDataFolder
-    {
+public class LocalSettingsOptions {
+    public string? ApplicationDataFolder {
         get; set;
     }
 
-    public string? LocalSettingsFile
-    {
+    public string? LocalSettingsFile {
         get; set;
     }
 }

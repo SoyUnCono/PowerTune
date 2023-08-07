@@ -4,19 +4,17 @@ using Microsoft.Win32;
 
 namespace PowerTune.Views.Controls.ViewModels;
 
-public partial class CustomHeaderViewModel : ObservableRecipient
-{
+public partial class CustomHeaderViewModel : ObservableRecipient {
     // SystemInformation Strings
-    [ObservableProperty] private string? systemInformationLabel;
-    [ObservableProperty] private string? nameInformationLabel;
-    [ObservableProperty] private string? motherBoardInformationLabel;
-    [ObservableProperty] private string? laptopOrDesktop;
+    [ObservableProperty] string? systemInformationLabel;
+    [ObservableProperty] string? nameInformationLabel;
+    [ObservableProperty] string? motherBoardInformationLabel;
+    [ObservableProperty] string? laptopOrDesktop;
 
     /// <summary>
     /// Main constructor
     /// </summary>
-    public CustomHeaderViewModel()
-    {
+    public CustomHeaderViewModel() {
         GetSystemInfo();
         CheckIfDesktopOrLaptop();
     }
@@ -24,8 +22,7 @@ public partial class CustomHeaderViewModel : ObservableRecipient
     /// <summary>
     /// Fill the systemInformationLabel property with system information
     /// </summary>
-    private void GetSystemInfo()
-    {
+    void GetSystemInfo() {
         var osVersion = Environment.OSVersion.Version;
         var editionID = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "EditionID", null) as string;
 
@@ -48,8 +45,7 @@ public partial class CustomHeaderViewModel : ObservableRecipient
     /// <summary>
     /// Retrieve the motherboard product information
     /// </summary>
-    private static string GetMotherboardProduct()
-    {
+    static string GetMotherboardProduct() {
         var query = new ManagementObjectSearcher("SELECT * FROM Win32_BaseBoard");
         var motherboard = query.Get().Cast<ManagementObject>().FirstOrDefault();
 
@@ -61,8 +57,7 @@ public partial class CustomHeaderViewModel : ObservableRecipient
     }
 
     // Method to check if the system is a desktop or a laptop
-    private void CheckIfDesktopOrLaptop()
-    {
+    void CheckIfDesktopOrLaptop() {
         // Query system information for battery adapters
         // Query to search for battery devices
         // Object to perform the search

@@ -1,81 +1,63 @@
 ﻿namespace PowerTune.Models;
 
-public class AppSettings
-{
-    public bool? _IsBoldCheck
-    {
+public class AppSettings {
+    public bool? _IsBoldCheck {
         get; set;
     }
-    public int? _SelectedTitleBarSize
-    {
+    public int? _SelectedTitleBarSize {
         get; set;
     }
-    public bool? _UacToggleSwitchValue
-    {
+    public bool? _UacToggleSwitchValue {
         get;
         set;
     }
-    public bool? _StartUp_Time_ToggleSwitchValue
-    {
+    public bool? _StartUp_Time_ToggleSwitchValue {
         get;
         set;
     }
-    public bool? _ComboboxIndex
-    {
+    public bool? _ComboboxIndex {
         get;
         set;
     }
-    public bool? _Alt_TabValue
-    {
+    public bool? _Alt_TabValue {
         get;
         set;
     }
-    public bool? _Old_Sound_Mixer
-    {
+    public bool? _Old_Sound_Mixer {
         get;
         set;
     }
-    public bool? _CheckBox_Dialog
-    {
+    public bool? _CheckBox_Dialog {
         get;
         set;
     }
-    public bool? _HeaderViewContent
-    {
+    public bool? _HeaderViewContent {
         get;
         set;
     }
-    public bool? _Disable_Apps_Background
-    {
+    public bool? _Disable_Apps_Background {
         get;
         set;
     }
-    public bool? _Ease_of_Access
-    {
+    public bool? _Ease_of_Access {
         get;
         set;
     }
-    public bool? _Account
-    {
+    public bool? _Account {
         get;
         set;
     }
-    public bool? _Apps
-    {
+    public bool? _Apps {
         get;
         set;
     }
 
-    public bool? _Personalization
-    {
+    public bool? _Personalization {
         get;
         set;
     }
-    public bool? _Notifications
-    {
+    public bool? _Notifications {
         get;
         set;
     }
-
-
 }

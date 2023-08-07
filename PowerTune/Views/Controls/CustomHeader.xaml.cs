@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
-using System.Windows.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using PowerTune.Views.Controls.ViewModels;
@@ -10,9 +9,7 @@ using PowerTune.Views.Controls.ViewModels;
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace PowerTune.Views.Controls;
-public sealed partial class CustomHeader : UserControl
-{
-
+public sealed partial class CustomHeader : UserControl {
     /// <summary>
     /// HeaderImageProperty 
     /// </summary>
@@ -41,48 +38,39 @@ public sealed partial class CustomHeader : UserControl
         typeof(bool),
         typeof(CustomHeader),
         new PropertyMetadata(true));
+    public CustomHeader() {
+        InitializeComponent();
+        ViewModel = App.GetService<CustomHeaderViewModel>();
+    }
 
-    public static bool GetIsRightContentVisible(DependencyObject obj)
-    {
+    public static bool GetIsRightContentVisible(DependencyObject obj) {
         return (bool)obj.GetValue(IsRightContentVisibleProperty);
     }
 
-    public static void SetIsRightContentVisible(DependencyObject obj, bool value)
-    {
+    public static void SetIsRightContentVisible(DependencyObject obj, bool value) {
         obj.SetValue(IsRightContentVisibleProperty, value);
     }
 
-    public string HeaderImage
-    {
+    public string HeaderImage {
         get => (string)GetValue(HeaderImageProperty);
         set => SetValue(HeaderImageProperty, value);
     }
 
-    public string HeaderTitle
-    {
+    public string HeaderTitle {
         get => (string)(GetValue(HeaderTitleProperty));
         set => SetValue(HeaderTitleProperty, value);
     }
-    public string SubHeaderTitle
-    {
+    public string SubHeaderTitle {
         get => (string)(GetValue(SubHeaderTitleProperty));
         set => SetValue(SubHeaderTitleProperty, value);
     }
 
-    public object HeaderRightContent
-    {
+    public object HeaderRightContent {
         get => GetValue(HeaderRightContentProperty);
         set => SetValue(HeaderRightContentProperty, value);
     }
 
-    public CustomHeaderViewModel ViewModel
-    {
+    public CustomHeaderViewModel ViewModel {
         get;
-    }
-    public CustomHeader()
-    {
-        this.InitializeComponent();
-        ViewModel = App.GetService<CustomHeaderViewModel>();
-
     }
 }

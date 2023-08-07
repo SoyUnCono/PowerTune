@@ -2,7 +2,5 @@
 
 namespace PowerTune.ViewModels;
 
-public class NewsViewModel : ObservableRecipient
-{
-
+public class NewsViewModel : ObservableRecipient {
 }

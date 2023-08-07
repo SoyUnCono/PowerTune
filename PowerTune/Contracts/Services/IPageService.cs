@@ -1,6 +1,5 @@
 ﻿namespace PowerTune.Contracts.Services;
 
-public interface IPageService
-{
+public interface IPageService {
     Type GetPageType(string key);
 }

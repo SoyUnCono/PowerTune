@@ -14,37 +14,18 @@ using PowerTune.Views.Controls.ViewModels;
 
 namespace PowerTune;
 
-public partial class App : Application
-{
-    public IHost Host
-    {
+public partial class App : Application {
+    public IHost Host {
         get;
     }
 
-    public static T GetService<T>()
-        where T : class
-    {
-        if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
-        {
-            throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
-        }
-
-        return service;
-    }
-
-    public static WindowEx MainWindow { get; } = new MainWindow();
-
-    public static UIElement? AppTitlebar { get; set; }
-
-    public App()
-    {
+    public App() {
         InitializeComponent();
 
         Host = Microsoft.Extensions.Hosting.Host.
         CreateDefaultBuilder().
         UseContentRoot(AppContext.BaseDirectory).
-        ConfigureServices((context, services) =>
-        {
+        ConfigureServices((context, services) => {
             // Default Activation Handler
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
@@ -86,12 +67,22 @@ public partial class App : Application
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
         }).
         Build();
-
-
     }
 
-    protected async override void OnLaunched(LaunchActivatedEventArgs args)
-    {
+    public static T GetService<T>()
+        where T : class {
+        if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service) {
+            throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
+        }
+
+        return service;
+    }
+
+    public static WindowEx MainWindow { get; } = new MainWindow();
+
+    public static UIElement? AppTitlebar { get; set; }
+
+    protected async override void OnLaunched(LaunchActivatedEventArgs args) {
         base.OnLaunched(args);
 
         await App.GetService<IActivationService>().ActivateAsync(args);
