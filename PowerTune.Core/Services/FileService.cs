@@ -1,14 +1,12 @@
 ﻿using System.Text;
-
 using Newtonsoft.Json;
-
 using PowerTune.Core.Contracts.Services;
 
 namespace PowerTune.Core.Services;
 
 public class FileService : IFileService
 {
-    public T Read<T>(string folderPath, string fileName)
+    public async Task<T> Read<T>(string folderPath, string fileName)
     {
         var path = Path.Combine(folderPath, fileName);
         if (File.Exists(path))
@@ -20,7 +18,7 @@ public class FileService : IFileService
         return default;
     }
 
-    public void Save<T>(string folderPath, string fileName, T content)
+    public async Task Save<T>(string folderPath, string fileName, T content)
     {
         if (!Directory.Exists(folderPath))
         {
@@ -31,7 +29,7 @@ public class FileService : IFileService
         File.WriteAllText(Path.Combine(folderPath, fileName), fileContent, Encoding.UTF8);
     }
 
-    public void Delete(string folderPath, string fileName)
+    public async Task Delete(string folderPath, string fileName)
     {
         if (fileName != null && File.Exists(Path.Combine(folderPath, fileName)))
         {

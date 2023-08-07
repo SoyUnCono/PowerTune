@@ -5,11 +5,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:Pages="using:PowerTune.Views.Pages"
       Loaded="OnLoaded"
-      xmlns:helpers="using:PowerTune.Helpers"
       xmlns:ui="using:CommunityToolkit.WinUI.UI"
+      xmlns:converter="using:PowerTune.Converters"
+      xmlns:helpers="using:PowerTune.Helpers"
       mc:Ignorable="d">
     <Page.Resources>
-        <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Page.Resources>
     <Grid>
         <!--TitleBar-->

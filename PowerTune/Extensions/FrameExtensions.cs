@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace PowerTune.Helpers;
+namespace PowerTune.Extensions;
 
 public static class FrameExtensions
 {

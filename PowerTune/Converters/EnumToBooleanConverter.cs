@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 
-namespace PowerTune.Helpers;
+namespace PowerTune.Converters;
 
 public class EnumToBooleanConverter : IValueConverter
 {

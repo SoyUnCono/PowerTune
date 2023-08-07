@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Data;
 
-namespace PowerTune.Helpers;
+namespace PowerTune.Converters;
 
 public class BoolToIntConverter : IValueConverter
 {

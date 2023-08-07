@@ -4,10 +4,10 @@
              xmlns:local="using:PowerTune.Views.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:helpers="using:PowerTune.Helpers"
+             xmlns:converter="using:PowerTune.Converters"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <Grid x:Name="controlRoot">
         <StackPanel Orientation='Horizontal'

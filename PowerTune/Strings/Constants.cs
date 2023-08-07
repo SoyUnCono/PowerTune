@@ -5,15 +5,15 @@ using Windows.Web.AtomPub;
 namespace PowerTune.Strings;
 public class Constants
 {
+    public const string restorePointServiceName = "PowerTune_RestorePoint";
+
     /// <summary>
     /// Root Keys
     /// </summary>
     public const string HKEY_LOCAL_MACHINE = "HKEY_LOCAL_MACHINE";
     public const string HKEY_CURRENT_USER = "HKEY_CURRENT_USER";
 
-    /// <summary>
-    /// Path Strings
-    /// </summary>
+    #region Path Strings
     public const string uacPath = "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
     public const string ApplicationPath = "Software\\RegisteredApplications\\PowerTune";
     public const string verbosePath = "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
@@ -52,10 +52,8 @@ public class Constants
     public const string ClassicContextMenuPath = "Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32";
     public const string BackgroundAppsPath = "Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications";
     public const string DisableWindowsWidgetsPath = "SOFTWARE\\Policies\\Microsoft\\Dsh";
-
-    /// <summary>
-    /// Value Strings
-    /// </summary>
+    #endregion
+    #region strings value
     public const string uacValue = "EnableLUA";
     public const string startUpTimeValue = "EnableBoostStartUp";
     public const string DialogStatus = "EnableDialog";
@@ -112,16 +110,9 @@ public class Constants
     public const string DisableWindowsWidgetsValue = "AllowNewsAndInterests";
     public const string NotificationsValue9 = "NOC_GLOBAL_SETTING_STYLUS_TOAST_NOTIFICATION";
     public const string NotificationsValue10 = "NOC_GLOBAL_SETTING_3DTOAST_ENABLED";
-
-    /// <summary>
-    /// Important Constants
-    /// </summary>
-    public const string restorePointServiceName = "PowerTune_RestorePoint";
-
-    /// <summary>
-    /// Raw Registry Content
-    /// </summary>
-    public const string RawBasicsOptimizationsW11= @"
+    #endregion
+    #region Import Raw Strings
+    public const string RawBasicsOptimizationsW11 = @"
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
 ""StartupBoostEnabled""=dword:00000000
 ""HardwareAccelerationModeEnabled""=dword:00000000
@@ -1027,4 +1018,276 @@ E0,F6,C5,D5,0E,CA,50,00,00
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 ""MultiTaskingAltTabFilter""=dword:00000003
 ";
+    #endregion
+    #region Raw Hex 
+    public const string _TITLE_BAR_6 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f8,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-270""
+""CaptionWidth""=""-270""";
+    public const string _TITLE_BAR_6_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f8,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-270""
+""CaptionWidth""=""-270""
+";
+    public const string _TITLE_BAR_7 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f7,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-270""
+""CaptionWidth""=""-270""";
+    public const string _TITLE_BAR_7_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f7,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-270""
+""CaptionWidth""=""-270""";
+    public const string _TITLE_BAR_8 = @"
+[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f5,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-270""
+""CaptionWidth""=""-270""";
+    public const string _TITLE_BAR_8_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f5,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-270""
+""CaptionWidth""=""-270""";
+    public const string _TITLE_BAR_9 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-285""
+""CaptionWidth""=""-285""";
+    public const string _TITLE_BAR_9_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-270""
+""CaptionWidth""=""-270""";
+    public const string _TITLE_BAR_10 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f3,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-285""
+""CaptionWidth""=""-285""";
+    public const string _TITLE_BAR_10_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f3,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-285""
+""CaptionWidth""=""-285""";
+    public const string _TITLE_BAR_11 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f1,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-330""
+""CaptionWidth""=""-330""";
+    public const string _TITLE_BAR_11_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f1,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-330""
+""CaptionWidth""=""-330""";
+    public const string _TITLE_BAR_12 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f0,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-345""
+""CaptionWidth""=""-345""";
+    public const string _TITLE_BAR_12_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:f0,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-345""
+""CaptionWidth""=""-345""";
+    public const string _TITLE_BAR_13 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:ef,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-375""
+""CaptionWidth""=""-375""";
+    public const string _TITLE_BAR_13_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:ef,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-375""
+""CaptionWidth""=""-375""";
+    public const string _TITLE_BAR_14 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:ed,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-405""
+""CaptionWidth""=""-405""";
+    public const string _TITLE_BAR_14_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:ed,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-405""
+""CaptionWidth""=""-405""";
+    public const string _TITLE_BAR_15 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:ec,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-450""
+""CaptionWidth""=""-450""";
+    public const string _TITLE_BAR_15_BOLD = @"
+[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:ec,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-450""
+""CaptionWidth""=""-450""";
+    public const string _TITLE_BAR_16 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:eb,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-480""
+""CaptionWidth""=""-480""";
+    public const string _TITLE_BAR_16_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:eb,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-480""
+""CaptionWidth""=""-480""";
+    public const string _TITLE_BAR_17 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e9,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-495""
+""CaptionWidth""=""-495""";
+    public const string _TITLE_BAR_17_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e9,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-495""
+""CaptionWidth""=""-495""";
+    public const string _TITLE_BAR_18 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e8,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-510""
+""CaptionWidth""=""-510""";
+    public const string _TITLE_BAR_18_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e8,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-510""
+""CaptionWidth""=""-510""";
+    public const string _TITLE_BAR_19 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e7,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-555""
+""CaptionWidth""=""-555""";
+    public const string _TITLE_BAR_19_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e7,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-555""
+""CaptionWidth""=""-555""";
+    public const string _TITLE_BAR_20 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e5,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-585""
+""CaptionWidth""=""-585""";
+    public const string _TITLE_BAR_20_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e5,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-585""
+""CaptionWidth""=""-585""";
+    public const string _TITLE_BAR_21 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-600""
+""CaptionWidth""=""-600""";
+    public const string _TITLE_BAR_21_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-600""
+""CaptionWidth""=""-600""";
+    public const string _TITLE_BAR_22 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e3,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-630""
+""CaptionWidth""=""-630""";
+    public const string _TITLE_BAR_22_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e3,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-630""
+""CaptionWidth""=""-630""";
+    public const string _TITLE_BAR_23 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e1,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-660""
+""CaptionWidth""=""-660""";
+    public const string _TITLE_BAR_23_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e1,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,bc,02,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-660""
+""CaptionWidth""=""-660""";
+    public const string _TITLE_BAR_24 = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e0,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-705""
+""CaptionWidth""=""-705""";
+    public const string _TITLE_BAR_24_BOLD = @"[HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics]
+""CaptionFont""=hex:e0,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,90,01,00,00,00,\
+  00,00,01,00,00,00,00,53,00,65,00,67,00,6f,00,65,00,20,00,55,00,49,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+""CaptionHeight""=""-705""
+""CaptionWidth""=""-705""";
+    #endregion
 }

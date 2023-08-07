@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml.Navigation;
 
 using PowerTune.Contracts.Services;
 using PowerTune.Contracts.ViewModels;
-using PowerTune.Helpers;
+using PowerTune.Extensions;
 
 namespace PowerTune.Services;
 

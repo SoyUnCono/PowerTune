@@ -133,7 +133,7 @@ public static class RegistryHelper
 
                     // If the value starts with "hex(", it is a hexadecimal string value.
                     // Parse the hexadecimal value and set it in the registry key as binary data.
-                    case string hexValue when hexValue.StartsWith("hex(", StringComparison.OrdinalIgnoreCase):
+                    case string hexValue when hexValue.StartsWith("hex:", StringComparison.OrdinalIgnoreCase):
                         var parsedHexValue = ParseHexValue(hexValue);
                         if (parsedHexValue != null)
                             regKey.SetValue(name, parsedHexValue, RegistryValueKind.Binary);
@@ -161,23 +161,23 @@ public static class RegistryHelper
         // Split the hex data by commas to get individual byte representations.
         var hexBytes = hexData.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-        // Create a byte array to store the parsed bytes.
-        var buffer = new byte[hexBytes.Length];
+        // Create a List<byte> to store the parsed bytes.
+        var buffer = new List<byte>();
 
         // Loop through each byte representation and parse it into a byte value.
-        for (var i = 0; i < hexBytes.Length;)
+        foreach (var hexByte in hexBytes)
         {
             // Try to parse each byte from hex string to a byte value.
-            if (byte.TryParse(hexBytes[i].Trim(), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var byteValue))
-                buffer[i] = byteValue;
-
-            // If the parsing fails, return null indicating invalid hex data.
-            return null;
+            if (byte.TryParse(hexByte.Trim(), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var byteValue))
+                buffer.Add(byteValue);
+            else
+                return null; // If the parsing fails, return null indicating invalid hex data.
         }
 
         // Return the byte array containing the parsed bytes.
-        return buffer;
+        return buffer.ToArray();
     }
+
 
     // <summary>
     // Gets or creates the registry key based on the key path.

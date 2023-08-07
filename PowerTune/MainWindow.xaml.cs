@@ -3,6 +3,7 @@ using Microsoft.UI;
 using PowerTune.Helpers;
 using Windows.UI.ViewManagement;
 using WinRT.Interop;
+using PowerTune.Extensions;
 
 namespace PowerTune;
 

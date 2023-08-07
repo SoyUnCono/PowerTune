@@ -7,16 +7,16 @@
       xmlns:labs="using:CommunityToolkit.Labs.WinUI"
       xmlns:models="using:PowerTune.Views.Controls.Models"
       Loaded="Page_Loaded"
-      xmlns:converter="using:PowerTune.Helpers"
       xmlns:ui="using:CommunityToolkit.WinUI.UI"
-      xmlns:Controls="using:PowerTune.Views.Controls">
+      xmlns:Controls="using:PowerTune.Views.Controls"
+      xmlns:converter="using:PowerTune.Converters">
     <Page.Resources>
         <converter:ToggleSwitchToStatusConverter x:Key="ToggleSwitchToStatusConverter" />
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converter:BoolToIntConverter x:Key="BoolToIntConverter" />
     </Page.Resources>
     <ScrollViewer Transitions="{StaticResource SettingsCardsAnimations}"
-                  Margin="{StaticResource MenuBarContentMargin}"
+                  Margin="{StaticResource NavigationViewPageContentMargin}"
                   VerticalScrollBarVisibility="Hidden">
         <StackPanel>
             <!--Content Dialog Splash-->
@@ -105,16 +105,21 @@
                 </StackPanel>
                 <!--Check windows updates -->
                 <labs:SettingsExpander Header="Check Windows Updates"
-                                       Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}"
-                                       HeaderIcon="{ui:FontIcon Glyph=&#xE895;}">
+                                       Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xE895;" />
+                    </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <!-- System Information -->
                         <labs:SettingsCard Description="{x:Bind ViewModel.Systeminformation}"
                                            IsClickEnabled="True"
                                            Padding="15 20 20 30"
                                            Command="{x:Bind ViewModel.OpenWindowsUpdatesCommand}"
-                                           CornerRadius="{StaticResource RadiusExpander}"
-                                           HeaderIcon="{ui:FontIcon Glyph=&#xE8A7;}" />
+                                           CornerRadius="{StaticResource RadiusExpander}">
+                            <labs:SettingsCard.HeaderIcon>
+                                <FontIcon Glyph="&#xE8A7;" />
+                            </labs:SettingsCard.HeaderIcon>
+                        </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
                 </labs:SettingsExpander>
                 <StackPanel Spacing="0"
@@ -128,9 +133,12 @@
                     <!-- Storage Capacity Labs -->
                     <labs:SettingsCard Header="Storage Capacity"
                                        Description="{x:Bind ViewModel.Storage}"
-                                       HeaderIcon="{ui:FontIcon Glyph=&#xE96A;}"
                                        CornerRadius="0 0 4 4"
-                                       IsClickEnabled="True" />
+                                       IsClickEnabled="True">
+                        <labs:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE96A;" />
+                        </labs:SettingsCard.HeaderIcon>
+                    </labs:SettingsCard>
 
                 </StackPanel>
             </models:Groups>
@@ -140,8 +148,10 @@
                 <labs:SettingsCard Header="Disable UAC"
                                    IsClickEnabled="False"
                                    IsActionIconVisible="False"
-                                   Description="{Binding IsOn, ElementName=_ToggleSwitchUAC,Converter={StaticResource ToggleSwitchToStatusConverter}}"
-                                   HeaderIcon="{ui:FontIcon Glyph=&#xE7EE;}">
+                                   Description="{Binding IsOn, ElementName=_ToggleSwitchUAC,Converter={StaticResource ToggleSwitchToStatusConverter}}">
+                    <labs:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE7EE;" />
+                    </labs:SettingsCard.HeaderIcon>
                     <ToggleSwitch IsOn="{x:Bind ViewModel.UacToggleSwitchValue}"
                                   Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle}"
                                   Tag="UAC" />
@@ -150,8 +160,10 @@
                 <labs:SettingsExpander Header="Enable Classic Windows Style"
                                        Description="Revitalize your Windows Style experience."
                                        IsExpanded="True"
-                                       HorizontalContentAlignment="Left"
-                                       HeaderIcon="{ui:FontIcon Glyph=&#xEE40;}">
+                                       HorizontalContentAlignment="Left">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xEE40;" />
+                    </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard IsEnabled="{x:Bind ViewModel.IsWindows11, Mode=OneWay}">
                             <labs:SettingsCard.Description>
@@ -194,8 +206,10 @@
                 </labs:SettingsExpander>
                 <!--Personalized Settings-->
                 <labs:SettingsExpander Header="Personalized Settings"
-                                       Description="Adjust privacy preferences, accessibility options, and other options"
-                                       HeaderIcon="{ui:FontIcon Glyph=&#xE771;}">
+                                       Description="Adjust privacy preferences, accessibility options, and other options">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xE76D;" />
+                    </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Configure Privacy"
                                            Description="Disable apps running in the background">

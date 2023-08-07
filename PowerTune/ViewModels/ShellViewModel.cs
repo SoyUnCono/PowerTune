@@ -53,13 +53,8 @@ public partial class ShellViewModel : ObservableRecipient
         IsSplashScreenBusy = true;
 
         try { await _restorePointService.RunRestorePoint(); } // Perform the notification task asynchronously
-        finally
-        {
-            // Delay the execution for 4000 milliseconds (4 seconds)
-            // Set IsSplashScreenBusy property to false to indicate that the splash screen is no longer busy
-            await Task.Delay(4000);
-            IsSplashScreenBusy = false;
-        }
+        finally { IsSplashScreenBusy = false; }
+       
     }
 
     // Updates the value of IsBackEnabled based on whether the NavigationService can go back

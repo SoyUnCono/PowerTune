@@ -101,8 +101,7 @@ public partial class MainViewModel : ObservableRecipient
             GetLastChecked();
             SetStateInitialValues();
             await NotificationTask();
-        }
-        finally
+        } finally
         {
             // Set IsBusy to False
             IsBusy = false;

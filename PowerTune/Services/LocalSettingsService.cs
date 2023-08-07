@@ -13,7 +13,7 @@ namespace PowerTune.Services;
 
 public class LocalSettingsService : ILocalSettingsService
 {
-    private const string _defaultApplicationDataFolder = "PowerTune/ApplicationData";
+    private const string _defaultApplicationDataFolder = "PowerTune";
     private const string _defaultLocalSettingsFile = "LocalSettings.json";
 
     private readonly IFileService _fileService;

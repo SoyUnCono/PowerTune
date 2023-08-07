@@ -14,4 +14,5 @@ public sealed partial class TweaksPage : Page
         ViewModel = App.GetService<TweaksViewModel>();
         this.InitializeComponent();
     }
+
 }

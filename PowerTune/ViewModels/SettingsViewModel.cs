@@ -7,8 +7,8 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 
 using PowerTune.Contracts.Services;
+using PowerTune.Extensions;
 using PowerTune.Helpers;
-
 using Windows.ApplicationModel;
 
 namespace PowerTune.ViewModels;

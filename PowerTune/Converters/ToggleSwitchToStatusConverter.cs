@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Data;
 
-namespace PowerTune.Helpers;
+namespace PowerTune.Converters;
 public class ToggleSwitchToStatusConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)

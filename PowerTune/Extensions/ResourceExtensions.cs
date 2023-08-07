@@ -1,6 +1,6 @@
 ﻿using Microsoft.Windows.ApplicationModel.Resources;
 
-namespace PowerTune.Helpers;
+namespace PowerTune.Extensions;
 
 public static class ResourceExtensions
 {
