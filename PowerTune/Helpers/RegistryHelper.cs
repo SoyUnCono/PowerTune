@@ -2,16 +2,20 @@
 using Microsoft.Win32;
 
 namespace PowerTune.Helpers;
-public static class RegistryHelper {
+
+public static class RegistryHelper
+{
     // This method sets a value in the Windows Registry.
     // Parameters:
     //   - rootKey: The root registry key (either "HKEY_LOCAL_MACHINE" or "HKEY_CURRENT_USER").
     //   - keyPath: The path to the registry key where the value should be set.
     //   - valueName: The name of the value to be set.
     //   - value: The value to be set.
-    public static void SetRegistryValue(string rootKey, string keyPath, string valueName, object value) {
+    public static void SetRegistryValue(string rootKey, string keyPath, string valueName, object value)
+    {
         // Convert the rootKey to uppercase and select the appropriate registry root based on its value.
-        var registryRoot = rootKey.ToUpper() switch {
+        var registryRoot = rootKey.ToUpper() switch
+        {
             "HKEY_LOCAL_MACHINE" => Registry.LocalMachine,
             "HKEY_CURRENT_USER" => Registry.CurrentUser,
             _ => throw new ArgumentException("Invalid root key specified."),
@@ -48,7 +52,8 @@ public static class RegistryHelper {
     //   - expectedValue: The expected value to compare against.
     // Returns:
     //   - true if the retrieved value matches the expected value; otherwise, false.
-    public static bool GetToggleSwitchInitialValue(string registryKeyPath, string registryValueName, int expectedValue) {
+    public static bool GetToggleSwitchInitialValue(string registryKeyPath, string registryValueName, int expectedValue)
+    {
         // Retrieve the registry value based on the key path and value name.
         var registryValue = Registry.GetValue(registryKeyPath!, registryValueName, null);
 
@@ -64,9 +69,11 @@ public static class RegistryHelper {
     // Parameters:
     //   - rootKey: The root registry key (either "HKEY_LOCAL_MACHINE" or "HKEY_CURRENT_USER").
     //   - keyPath: The path to the registry key to be removed.
-    public static void RemoveRegistryKey(string rootKey, string keyPath) {
+    public static void RemoveRegistryKey(string rootKey, string keyPath)
+    {
         // Convert the rootKey to uppercase and select the appropriate registry root based on its value.
-        var registryRoot = rootKey.ToUpper() switch {
+        var registryRoot = rootKey.ToUpper() switch
+        {
             "HKEY_LOCAL_MACHINE" => Registry.LocalMachine,
             "HKEY_CURRENT_USER" => Registry.CurrentUser,
             _ => throw new ArgumentException("Invalid root key specified."),
@@ -78,12 +85,14 @@ public static class RegistryHelper {
 
     // This method imports a registry file content in string format.
     // It splits the content into sections based on the "[HKEY_" tag, then processes each section separately.
-    public static void ImportRegistryFromString(string regContent) {
+    public static void ImportRegistryFromString(string regContent)
+    {
         // Split the content into sections using "[HKEY_" as the delimiter and remove any empty entries.
         var sections = regContent.Split(new string[] { "[HKEY_" }, StringSplitOptions.RemoveEmptyEntries);
 
         // Loop through each section to process them individually.
-        foreach (var section in sections) {
+        foreach (var section in sections)
+        {
             // Find the end of the key path by locating the first ']'.
             var keyEndIndex = section.IndexOf(']');
             if (keyEndIndex < 0) continue;
@@ -92,13 +101,15 @@ public static class RegistryHelper {
             var keyPath = section[..keyEndIndex];
 
             // Split the section into lines, removing empty entries and using '\r' and '\n' as delimiters.
-            var lines = section[(keyEndIndex + 1)..].Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            var lines = section[(keyEndIndex + 1)..]
+                .Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
             // Get or create the registry key based on the extracted key path.
             using var regKey = GetOrCreateRegistryKey(keyPath);
 
             // Process each line in the section to set registry values.
-            foreach (var line in lines) {
+            foreach (var line in lines)
+            {
                 // Find the index of '=' to separate the name and value parts.
                 var equalsIndex = line.IndexOf('=');
                 if (equalsIndex < 0) continue;
@@ -112,11 +123,13 @@ public static class RegistryHelper {
                     name = name.Trim('"');
 
                 // Check for different value types using switch.
-                switch (value) {
+                switch (value)
+                {
                     // If the value starts with "dword:", it is a DWORD (32-bit integer) value.
                     // Parse the integer value and set it in the registry key as a DWORD.
                     case string dwordValue when dwordValue.StartsWith("dword:", StringComparison.OrdinalIgnoreCase):
-                        if (int.TryParse(dwordValue[6..], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var intValue))
+                        if (int.TryParse(dwordValue[6..], NumberStyles.HexNumber, CultureInfo.InvariantCulture,
+                                out var intValue))
                             regKey.SetValue(name, intValue, RegistryValueKind.DWord);
                         break;
 
@@ -142,7 +155,8 @@ public static class RegistryHelper {
 
     // This method parses a hexadecimal value in the "hex(...)" format and returns the byte array represented by it.
     // If the parsing fails, it returns null to indicate invalid hex data.
-    static byte[]? ParseHexValue(string hexValue) {
+    private static byte[]? ParseHexValue(string hexValue)
+    {
         // Remove the "hex(" and ")" part to get the hex data only.
         var hexData = hexValue[4..^1];
 
@@ -153,7 +167,8 @@ public static class RegistryHelper {
         var buffer = new List<byte>();
 
         // Loop through each byte representation and parse it into a byte value.
-        foreach (var hexByte in hexBytes) {
+        foreach (var hexByte in hexBytes)
+        {
             // Try to parse each byte from hex string to a byte value.
             if (byte.TryParse(hexByte.Trim(), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var byteValue))
                 buffer.Add(byteValue);
@@ -170,13 +185,15 @@ public static class RegistryHelper {
     // </summary>
     // <param name="keyPath">The path of the registry key.</param>
     // <returns>The registry key.</returns>
-    static RegistryKey GetOrCreateRegistryKey(string keyPath) {
+    private static RegistryKey GetOrCreateRegistryKey(string keyPath)
+    {
         // Extract the root key and subkey from the key path
         var rootKey = keyPath[..keyPath.IndexOf('\\')];
         var subKey = keyPath[(keyPath.IndexOf('\\') + 1)..];
 
         // Create or get the corresponding registry key based on the root key
-        var key = rootKey.ToUpper() switch {
+        var key = rootKey.ToUpper() switch
+        {
             "CLASSES_ROOT" => Registry.ClassesRoot.CreateSubKey(subKey),
             "CURRENT_CONFIG" => Registry.CurrentConfig.CreateSubKey(subKey),
             "CURRENT_USER" => Registry.CurrentUser.CreateSubKey(subKey),

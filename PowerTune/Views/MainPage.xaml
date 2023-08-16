@@ -49,7 +49,7 @@
                     <CheckBox x:Uid="DialogTextCheckBox"
                               Margin="10 20 0 0"
                               Tag="Dialog_Visibility"
-                              IsChecked="{x:Bind ViewModel.CheckBox_Dialog, Mode=OneWay}"
+                              IsChecked="{x:Bind ViewModel.CheckBoxDialog, Mode=OneWay}"
                               Checked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}"
                               Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
                 </StackPanel>
@@ -62,14 +62,14 @@
                           Height="32"
                           IsHitTestVisible="True"
                           HorizontalAlignment="Center">
-                        <labs:Shimmer Foreground="Blue"
-                                      Duration="0:0:3"
-                                      Opacity="2"
-                                      Width="90" />
-                        <Button x:Name="Start_Optimization"
-                                Content="Let's Begin!"
-                                Background="{StaticResource CardBackgroundFillColorDefault}"
-                                Command="{x:Bind ViewModel.NavigateToTweaksPageCommand, Mode=OneWay}" />
+                        <labs:Shimmer
+                            Duration="0:0:3"
+                            Opacity="2"
+                            Width="90" />
+                        <Button
+                            Content="Let's Begin!"
+                            Background="{StaticResource CardBackgroundFillColorDefault}"
+                            Command="{x:Bind ViewModel.NavigateToTweaksPageCommand, Mode=OneWay}" />
                     </Grid>
                 </Controls:CustomHeader.HeaderRightContent>
             </Controls:CustomHeader>
@@ -96,7 +96,7 @@
                                        IsClickEnabled="True">
                         <ToggleSwitch ToolTipService.ToolTip="Disable or enable our Boost Startup Service."
                                       Tag="Start_Up_Time"
-                                      IsOn="{x:Bind ViewModel.StartUp_Time_ToggleSwitchValue}"
+                                      IsOn="{x:Bind ViewModel.StartUpTimeToggleSwitchValue}"
                                       Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle}" />
                         <labs:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE835;" />
@@ -142,7 +142,7 @@
 
                 </StackPanel>
             </models:Groups>
-            <models:Groups Header="Apperance and Personalization"
+            <models:Groups Header="Appearance and Personalization"
                            IsEnabled="{x:Bind ViewModel.IsNotBusy,Mode=OneWay}">
                 <!-- UAC SettingsCard -->
                 <labs:SettingsCard Header="Disable UAC"
@@ -175,16 +175,17 @@
                                                Visibility="{x:Bind ViewModel.IsNotWindows11,Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 </StackPanel>
                             </labs:SettingsCard.Description>
-                            <ComboBox SelectedIndex="{x:Bind ViewModel.ComboboxIndex,Mode=OneWay,Converter={StaticResource BoolToIntConverter}}"
-                                      SelectionChanged="{x:Bind ViewModel.TaskBarFunctions, Mode=OneWay}"
-                                      HorizontalAlignment="Right">
+                            <ComboBox
+                                SelectedIndex="{x:Bind ViewModel.ComboboxIndex,Mode=OneWay,Converter={StaticResource BoolToIntConverter}}"
+                                SelectionChanged="{x:Bind ViewModel.TaskBarFunctions, Mode=OneWay}"
+                                HorizontalAlignment="Right">
                                 <ComboBoxItem Content="Center" />
                                 <ComboBoxItem Content="Left" />
                             </ComboBox>
                         </labs:SettingsCard>
                         <labs:SettingsCard Description="Enable Alt + Tab Style">
                             <CheckBox Tag="Alt_Tab"
-                                      IsChecked="{x:Bind ViewModel.Alt_TabValue, Mode=OneWay}"
+                                      IsChecked="{x:Bind ViewModel.AltTabValue, Mode=OneWay}"
                                       Checked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}"
                                       Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
                         </labs:SettingsCard>
@@ -198,7 +199,7 @@
                                 </StackPanel>
                             </labs:SettingsCard.Description>
                             <CheckBox Tag="Old_Sound_Mixer"
-                                      IsChecked="{x:Bind ViewModel.Old_Sound_Mixer, Mode=OneWay}"
+                                      IsChecked="{x:Bind ViewModel.OldSoundMixer, Mode=OneWay}"
                                       Checked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}"
                                       Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
                         </labs:SettingsCard>
@@ -215,12 +216,12 @@
                                            Description="Disable apps running in the background">
                             <ToggleSwitch Tag="Backgrounds_Apps"
                                           Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}"
-                                          IsOn="{x:Bind ViewModel.Disable_Apps_Background, Mode=OneWay}" />
+                                          IsOn="{x:Bind ViewModel.DisableAppsBackground, Mode=OneWay}" />
                         </labs:SettingsCard>
                         <labs:SettingsCard Header="Ease of access"
                                            Description="Modifying Ease of Access settings appropriately.">
                             <ToggleSwitch Tag="Ease_of_Access"
-                                          IsOn="{x:Bind ViewModel.Ease_of_Access, Mode=OneWay}"
+                                          IsOn="{x:Bind ViewModel.EaseOfAccess, Mode=OneWay}"
                                           Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
                         </labs:SettingsCard>
                         <labs:SettingsCard Header="Account"

@@ -2,12 +2,15 @@
 
 namespace PowerTune.Contracts.Services;
 
-public interface INavigationViewService {
-    IList<object>? MenuItems {
+public interface INavigationViewService
+{
+    IList<object>? MenuItems
+    {
         get;
     }
 
-    object? SettingsItem {
+    object? SettingsItem
+    {
         get;
     }
 

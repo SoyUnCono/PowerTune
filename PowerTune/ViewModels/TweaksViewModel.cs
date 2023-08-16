@@ -92,8 +92,8 @@ public partial class TweaksViewModel : ObservableRecipient
 
         if (settings != null)
         {
-            SelectedTitleBarSize = (int)settings?._SelectedTitleBarSize!;
-            IsBoldCheck = (bool)settings?._IsBoldCheck!;
+            SelectedTitleBarSize = (int)settings?.SelectedTitleBarSize!;
+            IsBoldCheck = (bool)settings?.IsBoldCheck!;
         }
     }
 
@@ -132,7 +132,7 @@ public partial class TweaksViewModel : ObservableRecipient
 
         RegistryHelper.ImportRegistryFromString(Selected_String);
 
-        await _fileService.Save($"{PowerTunePath}", "AppSettings.json", new AppSettings { _IsBoldCheck = IsBoldCheck, _SelectedTitleBarSize = SelectedTitleBarSize });
+        await _fileService.Save($"{PowerTunePath}", "AppSettings.json", new AppSettings { IsBoldCheck = IsBoldCheck, SelectedTitleBarSize = SelectedTitleBarSize });
 
         IsBusy = false;
     }

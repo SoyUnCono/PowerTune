@@ -17,7 +17,7 @@ public sealed partial class MainPage : Page {
     async void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
         // Checks if the CheckBox_Dialog property is false
         // Displays the warning dialog asynchronously
-        if (!ViewModel.CheckBox_Dialog)
+        if (!ViewModel.CheckBoxDialog)
             await SplashWarningDialog.ShowAsync();
     }
 }
