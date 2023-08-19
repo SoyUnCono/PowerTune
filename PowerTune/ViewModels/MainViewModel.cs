@@ -14,15 +14,15 @@ namespace PowerTune.ViewModels;
 
 public partial class MainViewModel : ObservableRecipient
 {
-    readonly INavigationService _navigationService;
+    private readonly INavigationService _navigationService;
 
-    const string LessThan75Perccent =
+    private const string LessThan75Perccent =
         "You can still store data, but monitor usage to avoid running out of space. Review and delete unnecessary files regularly.";
 
-    const string MoreThan75Perccent =
+    private const string MoreThan75Perccent =
         "Memory usage exceeded 75%. Delete unnecessary files or apps to free up memory. Consider resetting device if issues persist.";
 
-    const string MoreThan90Perccent =
+    private const string MoreThan90Perccent =
         "Memory usage exceeded 90%. Reset device to free up space and resolve memory issues. Back up critical data before resetting.";
 
     [ObservableProperty] private string? _username;
@@ -32,35 +32,10 @@ public partial class MainViewModel : ObservableRecipient
     [ObservableProperty] private string? _lastchecked;
     [ObservableProperty] private string? _fulldatastorage;
     [ObservableProperty] private int _index;
-
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsNotBusy))]
-    bool _isBusy;
-
     [ObservableProperty] private string? _notificationTitle;
     [ObservableProperty] private string? _notificationMessage;
     [ObservableProperty] private string? _notificationsIconSource;
     [ObservableProperty] private string? _isRunAsAdmin;
-    [ObservableProperty] private bool _isNotificationOpen = false;
-    [ObservableProperty] private bool _canCloseNotification = false;
-    [ObservableProperty] private bool _notificationIconsVisible = false;
-
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsNotWindows11))]
-    private bool _isWindows11;
-
-    public ICommand OpenWindowsUpdatesCommand
-    {
-        get;
-    }
-
-    public ICommand NavigateToTweaksPageCommand
-    {
-        get;
-    }
-
-    public bool IsNotBusy => !IsBusy;
-    public bool IsNotWindows11 => !IsWindows11;
-    public bool DontShowHeader => !HeaderViewContent;
-
     [ObservableProperty] private bool _uacToggleSwitchValue;
     [ObservableProperty] private bool _startUpTimeToggleSwitchValue;
     [ObservableProperty] private bool _altTabValue;
@@ -73,10 +48,34 @@ public partial class MainViewModel : ObservableRecipient
     [ObservableProperty] private bool _apps;
     [ObservableProperty] private bool _personalization;
     [ObservableProperty] private bool _notifications;
+    [ObservableProperty] private bool _isNotificationOpen = false;
+    [ObservableProperty] private bool _canCloseNotification = false;
+    [ObservableProperty] private bool _notificationIconsVisible = false;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(DontShowHeader))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsNotBusy))]
+    private bool _isBusy;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsNotWindows11))]
+    private bool _isWindows11;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(DontShowHeader))]
     private bool _headerViewContent;
 
+    public bool IsNotWindows11 => !IsWindows11;
+    public bool DontShowHeader => !HeaderViewContent;
+    public bool IsNotBusy => !IsBusy;
+
+
+    public ICommand OpenWindowsUpdatesCommand
+    {
+        get;
+    }
+
+    public ICommand NavigateToTweaksPageCommand
+    {
+        get;
+    }
     public MainViewModel(INavigationService navigationService)
     {
         _ = StartupAsyncTasks();

@@ -248,16 +248,16 @@
   <data name="ShellMenuItem_Views_Search.Content" xml:space="preserve">
     <value>Search for Tweak</value>
   </data>
-  <data name="_TITLEBAR_CHANGE_TEXT_SIZE.Description" xml:space="preserve">
+  <data name="TitleBarChangeSize.Description" xml:space="preserve">
     <value>Adjust the font size of the titlebar to customize the appearance of the window's title text for better readability and visual appeal.</value>
   </data>
-  <data name="_TITLEBAR_CHANGE_TEXT_SIZE.Header" xml:space="preserve">
+  <data name="TitleBarChangeSize.Header" xml:space="preserve">
     <value>Update Titlebar Text Size</value>
   </data>
-  <data name="_VISUAL_FEEDBACK.Description" xml:space="preserve">
+  <data name="VisualFeedBack.Description" xml:space="preserve">
     <value>Choose visual feedback preferences to receive helpful visual cues during interactions for an intuitive user experience.</value>
   </data>
-  <data name="_VISUAL_FEEDBACK.Header" xml:space="preserve">
+  <data name="VisualFeedBack.Header" xml:space="preserve">
     <value>Visual Feedback</value>
   </data>
 </root>

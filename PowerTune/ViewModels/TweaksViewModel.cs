@@ -1,28 +1,50 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using PowerTune.Core.Contracts.Services;
 using PowerTune.Helpers;
-using PowerTune.Models;
 using PowerTune.Strings;
 
 namespace PowerTune.ViewModels;
 
+public class AppSettings
+{
+    public bool IsBoldCheck
+    {
+        get;
+        init;
+    }
+
+    public int SelectedTitleBarSize
+    {
+        get;
+        init;
+    }
+
+    public bool VisualFeedBack
+    {
+
+        get;
+        init;
+    }
+}
+
 public partial class TweaksViewModel : ObservableRecipient
 {
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsNotBusy))]
-    bool isBusy;
+    private readonly string? PowerTunePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PowerTune");
+    private readonly IFileService _fileService;
 
-    [ObservableProperty] bool? isBoldCheck = false;
-    [ObservableProperty] string? _selected_String;
-    readonly IFileService _fileService;
-
-    readonly string? PowerTunePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PowerTune");
-
+    [ObservableProperty] private bool _isBoldCheck = false;
+    [ObservableProperty] private string _selected_String;
+    [ObservableProperty] private int _selectedTitleBarSize;
+    [ObservableProperty] private bool _visualFeedBack;
     public bool IsNotBusy => !IsBusy;
 
-    [ObservableProperty] int selectedTitleBarSize;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsNotBusy))]
+    private bool isBusy;
 
     public List<int> Titlebar_Size = new()
     {
@@ -83,22 +105,24 @@ public partial class TweaksViewModel : ObservableRecipient
         ImportAllBasicSettingsCommand = new RelayCommand(ApplyBasicsOptimizations);
     }
 
-    async Task LoadSettingsAsync()
+    private async Task LoadSettingsAsync()
     {
         var settings = await _fileService.Read<AppSettings>($"{PowerTunePath}", "AppSettings.json");
 
         if (settings == null)
+            //TODO : HANDLE ERROR
             _ = App.MainWindow.CreateMessageDialog("An error has occurred trying to load settings");
 
         if (settings != null)
         {
-            SelectedTitleBarSize = (int)settings?.SelectedTitleBarSize!;
-            IsBoldCheck = (bool)settings?.IsBoldCheck!;
+            SelectedTitleBarSize = settings.SelectedTitleBarSize;
+            IsBoldCheck = settings.IsBoldCheck;
+            VisualFeedBack = settings.VisualFeedBack;
         }
     }
 
 
-    async void ApplyBasicsOptimizations()
+    private async void ApplyBasicsOptimizations()
     {
         IsBusy = true;
 
@@ -132,8 +156,37 @@ public partial class TweaksViewModel : ObservableRecipient
 
         RegistryHelper.ImportRegistryFromString(Selected_String);
 
-        await _fileService.Save($"{PowerTunePath}", "AppSettings.json", new AppSettings { IsBoldCheck = IsBoldCheck, SelectedTitleBarSize = SelectedTitleBarSize });
+        await _fileService.Save($"{PowerTunePath}", "AppSettings.json", new AppSettings
+        {
+            IsBoldCheck = IsBoldCheck,
+            SelectedTitleBarSize = SelectedTitleBarSize,
+            VisualFeedBack = VisualFeedBack,
+        });
 
         IsBusy = false;
+    }
+
+    public async Task ApplyCheckBoxValue(Object sender, RoutedEventArgs e)
+    {
+        var checkBox = (CheckBox)sender;
+        var checkBoxId = checkBox.Tag as string;
+        var checkStatus = (bool)checkBox.IsChecked!;
+        var customCommand = RegistryHelper.SetRegistryValue;
+
+        switch (checkBoxId)
+        {
+            case "VisualFeedBack":
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.VisualFeedBackPath, Constants.VisualFeedBackvalue1, checkStatus ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.VisualFeedBackPath, Constants.VisualFeedBackvalue1, checkStatus ? 0 : 1f);
+                await _fileService.Save($"{PowerTunePath}", "AppSettings.json", new AppSettings
+                {
+                    IsBoldCheck = IsBoldCheck,
+                    SelectedTitleBarSize = SelectedTitleBarSize,
+                    VisualFeedBack = VisualFeedBack
+                });
+                break;
+        }
+
+
     }
 }

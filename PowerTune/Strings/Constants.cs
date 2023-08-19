@@ -14,6 +14,7 @@ public class Constants
     #region Path Strings
 
     public const string UacPath = "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
+    public const string VisualFeedBackPath = "Control Panel\\Cursors";
     public const string ApplicationPath = "Software\\RegisteredApplications\\PowerTune";
     public const string VerbosePath = "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
     public const string SerializePath = "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize";
@@ -68,6 +69,8 @@ public class Constants
     public const string UacValue = "EnableLUA";
     public const string StartUpTimeValue = "EnableBoostStartUp";
     public const string DialogStatus = "EnableDialog";
+    public const string VisualFeedBackvalue1 = "ContactVisualization";
+    public const string VisualFeedBackvalue2 = "GestureVisualization";
     public const string VerboseValue = "VerboseStatus";
     public const string HeaderViewContentValue = "ShowHeaderStatus";
     public const string SerializeValue = "StartupDelayInMSec";
