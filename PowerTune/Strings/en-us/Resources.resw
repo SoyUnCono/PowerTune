@@ -260,4 +260,10 @@
   <data name="VisualFeedBack.Header" xml:space="preserve">
     <value>Visual Feedback</value>
   </data>
+  <data name="AutomaticallyHideScrollBars.Description" xml:space="preserve">
+    <value>Scroll bars will automatically hide when not in use, providing a cleaner interface.</value>
+  </data>
+  <data name="AutomaticallyHideScrollBars.Header" xml:space="preserve">
+    <value>Adjust Scroll Bar Behavior for Windows 10 Apps</value>
+  </data>
 </root>

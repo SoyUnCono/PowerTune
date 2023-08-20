@@ -11,7 +11,7 @@
                    MinHeight="650"
                    IsResizable="False"
                    MaxHeight="650"
-                   MaxWidth="526"
+                   MaxWidth="726"
                    IsMaximizable="False"
                    IsAlwaysOnTop="True"
                    PersistenceId="MainWindow"

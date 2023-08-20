@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using PowerTune.Core.Contracts.Services;
 using PowerTune.Helpers;
 using PowerTune.Strings;
+using PowerTune.Views;
 
 namespace PowerTune.ViewModels;
 
@@ -16,16 +17,20 @@ public class AppSettings
         get;
         init;
     }
-
-    public int SelectedTitleBarSize
-    {
-        get;
-        init;
-    }
-
     public bool VisualFeedBack
     {
 
+        get;
+        init;
+    }
+    public bool HideScrollBar
+    {
+
+        get;
+        set;
+    }
+    public int SelectedTitleBarSize
+    {
         get;
         init;
     }
@@ -36,15 +41,22 @@ public partial class TweaksViewModel : ObservableRecipient
     private readonly string? PowerTunePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PowerTune");
     private readonly IFileService _fileService;
 
-    [ObservableProperty] private bool _isBoldCheck = false;
-    [ObservableProperty] private string _selected_String;
-    [ObservableProperty] private int _selectedTitleBarSize;
+    [ObservableProperty] private bool _isBoldCheck;
     [ObservableProperty] private bool _visualFeedBack;
-    public bool IsNotBusy => !IsBusy;
+    [ObservableProperty] private bool _showErrorDialog;
+    [ObservableProperty] private bool _hideScrollBar;
+    [ObservableProperty] private int _selectedTitleBarSize;
+
+    [ObservableProperty] private string? _selected_String;
+    [ObservableProperty] private string? _errorDialogHandlerTitle;
+    [ObservableProperty] private string? _errorDialogHandlerDescription;
+    [ObservableProperty] private string? _errorDialogHandlerErrorCode;
+
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNotBusy))]
     private bool isBusy;
+    public bool IsNotBusy => !IsBusy;
 
     public List<int> Titlebar_Size = new()
     {
@@ -68,8 +80,7 @@ public partial class TweaksViewModel : ObservableRecipient
         23,
         24,
     };
-
-    readonly Dictionary<int, (string REGULAR, string BOLD)> stringData = new()
+    private readonly Dictionary<int, (string REGULAR, string BOLD)> stringData = new()
     {
         { 0, (Constants._TITLE_BAR_6, Constants._TITLE_BAR_6_BOLD) },
         { 1, (Constants._TITLE_BAR_7, Constants._TITLE_BAR_7_BOLD) },
@@ -100,7 +111,6 @@ public partial class TweaksViewModel : ObservableRecipient
     public TweaksViewModel(IFileService fileService)
     {
         _fileService = fileService;
-
         _ = LoadSettingsAsync();
         ImportAllBasicSettingsCommand = new RelayCommand(ApplyBasicsOptimizations);
     }
@@ -110,17 +120,28 @@ public partial class TweaksViewModel : ObservableRecipient
         var settings = await _fileService.Read<AppSettings>($"{PowerTunePath}", "AppSettings.json");
 
         if (settings == null)
-            //TODO : HANDLE ERROR
-            _ = App.MainWindow.CreateMessageDialog("An error has occurred trying to load settings");
+            HandleErrorDialog("Error", "An error occurred while attempting to load settings", "Error code [ 0x0ffff ]",true);
 
         if (settings != null)
         {
             SelectedTitleBarSize = settings.SelectedTitleBarSize;
             IsBoldCheck = settings.IsBoldCheck;
             VisualFeedBack = settings.VisualFeedBack;
+            HideScrollBar = settings.HideScrollBar;
         }
     }
 
+
+    private async Task SaveSettings()
+    {
+        await _fileService.Save($"{PowerTunePath}", "AppSettings.json", new AppSettings
+        {
+            HideScrollBar = HideScrollBar,
+            IsBoldCheck = IsBoldCheck,
+            SelectedTitleBarSize = SelectedTitleBarSize,
+            VisualFeedBack = VisualFeedBack,
+        });
+    }
 
     private async void ApplyBasicsOptimizations()
     {
@@ -156,37 +177,60 @@ public partial class TweaksViewModel : ObservableRecipient
 
         RegistryHelper.ImportRegistryFromString(Selected_String);
 
-        await _fileService.Save($"{PowerTunePath}", "AppSettings.json", new AppSettings
-        {
-            IsBoldCheck = IsBoldCheck,
-            SelectedTitleBarSize = SelectedTitleBarSize,
-            VisualFeedBack = VisualFeedBack,
-        });
+        await SaveSettings();
 
         IsBusy = false;
     }
 
-    public async Task ApplyCheckBoxValue(Object sender, RoutedEventArgs e)
+    //public async Task ApplyCheckBoxValue(object sender, RoutedEventArgs e)
+    //{
+    //    var checkBox = (CheckBox)sender;
+    //    var checkBoxId = checkBox.Tag as string;
+    //    var checkStatus = (bool)checkBox.IsChecked!;
+    //    var customCommand = RegistryHelper.SetRegistryValue;
+
+    //    switch (checkBoxId)
+    //    {
+
+    //    }
+    //}
+
+    private void HandleErrorDialog(string title, string description,string errorCode, bool showDialog)
     {
-        var checkBox = (CheckBox)sender;
-        var checkBoxId = checkBox.Tag as string;
-        var checkStatus = (bool)checkBox.IsChecked!;
+        ErrorDialogHandlerTitle = title;
+        ErrorDialogHandlerDescription = description;
+        ErrorDialogHandlerErrorCode = errorCode;
+        ShowErrorDialog = showDialog;
+    }
+
+    public async Task ApplyToggleSwitchValue(object sender, RoutedEventArgs e)
+    {
+        var toggleSwitch = (ToggleSwitch)sender;
+        var toggleSwitchId = toggleSwitch.Tag.ToString();
+
         var customCommand = RegistryHelper.SetRegistryValue;
 
-        switch (checkBoxId)
-        {
-            case "VisualFeedBack":
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.VisualFeedBackPath, Constants.VisualFeedBackvalue1, checkStatus ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.VisualFeedBackPath, Constants.VisualFeedBackvalue1, checkStatus ? 0 : 1f);
-                await _fileService.Save($"{PowerTunePath}", "AppSettings.json", new AppSettings
-                {
-                    IsBoldCheck = IsBoldCheck,
-                    SelectedTitleBarSize = SelectedTitleBarSize,
-                    VisualFeedBack = VisualFeedBack
-                });
-                break;
-        }
+        var check = (bool)toggleSwitch.IsOn!;
 
+        switch (toggleSwitchId)
+        {
+            case "HideScrollBar":
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.ShowAlwaysScrollBarPath, Constants.ShowAlwaysScrollBarValue, check ? 1 : 0);
+                HideScrollBar = check;
+                await SaveSettings();
+                break;
+
+            case "VisualFeedBack":
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.VisualFeedBackPath, Constants.VisualFeedBackvalue1, check ? 0 : 1);
+                customCommand(Constants.HKEY_CURRENT_USER, Constants.VisualFeedBackPath, Constants.VisualFeedBackvalue1, check ? 0 : 1f);
+                VisualFeedBack = check;
+                await SaveSettings();
+                break;
+
+            default:
+                break;
+
+        }
 
     }
 }

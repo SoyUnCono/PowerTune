@@ -71,13 +71,14 @@ public class RestorePointService : IRestorePointService
         {
             // Invoke the CreateRestorePoint method in a separate task
             // ONLY FOR DEVELOPMENT PROCESS
-             var outParams = await Task.Run(() => new ManagementClass("//./root/default:SystemRestore")
-               .InvokeMethod("CreateRestorePoint", srArgs, new InvokeMethodOptions(null!, TimeSpan.MaxValue)));
+            var outParams = await Task.Run(() => new ManagementClass("//./root/default:SystemRestore")
+              .InvokeMethod("CreateRestorePoint", srArgs, new InvokeMethodOptions(null!, TimeSpan.MaxValue)));
 
             return true; // Return true indicating successful creation of restore point
         }
-        catch (Exception ex)
+        catch
         {
+            //TODO: Handler event
             return false;
         }
     }

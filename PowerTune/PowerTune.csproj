@@ -26,6 +26,14 @@
 		<Content Include="Assets\NavigationViewPagesIcons\*.png" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Compile Remove="Assets\SettingscardIcons\**" />
+	  <Content Remove="Assets\SettingscardIcons\**" />
+	  <EmbeddedResource Remove="Assets\SettingscardIcons\**" />
+	  <None Remove="Assets\SettingscardIcons\**" />
+	  <Page Remove="Assets\SettingscardIcons\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Assets\NavigationViewIcons\icons8-broken-robot-66.png" />
 	  <None Remove="Assets\NavigationViewIcons\icons8-cloud-firewall-48.png" />
 	  <None Remove="Assets\NavigationViewIcons\icons8-control-panel-48.png" />
 	  <None Remove="Assets\NavigationViewIcons\icons8-home-16.png" />
@@ -98,11 +106,11 @@
 		<ProjectCapability Include="Msix" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Assets\SettingscardIcons\" />
-	</ItemGroup>
-
 	<PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
 		<HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <PRIResource Remove="Assets\SettingscardIcons\**" />
+	</ItemGroup>
 </Project>
