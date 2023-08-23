@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using PowerTune.Extensions;
 using PowerTune.Helpers;
+using PowerTune.Services;
 using PowerTune.ViewModels;
 
 namespace PowerTune.Views;
@@ -30,14 +31,14 @@ public sealed partial class ShellPage : Page {
     }
 
     // Event handler for the MainWindow Activated event, updates the app title bar based on activation state
-    void MainWindow_Activated(object sender, WindowActivatedEventArgs args) {
+    private void MainWindow_Activated(object sender, WindowActivatedEventArgs args) {
         var resource = args.WindowActivationState == WindowActivationState.Deactivated ? "WindowCaptionForegroundDisabled" : "WindowCaptionForeground";
 
         AppTitleBarText.Foreground = (SolidColorBrush)App.Current.Resources[resource];
         App.AppTitlebar = AppTitleBarText as UIElement;
     }
 
-    void NavigationViewControl_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args) {
+    private void NavigationViewControl_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args) {
         AppTitleBar.Margin = new Thickness() {
             Left = sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 2 : 1),
             Top = AppTitleBar.Margin.Top,
@@ -46,5 +47,8 @@ public sealed partial class ShellPage : Page {
         };
     }
 
-    void OnLoaded(object sender, RoutedEventArgs e) => TitleBarHelper.UpdateTitleBar(RequestedTheme);
+    private void OnLoaded(object sender, RoutedEventArgs e) => TitleBarHelper.UpdateTitleBar(RequestedTheme);
+
+    private void RootGrid_OnLoaded(object sender, RoutedEventArgs e) =>
+        ContentDialogService.Initialize(this.RootGrid.XamlRoot);
 }

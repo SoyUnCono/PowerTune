@@ -5,8 +5,10 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using PowerTune.Core.Contracts.Services;
 using PowerTune.Helpers;
+using PowerTune.Services;
 using PowerTune.Strings;
 using PowerTune.Views;
+using PowerTune.Views.Controls.ViewModels;
 
 namespace PowerTune.ViewModels;
 
@@ -47,10 +49,11 @@ public partial class TweaksViewModel : ObservableRecipient
     [ObservableProperty] private bool _hideScrollBar;
     [ObservableProperty] private int _selectedTitleBarSize;
 
+    [ObservableProperty] private string? _errorDialogTitle;
+    [ObservableProperty] private string? _errorDialogDescription;
+    [ObservableProperty] private string? _errorDialogCode;
+
     [ObservableProperty] private string? _selected_String;
-    [ObservableProperty] private string? _errorDialogHandlerTitle;
-    [ObservableProperty] private string? _errorDialogHandlerDescription;
-    [ObservableProperty] private string? _errorDialogHandlerErrorCode;
 
 
     [ObservableProperty]
@@ -119,10 +122,10 @@ public partial class TweaksViewModel : ObservableRecipient
     {
         var settings = await _fileService.Read<AppSettings>($"{PowerTunePath}", "AppSettings.json");
 
-        if (settings == null)
-            HandleErrorDialog("Error", "An error occurred while attempting to load settings", "Error code [ 0x0ffff ]",true);
-
         if (settings != null)
+            await ContentDialogService.ShowDialogAsync("Hola", "Prueba", "errorCode");
+
+        if (settings == null)
         {
             SelectedTitleBarSize = settings.SelectedTitleBarSize;
             IsBoldCheck = settings.IsBoldCheck;
@@ -180,27 +183,6 @@ public partial class TweaksViewModel : ObservableRecipient
         await SaveSettings();
 
         IsBusy = false;
-    }
-
-    //public async Task ApplyCheckBoxValue(object sender, RoutedEventArgs e)
-    //{
-    //    var checkBox = (CheckBox)sender;
-    //    var checkBoxId = checkBox.Tag as string;
-    //    var checkStatus = (bool)checkBox.IsChecked!;
-    //    var customCommand = RegistryHelper.SetRegistryValue;
-
-    //    switch (checkBoxId)
-    //    {
-
-    //    }
-    //}
-
-    private void HandleErrorDialog(string title, string description,string errorCode, bool showDialog)
-    {
-        ErrorDialogHandlerTitle = title;
-        ErrorDialogHandlerDescription = description;
-        ErrorDialogHandlerErrorCode = errorCode;
-        ShowErrorDialog = showDialog;
     }
 
     public async Task ApplyToggleSwitchValue(object sender, RoutedEventArgs e)

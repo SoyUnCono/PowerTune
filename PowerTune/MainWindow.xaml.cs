@@ -3,16 +3,19 @@ using Microsoft.UI.Windowing;
 using PowerTune.Extensions;
 using PowerTune.Helpers;
 using Windows.UI.ViewManagement;
+using Microsoft.UI.Xaml;
+using PowerTune.Services;
 using WinRT.Interop;
 
 namespace PowerTune;
 
-public sealed partial class MainWindow : WindowEx {
-    readonly Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
+public sealed partial class MainWindow : WindowEx
+{
+    private readonly Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
+    private readonly UISettings _settings;
 
-    readonly UISettings settings;
-
-    public MainWindow() {
+    public MainWindow()
+    {
         InitializeComponent();
 
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.gif"));
@@ -21,9 +24,10 @@ public sealed partial class MainWindow : WindowEx {
         IsAlwaysOnTop = true;
 
         // Theme change code picked from https://github.com/microsoft/WinUI-Gallery/pull/1239
-        dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
-        settings = new UISettings();
-        settings.ColorValuesChanged += Settings_ColorValuesChanged; // cannot use FrameworkElement.ActualThemeChanged event
+        _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
+        _settings = new UISettings();
+        _settings.ColorValuesChanged +=
+            Settings_ColorValuesChanged; // cannot use FrameworkElement.ActualThemeChanged event
 
         // Moves the window to the right side of the screen.
         MoveWindowToTheRight();
@@ -32,14 +36,17 @@ public sealed partial class MainWindow : WindowEx {
     /// <summary>
     /// Moves the window to the right side of the screen.
     /// </summary>
-    void MoveWindowToTheRight() {
+    private void MoveWindowToTheRight()
+    {
         // Get the window ID
         // Get the window handle
         var hWnd = WindowNative.GetWindowHandle(this);
         var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
 
         // Check if the window ID corresponds to an AppWindow and a valid DisplayArea
-        if (AppWindow.GetFromWindowId(windowId) is AppWindow appWindow && DisplayArea.GetFromWindowId(windowId, DisplayAreaFallback.Nearest) is DisplayArea displayArea) {
+        if (AppWindow.GetFromWindowId(windowId) is { } appWindow &&
+            DisplayArea.GetFromWindowId(windowId, DisplayAreaFallback.Nearest) is { } displayArea)
+        {
             // Create a new position for the window
             var newPosition = appWindow.Position;
 
@@ -59,9 +66,11 @@ public sealed partial class MainWindow : WindowEx {
     /// <param name="sender"></param>
     /// <param name="args"></param>
     // while the app is open
-    void Settings_ColorValuesChanged(UISettings sender, object args) {
+    private void Settings_ColorValuesChanged(UISettings sender, object args)
+    {
         // This calls comes off-thread, hence we will need to dispatch it to current app's thread
-        dispatcherQueue.TryEnqueue(() => {
+        _dispatcherQueue.TryEnqueue(() =>
+        {
             TitleBarHelper.ApplySystemThemeToCaptionButtons();
         });
     }

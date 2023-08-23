@@ -15,10 +15,4 @@ public sealed partial class TweaksPage : Page
         InitializeComponent();
     }
 
-    private async void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-    {
-        if(ViewModel.ShowErrorDialog != false)
-            await ErrorDialog.ShowAsync();
-    }
-
 }
