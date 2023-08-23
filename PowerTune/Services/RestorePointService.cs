@@ -31,7 +31,7 @@ public class RestorePointService : IRestorePointService
     /// Activate RestorePoint Services Before Creating a restore point.
     /// </summary>
     /// <param name="driveLetter">The drive letter for which to enable System Restore.</param>
-    private static void EnableSystemRestoreForDrive(string? driveLetter)
+    private static async Task EnableSystemRestoreForDrive(string? driveLetter)
     {
         try
         {
@@ -44,9 +44,10 @@ public class RestorePointService : IRestorePointService
             // Invoke the "Enable" method on the SystemRestore class with the provided parameters
             srClass.InvokeMethod("Enable", srArgs, null!);
         }
-        catch (Exception ex)
+        catch
         {
-            App.MainWindow.ShowMessageDialogAsync($"{ex.Message}", $"{ex.Source}");
+            ErrorCodeStrings.ErrorHandler.TryGetValue("ErrorCode-EnablingRestorePointService", out var errorData);
+            await ContentDialogService.ShowDialogAsync(errorData.title, errorData.description, errorData.errorCode);
         } // If an exception occurs, throw a new exception with the error message
     }
 
@@ -78,8 +79,9 @@ public class RestorePointService : IRestorePointService
         }
         catch
         {
-            //TODO: Handler event
-            return false;
+            ErrorCodeStrings.ErrorHandler.TryGetValue("ErrorCode-CreatingRestorePointService", out var errorData);
+            await ContentDialogService.ShowDialogAsync(errorData.title, errorData.description, errorData.errorCode);
+            return true;
         }
     }
 
@@ -106,7 +108,8 @@ public class RestorePointService : IRestorePointService
         }
         catch (Exception ex)
         {
-            App.MainWindow.CreateMessageDialog($"{ex.Message}", $"{ex.Source}");
+            ErrorCodeStrings.ErrorHandler.TryGetValue("ErrorCode-CreatingRestorePointService", out var errorData);
+            await ContentDialogService.ShowDialogAsync(errorData.title, errorData.description, errorData.errorCode);
             return false;
         } // If any exception occurs, return false to indicate that the restore point check failed
     }

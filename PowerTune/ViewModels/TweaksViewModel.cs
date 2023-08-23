@@ -39,9 +39,7 @@ public class AppSettings
 
 public partial class TweaksViewModel : ObservableRecipient
 {
-    private readonly string? _powerTunePath =
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PowerTune");
-
+    
     private readonly IFileService _fileService;
 
     [ObservableProperty] private bool _isBoldCheck;
@@ -67,7 +65,7 @@ public partial class TweaksViewModel : ObservableRecipient
 
     private async Task LoadSettingsAsync()
     {
-        var settings = await _fileService.Read<AppSettings>($"{_powerTunePath}", "AppSettings.json");
+        var settings = await _fileService.Read<AppSettings>($"{Constants.PowerTunePath}", "AppSettings.json");
         ErrorCodeStrings.ErrorHandler.TryGetValue("ErrorCode-LoadSettings", out var errorData);
 
         if (settings == null)
@@ -81,7 +79,7 @@ public partial class TweaksViewModel : ObservableRecipient
 
     private async Task SaveSettings()
     {
-        await _fileService.Save($"{_powerTunePath}", "AppSettings.json", new AppSettings
+        await _fileService.Save($"{Constants.PowerTunePath}", "AppSettings.json", new AppSettings
         {
             HideScrollBar = HideScrollBar,
             IsBoldCheck = IsBoldCheck,
