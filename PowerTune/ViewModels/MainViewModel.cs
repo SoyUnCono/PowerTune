@@ -135,7 +135,7 @@ public partial class MainViewModel : ObservableRecipient
 
     private async Task NotificationTask()
     {
-        var restorePointExists = await RestorePointService.CheckIfRestorePointExists(Constants.restorePointServiceName);
+        var restorePointExists = await RestorePointService.CheckIfRestorePointExists(Constants.RestorePointServiceName);
 
         IsNotificationOpen = true;
         CanCloseNotification = true;
@@ -157,13 +157,13 @@ public partial class MainViewModel : ObservableRecipient
         switch (userChoice)
         {
             case "Center":
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.TaskbarPositionPath,
-                    Constants.TaskbarPositionValue, 1);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.TaskbarPositionPath,
+                    ValueStrings.TaskbarPositionValue, 1);
                 break;
 
             case "Left":
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.TaskbarPositionPath,
-                    Constants.TaskbarPositionValue, 0);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.TaskbarPositionPath,
+                    ValueStrings.TaskbarPositionValue, 0);
                 break;
 
             default:
@@ -178,11 +178,11 @@ public partial class MainViewModel : ObservableRecipient
             Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "EditionID",
                 null) as string;
 
-        if (osVersion.Major == 10 && osVersion.Minor == 0)
+        if (osVersion is { Major: 10, Minor: 0 })
             Systeminformation = $"You're currently running Windows 10 {editionID} ({osVersion})";
         IsWindows11 = false;
 
-        if (osVersion.Major == 10 && osVersion.Minor == 0 && osVersion.Build >= 22000)
+        if (osVersion is { Major: 10, Minor: 0, Build: >= 22000 })
             Systeminformation = $"You're currently running Windows 11 {editionID} ({osVersion})";
         IsWindows11 = true;
     }
@@ -200,34 +200,34 @@ public partial class MainViewModel : ObservableRecipient
     {
         var customCommand = RegistryHelper.GetToggleSwitchInitialValue;
 
-        const string registryKeyPathUac = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.UacPath}";
-        const string registryKeyPathApplicationPath = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.ApplicationPath}";
+        const string registryKeyPathUac = $"{RootKeys.HKEY_LOCAL_MACHINE}\\{PathStrings.UacPath}";
+        const string registryKeyPathApplicationPath = $"{RootKeys.HKEY_LOCAL_MACHINE}\\{PathStrings.ApplicationPath}";
         const string registryKeyPathTaskbarAlignment =
-            $"{Constants.HKEY_CURRENT_USER}\\{Constants.TaskbarPositionPath}";
-        const string registryKeyPathAltTab = $"{Constants.HKEY_CURRENT_USER}\\{Constants.AltTabPath}";
-        const string registryKeyPathOldSoundMixer = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.OldSoundMixerPath}";
+            $"{RootKeys.HKEY_CURRENT_USER}\\{PathStrings.TaskbarPositionPath}";
+        const string registryKeyPathAltTab = $"{RootKeys.HKEY_CURRENT_USER}\\{PathStrings.AltTabPath}";
+        const string registryKeyPathOldSoundMixer = $"{RootKeys.HKEY_LOCAL_MACHINE}\\{PathStrings.OldSoundMixerPath}";
         const string registryKeyPathBackgroundApps =
-            $"{Constants.HKEY_CURRENT_USER}\\{Constants.BackgroundAccessApplicationsPath}";
-        const string registryKeyPathEaseOfAccess = $"{Constants.HKEY_CURRENT_USER}\\{Constants.NarratorPath}";
-        const string registryKeyPathAccount = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.AutoFinishSetupPath}";
-        const string registryKeyPathApps = $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.AutoUpdateMapsPath}";
+            $"{RootKeys.HKEY_CURRENT_USER}\\{PathStrings.BackgroundAccessApplicationsPath}";
+        const string registryKeyPathEaseOfAccess = $"{RootKeys.HKEY_CURRENT_USER}\\{PathStrings.NarratorPath}";
+        const string registryKeyPathAccount = $"{RootKeys.HKEY_LOCAL_MACHINE}\\{PathStrings.AutoFinishSetupPath}";
+        const string registryKeyPathApps = $"{RootKeys.HKEY_LOCAL_MACHINE}\\{PathStrings.AutoUpdateMapsPath}";
         const string registryKeyPathPersonalization =
-            $"{Constants.HKEY_LOCAL_MACHINE}\\{Constants.RecentlyAddedAppsPath1}";
-        const string registryKeyPathNotifications = $"{Constants.HKEY_CURRENT_USER}\\{Constants.NotificationsPath1}";
+            $"{RootKeys.HKEY_LOCAL_MACHINE}\\{PathStrings.RecentlyAddedAppsPath1}";
+        const string registryKeyPathNotifications = $"{RootKeys.HKEY_CURRENT_USER}\\{PathStrings.NotificationsPath1}";
 
-        UacToggleSwitchValue = customCommand(registryKeyPathUac, Constants.UacValue, 0);
-        StartUpTimeToggleSwitchValue = customCommand(registryKeyPathApplicationPath, Constants.StartUpTimeValue, 1);
-        ComboboxIndex = customCommand(registryKeyPathTaskbarAlignment, Constants.TaskbarPositionValue, 0);
-        AltTabValue = customCommand(registryKeyPathAltTab, Constants.AltTabValue, 1);
-        OldSoundMixer = customCommand(registryKeyPathOldSoundMixer, Constants.OldSoundMixerValue, 1);
-        CheckBoxDialog = customCommand(registryKeyPathApplicationPath, Constants.DialogStatus, 1);
-        HeaderViewContent = customCommand(registryKeyPathApplicationPath, Constants.HeaderViewContentValue, 1);
-        DisableAppsBackground = customCommand(registryKeyPathBackgroundApps, Constants.GlobalUserDisabledValue, 1);
-        EaseOfAccess = customCommand(registryKeyPathEaseOfAccess, Constants.WinEnterLaunchEnabledValue, 0);
-        Account = customCommand(registryKeyPathAccount, Constants.DisableAutomaticRestartSignOnValue, 1);
-        Apps = customCommand(registryKeyPathApps, Constants.AutoUpdateEnabledValue, 0);
-        Personalization = customCommand(registryKeyPathPersonalization, Constants.HideRecentlyAddedAppsValue1, 1);
-        Notifications = customCommand(registryKeyPathNotifications, Constants.NotificationsValue1, 0);
+        UacToggleSwitchValue = customCommand(registryKeyPathUac, ValueStrings.UacValue, 0);
+        StartUpTimeToggleSwitchValue = customCommand(registryKeyPathApplicationPath, ValueStrings.StartUpTimeValue, 1);
+        ComboboxIndex = customCommand(registryKeyPathTaskbarAlignment, ValueStrings.TaskbarPositionValue, 0);
+        AltTabValue = customCommand(registryKeyPathAltTab, ValueStrings.AltTabValue, 1);
+        OldSoundMixer = customCommand(registryKeyPathOldSoundMixer, ValueStrings.OldSoundMixerValue, 1);
+        CheckBoxDialog = customCommand(registryKeyPathApplicationPath, ValueStrings.DialogStatus, 1);
+        HeaderViewContent = customCommand(registryKeyPathApplicationPath, ValueStrings.HeaderViewContentValue, 1);
+        DisableAppsBackground = customCommand(registryKeyPathBackgroundApps, ValueStrings.GlobalUserDisabledValue, 1);
+        EaseOfAccess = customCommand(registryKeyPathEaseOfAccess, ValueStrings.WinEnterLaunchEnabledValue, 0);
+        Account = customCommand(registryKeyPathAccount, ValueStrings.DisableAutomaticRestartSignOnValue, 1);
+        Apps = customCommand(registryKeyPathApps, ValueStrings.AutoUpdateEnabledValue, 0);
+        Personalization = customCommand(registryKeyPathPersonalization, ValueStrings.HideRecentlyAddedAppsValue1, 1);
+        Notifications = customCommand(registryKeyPathNotifications, ValueStrings.NotificationsValue1, 0);
     }
 
     public void SetWindowsRegistryToggle(object sender, RoutedEventArgs e)
@@ -241,88 +241,88 @@ public partial class MainViewModel : ObservableRecipient
         switch (toggleSwitchId)
         {
             case "UAC":
-                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.UacPath, Constants.UacValue,
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.UacPath, ValueStrings.UacValue,
                     toggleSwitch.IsOn ? 0 : 1);
                 break;
 
             case "Start_Up_Time":
-                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.ApplicationPath, Constants.StartUpTimeValue,
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.ApplicationPath, ValueStrings.StartUpTimeValue,
                     toggleSwitch.IsOn ? 1 : 0);
-                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.VerbosePath, Constants.VerboseValue,
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.VerbosePath, ValueStrings.VerboseValue,
                     toggleSwitch.IsOn ? 1 : 0);
-                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.SerializePath, Constants.SerializeValue,
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.SerializePath, ValueStrings.SerializeValue,
                     toggleSwitch.IsOn ? 0 : 1);
                 break;
             case "Backgrounds_Apps":
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.BackgroundAccessApplicationsPath,
-                    Constants.GlobalUserDisabledValue, toggleSwitch.IsOn ? 1 : 0);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.SearchPath,
-                    Constants.BackgroundAppGlobalToggleValue, toggleSwitch.IsOn ? 0 : 1);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.BackgroundAccessApplicationsPath,
+                    ValueStrings.GlobalUserDisabledValue, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.SearchPath,
+                    ValueStrings.BackgroundAppGlobalToggleValue, toggleSwitch.IsOn ? 0 : 1);
                 break;
             case "Ease_of_Access":
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.NarratorPath, Constants.WinEnterLaunchEnabledValue,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.NarratorPath, ValueStrings.WinEnterLaunchEnabledValue,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.StickyKeysPath, Constants.StickyKeysFlagsValue,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.StickyKeysPath, ValueStrings.StickyKeysFlagsValue,
                     toggleSwitch.IsOn ? 506 : 0);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.ToggleKeysPath, Constants.ToggleKeysFlagsValue,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.ToggleKeysPath, ValueStrings.ToggleKeysFlagsValue,
                     toggleSwitch.IsOn ? 34 : 0);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.KeyboardResponsePath,
-                    Constants.KeyboardResponseFlagsValue, toggleSwitch.IsOn ? 2 : 0);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.KeyboardResponsePath,
+                    ValueStrings.KeyboardResponseFlagsValue, toggleSwitch.IsOn ? 2 : 0);
                 break;
             case "Account":
-                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.AutoFinishSetupPath,
-                    Constants.DisableAutomaticRestartSignOnValue, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.AutoFinishSetupPath,
+                    ValueStrings.DisableAutomaticRestartSignOnValue, toggleSwitch.IsOn ? 1 : 0);
                 break;
             case "Apps":
-                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.AutoUpdateMapsPath,
-                    Constants.AutoUpdateEnabledValue, toggleSwitch.IsOn ? 0 : 1);
-                removeCommand(Constants.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
-                removeCommand(Constants.HKEY_CURRENT_USER, @"Software\Microsoft\Windows\CurrentVersion\Run");
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.AutoUpdateMapsPath,
+                    ValueStrings.AutoUpdateEnabledValue, toggleSwitch.IsOn ? 0 : 1);
+                removeCommand(RootKeys.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
+                removeCommand(RootKeys.HKEY_CURRENT_USER, @"Software\Microsoft\Windows\CurrentVersion\Run");
                 break;
             case "Personalization":
-                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.RecentlyAddedAppsPath1,
-                    Constants.HideRecentlyAddedAppsValue1, toggleSwitch.IsOn ? 1 : 0);
-                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.RecentlyAddedAppsPath2,
-                    Constants.HideRecentlyAddedAppsValue2, toggleSwitch.IsOn ? 1 : 0);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.AlwaysShowIconsPath, Constants.EnableAutoTrayValue,
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.RecentlyAddedAppsPath1,
+                    ValueStrings.HideRecentlyAddedAppsValue1, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.RecentlyAddedAppsPath2,
+                    ValueStrings.HideRecentlyAddedAppsValue2, toggleSwitch.IsOn ? 1 : 0);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.AlwaysShowIconsPath, ValueStrings.EnableAutoTrayValue,
                     toggleSwitch.IsOn ? 0 : 1);
                 break;
             case "Notifications":
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath1, Constants.NotificationsValue1,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.NotificationsPath1, ValueStrings.NotificationsValue1,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath1, Constants.NotificationsValue2,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.NotificationsPath1, ValueStrings.NotificationsValue2,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath1, Constants.NotificationsValue8,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.NotificationsPath1, ValueStrings.NotificationsValue8,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath2, Constants.NotificationsPath3,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.NotificationsPath2, PathStrings.NotificationsPath3,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath2, Constants.NotificationsPath4,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.NotificationsPath2, PathStrings.NotificationsPath4,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath3, Constants.NotificationsValue5,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.NotificationsPath3, ValueStrings.NotificationsValue5,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath4, Constants.NotificationsValue6,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.NotificationsPath4, ValueStrings.NotificationsValue6,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath5, Constants.NotificationsValue7,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.NotificationsPath5, ValueStrings.NotificationsValue7,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.NotificationsPath6, Constants.NotificationsValue7,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.NotificationsPath6, ValueStrings.NotificationsValue7,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath1, Constants.TabletModeValue1,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.TabletModePath1, ValueStrings.TabletModeValue1,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath1, Constants.TabletModeValue2,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.TabletModePath1, ValueStrings.TabletModeValue2,
                     toggleSwitch.IsOn ? 1 : 0);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath1, Constants.TabletModeValue3,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.TabletModePath1, ValueStrings.TabletModeValue3,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath2, Constants.TabletModeValue4,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.TabletModePath2, ValueStrings.TabletModeValue4,
                     toggleSwitch.IsOn ? 1 : 0);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath2, Constants.TabletModeValue5,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.TabletModePath2, ValueStrings.TabletModeValue5,
                     toggleSwitch.IsOn ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath2, Constants.VirtualDesktopsValue1,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.TabletModePath2, ValueStrings.VirtualDesktopsValue1,
                     toggleSwitch.IsOn ? 1 : 0);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.TabletModePath2, Constants.VirtualDesktopsValue2,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.TabletModePath2, ValueStrings.VirtualDesktopsValue2,
                     toggleSwitch.IsOn ? 1 : 0);
                 break;
             case "HeaderView":
-                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.ApplicationPath, Constants.HeaderViewContentValue,
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.ApplicationPath, ValueStrings.HeaderViewContentValue,
                     toggleSwitch.IsOn ? 1 : 0);
                 break;
 
@@ -344,15 +344,15 @@ public partial class MainViewModel : ObservableRecipient
         switch (checkBoxId)
         {
             case "Alt_Tab":
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.AltTabPath, Constants.AltTabValue,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.AltTabPath, ValueStrings.AltTabValue,
                     checkStatus ? 1 : 0);
                 break;
             case "Old_Sound_Mixer":
-                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.OldSoundMixerPath, Constants.OldSoundMixerValue,
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.OldSoundMixerPath, ValueStrings.OldSoundMixerValue,
                     checkStatus ? 1 : 0);
                 break;
             case "Dialog_Visibility":
-                customCommand(Constants.HKEY_LOCAL_MACHINE, Constants.ApplicationPath, Constants.DialogStatus,
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.ApplicationPath, ValueStrings.DialogStatus,
                     checkStatus ? 1 : 0);
                 break;
             default:

@@ -7,8 +7,6 @@ using PowerTune.Core.Contracts.Services;
 using PowerTune.Helpers;
 using PowerTune.Services;
 using PowerTune.Strings;
-using PowerTune.Views;
-using PowerTune.Views.Controls.ViewModels;
 
 namespace PowerTune.ViewModels;
 
@@ -19,18 +17,19 @@ public class AppSettings
         get;
         init;
     }
+
     public bool VisualFeedBack
     {
-
         get;
         init;
     }
+
     public bool HideScrollBar
     {
-
         get;
-        set;
+        init;
     }
+
     public int SelectedTitleBarSize
     {
         get;
@@ -40,104 +39,49 @@ public class AppSettings
 
 public partial class TweaksViewModel : ObservableRecipient
 {
-    private readonly string? PowerTunePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PowerTune");
+    private readonly string? _powerTunePath =
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PowerTune");
+
     private readonly IFileService _fileService;
 
     [ObservableProperty] private bool _isBoldCheck;
     [ObservableProperty] private bool _visualFeedBack;
     [ObservableProperty] private bool _showErrorDialog;
     [ObservableProperty] private bool _hideScrollBar;
+
     [ObservableProperty] private int _selectedTitleBarSize;
 
-    [ObservableProperty] private string? _errorDialogTitle;
-    [ObservableProperty] private string? _errorDialogDescription;
-    [ObservableProperty] private string? _errorDialogCode;
+    [ObservableProperty] private string? _selectedString;
 
-    [ObservableProperty] private string? _selected_String;
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsNotBusy))]
+    private bool _isBusy;
 
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsNotBusy))]
-    private bool isBusy;
     public bool IsNotBusy => !IsBusy;
-
-    public List<int> Titlebar_Size = new()
-    {
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        22,
-        23,
-        24,
-    };
-    private readonly Dictionary<int, (string REGULAR, string BOLD)> stringData = new()
-    {
-        { 0, (Constants._TITLE_BAR_6, Constants._TITLE_BAR_6_BOLD) },
-        { 1, (Constants._TITLE_BAR_7, Constants._TITLE_BAR_7_BOLD) },
-        { 2, (Constants._TITLE_BAR_8, Constants._TITLE_BAR_8_BOLD) },
-        { 3, (Constants._TITLE_BAR_9, Constants._TITLE_BAR_9_BOLD) },
-        { 4, (Constants._TITLE_BAR_10, Constants._TITLE_BAR_10_BOLD) },
-        { 5, (Constants._TITLE_BAR_11, Constants._TITLE_BAR_11_BOLD) },
-        { 6, (Constants._TITLE_BAR_12, Constants._TITLE_BAR_12_BOLD) },
-        { 7, (Constants._TITLE_BAR_13, Constants._TITLE_BAR_13_BOLD) },
-        { 8, (Constants._TITLE_BAR_14, Constants._TITLE_BAR_14_BOLD) },
-        { 9, (Constants._TITLE_BAR_15, Constants._TITLE_BAR_15_BOLD) },
-        { 10, (Constants._TITLE_BAR_16, Constants._TITLE_BAR_16_BOLD) },
-        { 11, (Constants._TITLE_BAR_17, Constants._TITLE_BAR_17_BOLD) },
-        { 12, (Constants._TITLE_BAR_18, Constants._TITLE_BAR_18_BOLD) },
-        { 13, (Constants._TITLE_BAR_19, Constants._TITLE_BAR_19_BOLD) },
-        { 14, (Constants._TITLE_BAR_20, Constants._TITLE_BAR_20_BOLD) },
-        { 15, (Constants._TITLE_BAR_21, Constants._TITLE_BAR_21_BOLD) },
-        { 16, (Constants._TITLE_BAR_22, Constants._TITLE_BAR_22_BOLD) },
-        { 17, (Constants._TITLE_BAR_23, Constants._TITLE_BAR_23_BOLD) },
-        { 18, (Constants._TITLE_BAR_24, Constants._TITLE_BAR_24_BOLD) },
-    };
-
-    public ICommand ImportAllBasicSettingsCommand
-    {
-        get;
-    }
-
+    public static List<int> TitlebarSizes => DictionaryStrings.TitlebarSize;
+    
     public TweaksViewModel(IFileService fileService)
     {
         _fileService = fileService;
-        _ = LoadSettingsAsync();
-        ImportAllBasicSettingsCommand = new RelayCommand(ApplyBasicsOptimizations);
+        LoadSettingsAsync().ConfigureAwait(true);
     }
 
     private async Task LoadSettingsAsync()
     {
-        var settings = await _fileService.Read<AppSettings>($"{PowerTunePath}", "AppSettings.json");
-
-        if (settings != null)
-            await ContentDialogService.ShowDialogAsync("Hola", "Prueba", "errorCode");
+        var settings = await _fileService.Read<AppSettings>($"{_powerTunePath}", "AppSettings.json");
+        ErrorCodeStrings.ErrorHandler.TryGetValue("ErrorCode-LoadSettings", out var errorData);
 
         if (settings == null)
-        {
-            SelectedTitleBarSize = settings.SelectedTitleBarSize;
-            IsBoldCheck = settings.IsBoldCheck;
-            VisualFeedBack = settings.VisualFeedBack;
-            HideScrollBar = settings.HideScrollBar;
-        }
-    }
+            await ContentDialogService.ShowDialogAsync(errorData.title, errorData.description, errorData.errorCode);
 
+        SelectedTitleBarSize = settings!.SelectedTitleBarSize;
+        IsBoldCheck = settings.IsBoldCheck;
+        VisualFeedBack = settings.VisualFeedBack;
+        HideScrollBar = settings.HideScrollBar;
+    }
 
     private async Task SaveSettings()
     {
-        await _fileService.Save($"{PowerTunePath}", "AppSettings.json", new AppSettings
+        await _fileService.Save($"{_powerTunePath}", "AppSettings.json", new AppSettings
         {
             HideScrollBar = HideScrollBar,
             IsBoldCheck = IsBoldCheck,
@@ -146,73 +90,106 @@ public partial class TweaksViewModel : ObservableRecipient
         });
     }
 
-    private async void ApplyBasicsOptimizations()
+    [RelayCommand]
+    private void ApplyBasicsOptimizations()
     {
+        // Indicate that an operation is in progress
         IsBusy = true;
 
+        // Retrieve the current operating system version
         var osVersion = Environment.OSVersion.Version;
 
-        if (osVersion.Major == 10 && osVersion.Minor == 0)
-            RegistryHelper.ImportRegistryFromString(Constants.RawBasicsOptimizationsW10);
+        // Check if the OS version is Windows 10 (specifically 10.0)
+        // Apply Windows 10 registry optimizations
+        if (osVersion is { Major: 10, Minor: 0 })
+            RegistryHelper.ImportRegistryFromString(RawString.RawBasicsOptimizationsW10);
 
-        if (osVersion.Major >= 10 && osVersion.Build >= 22000)
-            RegistryHelper.ImportRegistryFromString(Constants.RawBasicsOptimizationsW11);
+        // Check if the OS version is Windows 11 with a build number greater than or equal to 22000
+        // Apply Windows 11 registry optimizations
+        if (osVersion is { Major: >= 10, Build: >= 22000 })
+            RegistryHelper.ImportRegistryFromString(RawString.RawBasicsOptimizationsW11);
 
-        await Task.Delay(1000);
-
+        // Indicate that the operation is complete
         IsBusy = false;
     }
 
     public async void ApplyTitleBarSizeAsync()
     {
+        // Indicate that an operation is in progress
         IsBusy = true;
 
-        if (stringData.TryGetValue(SelectedTitleBarSize, out var stringPair))
+        // Try to get the selected title bar size from the dictionary
+        if (DictionaryStrings.StringData.TryGetValue(SelectedTitleBarSize, out var stringPair))
         {
+            // Check if the IsBoldCheck is false
             if (IsBoldCheck == false)
-                Selected_String = stringPair.REGULAR;
+                SelectedString = stringPair.REGULAR; // Use the regular string
 
-            if (IsBoldCheck == true)
-                Selected_String = stringPair.BOLD;
+            // Check if the IsBoldCheck is true
+            if (IsBoldCheck)
+                SelectedString = stringPair.BOLD; // Use the bold string
         }
 
-        if (string.IsNullOrEmpty(Selected_String)) return;
+        // Check if the SelectedString is null or empty
+        if (string.IsNullOrEmpty(SelectedString))
+        {
+            // Show an error dialog if the selected string is missing or empty
+            await ContentDialogService.ShowDialogAsync(
+                title: "Error Applying Title Bar Size",
+                description: "Failed to apply title bar size. The selected string is missing or empty.",
+                errorCode: "Please ensure that a valid title bar size is selected before applying.");
 
-        RegistryHelper.ImportRegistryFromString(Selected_String);
+            IsBusy = false; // Indicate that the operation is complete
+            return; // Exit the method to avoid further execution
+        }
 
+        // Import registry settings from the SelectedString
+        RegistryHelper.ImportRegistryFromString(SelectedString);
+
+        // Save settings
         await SaveSettings();
-
+        // Indicate that the operation is complete
         IsBusy = false;
     }
 
+
     public async Task ApplyToggleSwitchValue(object sender, RoutedEventArgs e)
     {
+        // Get the ToggleSwitch that triggered the event
+        // Get the identifier for the ToggleSwitch
+        // Get the registry command
+        // Get the state of the ToggleSwitch
         var toggleSwitch = (ToggleSwitch)sender;
         var toggleSwitchId = toggleSwitch.Tag.ToString();
-
         var customCommand = RegistryHelper.SetRegistryValue;
-
-        var check = (bool)toggleSwitch.IsOn!;
+        var check = toggleSwitch.IsOn;
 
         switch (toggleSwitchId)
         {
             case "HideScrollBar":
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.ShowAlwaysScrollBarPath, Constants.ShowAlwaysScrollBarValue, check ? 1 : 0);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.ShowAlwaysScrollBarPath,
+                    ValueStrings.ShowAlwaysScrollBarValue, check ? 1 : 0);
                 HideScrollBar = check;
                 await SaveSettings();
                 break;
 
             case "VisualFeedBack":
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.VisualFeedBackPath, Constants.VisualFeedBackvalue1, check ? 0 : 1);
-                customCommand(Constants.HKEY_CURRENT_USER, Constants.VisualFeedBackPath, Constants.VisualFeedBackvalue1, check ? 0 : 1f);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.VisualFeedBackPath, ValueStrings.VisualFeedBackvalue1,
+                    check ? 0 : 1);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.VisualFeedBackPath, ValueStrings.VisualFeedBackvalue1,
+                    check ? 0 : 1f);
                 VisualFeedBack = check;
                 await SaveSettings();
                 break;
 
             default:
+                await ContentDialogService.ShowDialogAsync(
+                    title: "Error",
+                    description: "An unexpected error occurred." +
+                                 "Please try again or contact support.",
+                    errorCode: "Error Code [ 0x0rrFFF ]"
+                );
                 break;
-
         }
-
     }
 }

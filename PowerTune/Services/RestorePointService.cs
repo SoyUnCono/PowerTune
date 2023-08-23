@@ -18,12 +18,12 @@ public class RestorePointService : IRestorePointService
     public async Task<bool> RunRestorePoint()
     {
         // Check if a restore point with the specified service name already exists
-        if (await CheckIfRestorePointExists(Constants.restorePointServiceName))
+        if (await CheckIfRestorePointExists(Constants.RestorePointServiceName))
             return false;
 
         // Create a new restore point with the specified service name and parameters
         // Return false to indicate that a restore point was not previously present
-        await CreateRestorePoint(Constants.restorePointServiceName, 0, 100);
+        await CreateRestorePoint(Constants.RestorePointServiceName, 0, 100);
         return true;
     }
 
