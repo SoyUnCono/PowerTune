@@ -61,7 +61,8 @@
                 </StackPanel>
             </ContentDialog>
             <!--  Header  -->
-            <Controls:CustomHeader HeaderImage="/Assets/NavigationViewPagesIcons/Rocket.png" HeaderTitle="Boost your system with one click!">
+            <Controls:CustomHeader HeaderImage="/Assets/NavigationViewPagesIcons/Rocket.png"
+                                   HeaderTitle="Boost your system with one click!">
                 <Controls:CustomHeader.HeaderRightContent>
                     <Grid
                         Width="90"
@@ -111,7 +112,8 @@
                     </labs:SettingsCard>
                 </StackPanel>
                 <!--  Check windows updates  -->
-                <labs:SettingsExpander Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}" Header="Check Windows Updates">
+                <labs:SettingsExpander Description="{x:Bind ViewModel.Lastchecked, Mode=OneWay}"
+                                       Header="Check Windows Updates">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE895;" />
                     </labs:SettingsExpander.HeaderIcon>
@@ -150,7 +152,8 @@
 
                 </StackPanel>
             </models:Groups>
-            <models:Groups Header="Appearance and Personalization" IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}">
+            <models:Groups Header="Appearance and Personalization"
+                           IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}">
                 <!--  UAC SettingsCard  -->
                 <labs:SettingsCard
                     Description="{Binding IsOn, ElementName=_ToggleSwitchUAC, Converter={StaticResource ToggleSwitchToStatusConverter}}"
@@ -201,11 +204,13 @@
                                 Tag="Alt_Tab"
                                 Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
                         </labs:SettingsCard>
-                        <labs:SettingsCard CornerRadius="{StaticResource RadiusExpander}" IsEnabled="{x:Bind ViewModel.IsNotWindows11, Mode=OneWay}">
+                        <labs:SettingsCard CornerRadius="{StaticResource RadiusExpander}"
+                                           IsEnabled="{x:Bind ViewModel.IsNotWindows11, Mode=OneWay}">
                             <labs:SettingsCard.Description>
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock x:Uid="Old_Volume_Mixer" />
-                                    <TextBlock x:Uid="Windows10_Only" Visibility="{x:Bind ViewModel.IsWindows11, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    <TextBlock x:Uid="Windows10_Only"
+                                               Visibility="{x:Bind ViewModel.IsWindows11, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 </StackPanel>
                             </labs:SettingsCard.Description>
                             <CheckBox
@@ -217,36 +222,44 @@
                     </labs:SettingsExpander.Items>
                 </labs:SettingsExpander>
                 <!--  Personalized Settings  -->
-                <labs:SettingsExpander Description="Adjust privacy preferences, accessibility options, and other options" Header="Personalized Settings">
+                <labs:SettingsExpander
+                    Description="Adjust privacy preferences, accessibility options, and other options"
+                    Header="Personalized Settings">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE76D;" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
-                        <labs:SettingsCard Description="Disable apps running in the background" Header="Configure Privacy">
+                        <labs:SettingsCard Description="Disable apps running in the background"
+                                           Header="Configure Privacy">
                             <ToggleSwitch
                                 IsOn="{x:Bind ViewModel.DisableAppsBackground, Mode=OneWay}"
                                 Tag="Backgrounds_Apps"
                                 Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
                         </labs:SettingsCard>
-                        <labs:SettingsCard Description="Modifying Ease of Access settings appropriately." Header="Ease of access">
+                        <labs:SettingsCard Description="Modifying Ease of Access settings appropriately."
+                                           Header="Ease of access">
                             <ToggleSwitch
                                 IsOn="{x:Bind ViewModel.EaseOfAccess, Mode=OneWay}"
                                 Tag="Ease_of_Access"
                                 Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
                         </labs:SettingsCard>
-                        <labs:SettingsCard Description="Disable automatically finish setting up my device after an update." Header="Account">
+                        <labs:SettingsCard
+                            Description="Disable automatically finish setting up my device after an update."
+                            Header="Account">
                             <ToggleSwitch
                                 IsOn="{x:Bind ViewModel.Account, Mode=OneWay}"
                                 Tag="Account"
                                 Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
                         </labs:SettingsCard>
-                        <labs:SettingsCard Description="Disable automatic updates for pre-installed applications." Header="Apps">
+                        <labs:SettingsCard Description="Disable automatic updates for pre-installed applications."
+                                           Header="Apps">
                             <ToggleSwitch
                                 IsOn="{x:Bind ViewModel.Apps, Mode=OneWay}"
                                 Tag="Apps"
                                 Toggled="{x:Bind ViewModel.SetWindowsRegistryToggle, Mode=OneWay}" />
                         </labs:SettingsCard>
-                        <labs:SettingsCard Description="Hide recently added apps on the Start-Menu" Header="Personalization">
+                        <labs:SettingsCard Description="Hide recently added apps on the Start-Menu"
+                                           Header="Personalization">
                             <ToggleSwitch
                                 IsOn="{x:Bind ViewModel.Personalization, Mode=OneWay}"
                                 Tag="Personalization"

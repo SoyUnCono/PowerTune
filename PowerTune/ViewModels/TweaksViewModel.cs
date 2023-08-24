@@ -18,6 +18,12 @@ public class AppSettings
         init;
     }
 
+    public bool DefaultDPI
+    {
+        get;
+        init;
+    }
+
     public bool VisualFeedBack
     {
         get;
@@ -35,17 +41,24 @@ public class AppSettings
         get;
         init;
     }
+
+    public bool ShowDisplayVersion
+    {
+        get;
+        init;
+    }
 }
 
 public partial class TweaksViewModel : ObservableRecipient
 {
-    
     private readonly IFileService _fileService;
 
     [ObservableProperty] private bool _isBoldCheck;
     [ObservableProperty] private bool _visualFeedBack;
     [ObservableProperty] private bool _showErrorDialog;
     [ObservableProperty] private bool _hideScrollBar;
+    [ObservableProperty] private bool _showDisplayVersion;
+    [ObservableProperty] private bool _setWindowsDPI;
 
     [ObservableProperty] private int _selectedTitleBarSize;
 
@@ -56,7 +69,7 @@ public partial class TweaksViewModel : ObservableRecipient
 
     public bool IsNotBusy => !IsBusy;
     public static List<int> TitlebarSizes => DictionaryStrings.TitlebarSize;
-    
+
     public TweaksViewModel(IFileService fileService)
     {
         _fileService = fileService;
@@ -75,17 +88,35 @@ public partial class TweaksViewModel : ObservableRecipient
         IsBoldCheck = settings.IsBoldCheck;
         VisualFeedBack = settings.VisualFeedBack;
         HideScrollBar = settings.HideScrollBar;
+        ShowDisplayVersion = settings.ShowDisplayVersion;
+        SetWindowsDPI = settings.DefaultDPI;
     }
 
     private async Task SaveSettings()
     {
-        await _fileService.Save($"{Constants.PowerTunePath}", "AppSettings.json", new AppSettings
+        ErrorCodeStrings.ErrorHandler.TryGetValue("ErrorCode-SaveSettings", out var errorData);
+        try
         {
-            HideScrollBar = HideScrollBar,
-            IsBoldCheck = IsBoldCheck,
-            SelectedTitleBarSize = SelectedTitleBarSize,
-            VisualFeedBack = VisualFeedBack,
-        });
+            IsBusy = true;
+            await _fileService.Save($"{Constants.PowerTunePath}", "AppSettings.json", new AppSettings
+            {
+                HideScrollBar = HideScrollBar,
+                IsBoldCheck = IsBoldCheck,
+                SelectedTitleBarSize = SelectedTitleBarSize,
+                VisualFeedBack = VisualFeedBack,
+                ShowDisplayVersion = ShowDisplayVersion,
+                DefaultDPI = ShowDisplayVersion,
+            });
+        }
+        catch
+        {
+            
+            await ContentDialogService.ShowDialogAsync(errorData.title, errorData.description, errorData.errorCode);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     [RelayCommand]
@@ -161,6 +192,8 @@ public partial class TweaksViewModel : ObservableRecipient
         var toggleSwitchId = toggleSwitch.Tag.ToString();
         var customCommand = RegistryHelper.SetRegistryValue;
         var check = toggleSwitch.IsOn;
+        ErrorCodeStrings.ErrorHandler.TryGetValue("ErrorCode-DefaultError", out var errorData);
+        var removeCommand = RegistryHelper.RemoveRegistryKey;
 
         switch (toggleSwitchId)
         {
@@ -168,25 +201,39 @@ public partial class TweaksViewModel : ObservableRecipient
                 customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.ShowAlwaysScrollBarPath,
                     ValueStrings.ShowAlwaysScrollBarValue, check ? 1 : 0);
                 HideScrollBar = check;
-                await SaveSettings();
+                await SaveSettings().ConfigureAwait(true);
                 break;
 
             case "VisualFeedBack":
-                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.VisualFeedBackPath, ValueStrings.VisualFeedBackvalue1,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.VisualFeedBackPath,
+                    ValueStrings.VisualFeedBackvalue1,
                     check ? 0 : 1);
-                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.VisualFeedBackPath, ValueStrings.VisualFeedBackvalue1,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.VisualFeedBackPath,
+                    ValueStrings.VisualFeedBackvalue1,
                     check ? 0 : 1f);
                 VisualFeedBack = check;
-                await SaveSettings();
+                await SaveSettings().ConfigureAwait(true);
                 break;
-
+            case "ShowWindowsDesktopVersion":
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.DisplayVersionPath,
+                    ValueStrings.ShowDisplayVersionValue, check
+                        ? 1
+                        : 0);
+                ShowDisplayVersion = check;
+                await SaveSettings().ConfigureAwait(true);
+                break;
+            case "SetWindowsDPI":
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.WindowsDPIPath, ValueStrings.WindowsDPIValue,
+                    00000096);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.WindowsDPIPath2, ValueStrings.WindowsDPIValue2,
+                    check ? 0 : 1);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.WindowsDPIPath2, ValueStrings.WindowsDPIValue3,
+                    check ? 00000096 : 0);
+                removeCommand("HKEY_CURRENT_USER", @"Control Panel\Desktop\PerMonitorSettings");
+                await SaveSettings().ConfigureAwait(true);
+                break;
             default:
-                await ContentDialogService.ShowDialogAsync(
-                    title: "Error",
-                    description: "An unexpected error occurred." +
-                                 "Please try again or contact support.",
-                    errorCode: "Error Code [ 0x0rrFFF ]"
-                );
+                await ContentDialogService.ShowDialogAsync(errorData.title, errorData.description, errorData.errorCode);
                 break;
         }
     }

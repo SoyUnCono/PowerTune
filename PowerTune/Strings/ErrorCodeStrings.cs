@@ -30,6 +30,19 @@ public static class ErrorCodeStrings
                 "An error occurred while checking for the existence of a restore point. Please ensure that you have the necessary permissions and try again.",
                 "Error Code - [ _INSUFFICIENT_PERMISSIONS_LEVEL ]"
             )
+        },
+        {
+            "ErrorCode-SaveSettings",
+            ("Error Save Settings",
+                "An error occurred while loading the application settings. Please try again later or contact support for assistance.",
+                "Error Code - [ _LOAD-SETTINGS_FILE_OPEN_BY_ANOTHER_PROGRAM ]")
+        },
+        {
+            "ErrorCode-DefaultError",
+            ("Unexpected Error",
+                "An unexpected error occurred while applying the settings. Please contact your system administrator or our support service for assistance.",
+                "Error Code - [ _INSUFFICIENT_PERMISSIONS_LEVEL ]"
+            )
         }
     };
 }

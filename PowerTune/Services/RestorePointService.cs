@@ -81,7 +81,7 @@ public class RestorePointService : IRestorePointService
         {
             ErrorCodeStrings.ErrorHandler.TryGetValue("ErrorCode-CreatingRestorePointService", out var errorData);
             await ContentDialogService.ShowDialogAsync(errorData.title, errorData.description, errorData.errorCode);
-            return true;
+            return false;
         }
     }
 

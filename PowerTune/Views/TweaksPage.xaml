@@ -8,7 +8,7 @@
     xmlns:models="using:PowerTune.Views.Controls.Models"
     xmlns:viewModels="using:PowerTune.ViewModels"
     mc:Ignorable="d">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -21,6 +21,15 @@
             VerticalScrollBarVisibility="Hidden">
             <StackPanel Margin="0,0,0,20" Orientation="Vertical">
                 <models:Groups Header="Appearance" IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}">
+                    <labs:SettingsCard x:Uid="VisualFeedback">
+                        <labs:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE835;" />
+                        </labs:SettingsCard.HeaderIcon>
+                        <ToggleSwitch
+                            IsOn="{x:Bind ViewModel.VisualFeedBack, Mode=TwoWay}"
+                            Tag="VisualFeedBack"
+                            Toggled="{x:Bind ViewModel.ApplyToggleSwitchValue}" />
+                    </labs:SettingsCard>
                     <labs:SettingsCard x:Uid="TitleBarChangeSize" HorizontalContentAlignment="Right">
                         <labs:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE8BA;" />
@@ -37,14 +46,15 @@
                                 SelectionChanged="{x:Bind ViewModel.ApplyTitleBarSizeAsync}" />
                         </StackPanel>
                     </labs:SettingsCard>
-                    <labs:SettingsCard x:Uid="VisualFeedback">
+                    <labs:SettingsCard
+                        Header="Set Default Windows DPI"
+                        Description="This will make modifications to your system to enhance display and DPI settings for improved clarity.">
                         <labs:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE835;" />
+                            <FontIcon Glyph="&#xE70C;" />
                         </labs:SettingsCard.HeaderIcon>
-                        <ToggleSwitch
-                            IsOn="{x:Bind ViewModel.VisualFeedBack, Mode=TwoWay}"
-                            Tag="VisualFeedBack"
-                            Toggled="{x:Bind ViewModel.ApplyToggleSwitchValue}" />
+                        <ToggleSwitch Tag="SetWindowsDPI"
+                                      IsOn="{x:Bind ViewModel.SetWindowsDPI, Mode=TwoWay}"
+                                      Toggled="{x:Bind ViewModel.ApplyToggleSwitchValue}" />
                     </labs:SettingsCard>
                     <labs:SettingsCard x:Uid="AutomaticallyHideScrollBars">
                         <labs:SettingsCard.HeaderIcon>
@@ -53,7 +63,17 @@
                         <ToggleSwitch
                             IsOn="{x:Bind ViewModel.HideScrollBar, Mode=TwoWay}"
                             Tag="HideScrollBar"
-                            Toggled="{x:Bind ViewModel.ApplyToggleSwitchValue, Mode=OneWay}" />
+                            Toggled="{x:Bind ViewModel.ApplyToggleSwitchValue}" />
+                    </labs:SettingsCard>
+                    <labs:SettingsCard
+                        Header="Show Windows Version on Desktop"
+                        Description="This will ensure that the current version of Windows is accurately reflected for system information and compatibility purposes.">
+                        <labs:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xF785;" />
+                        </labs:SettingsCard.HeaderIcon>
+                        <ToggleSwitch Tag="ShowWindowsDesktopVersion"
+                                      IsOn="{x:Bind ViewModel.ShowDisplayVersion, Mode=TwoWay}"
+                                      Toggled="{x:Bind ViewModel.ApplyToggleSwitchValue}" />
                     </labs:SettingsCard>
                 </models:Groups>
             </StackPanel>
