@@ -27,8 +27,16 @@ public static class PathStrings
     public const string DisplayVersionPath = "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows";
     public const string TabletModePath1 = "Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell";
     public const string TabletModePath2 = "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced";
-    public const string WindowsDPIPath = "Control Panel\\Desktop";
-    public const string WindowsDPIPath2 = "Control Panel\\Desktop\\PerMonitorSettings";
+    public const string WindowsDpiPath = "Control Panel\\Desktop";
+    public const string WindowsDpiPath2 = "Control Panel\\Desktop\\PerMonitorSettings";
+    public const string EnhancedSearchIndexingPath = "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search";
+    public const string SecurityFileDownloadPath = "Software\\Microsoft\\Internet Explorer\\Download";
+
+    public const string SecurityFileDownloadPath1 =
+        "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Attachments";
+
+    public const string SecurityFileDownloadPath2 =
+        "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Associations";
 
     public const string BackgroundAccessApplicationsPath =
         "Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications";
@@ -41,5 +49,4 @@ public static class PathStrings
 
     public const string NotificationsPath6 =
         "Software\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\\Windows.SystemToast.AutoPlay";
-
 }

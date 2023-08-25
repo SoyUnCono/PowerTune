@@ -38,8 +38,12 @@ public static class ValueStrings
     public const string VirtualDesktopsValue1 = "VirtualDesktopTaskbarFilter";
     public const string VirtualDesktopsValue2 = "VirtualDesktopAltTabFilter";
     public const string ShowDisplayVersionValue = "DisplayVersion";
-    public const string WindowsDPIValue = "LogPixels";
-    public const string WindowsDPIValue2 = "Win8DpiScaling";
-    public const string WindowsDPIValue3 = "AppliedDPI";
-
+    public const string WindowsDpiValue = "LogPixels";
+    public const string WindowsDpiValue2 = "Win8DpiScaling";
+    public const string WindowsDpiValue3 = "AppliedDPI";
+    public const string EnhancedSearchIndexingValue = "PreventUsingAdvancedIndexingOptions";
+    public const string SecurityFileDownloadValue = "CheckExeSignatures";
+    public const string SecurityFileDownloadValue1 = "RunInvalidSignatures";
+    public const string SecurityFileDownloadValue2 = "SaveZoneInformation";
+    public const string SecurityFileDownloadValue3 = "LowRiskFileTypes";
 }

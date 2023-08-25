@@ -56,13 +56,13 @@ public partial class MainViewModel : ObservableRecipient
     [NotifyPropertyChangedFor(nameof(IsNotBusy))]
     private bool _isBusy;
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsNotWindows11))]
+    [NotifyPropertyChangedFor(nameof(IsWindows10))]
     private bool _isWindows11;
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(DontShowHeader))]
     private bool _headerViewContent;
 
-    public bool IsNotWindows11 => !IsWindows11;
+    public bool IsWindows10 => !IsWindows11;
     public bool DontShowHeader => !HeaderViewContent;
     public bool IsNotBusy => !IsBusy;
 

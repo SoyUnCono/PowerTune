@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.CodeDom;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
@@ -12,13 +13,25 @@ namespace PowerTune.ViewModels;
 
 public class AppSettings
 {
+    public bool SecurityFileDownloads
+    {
+        get;
+        init;
+    }
+
     public bool IsBoldCheck
     {
         get;
         init;
     }
 
-    public bool DefaultDPI
+    public bool DefaultDpi
+    {
+        get;
+        init;
+    }
+
+    public bool EnhancedSearchIndexing
     {
         get;
         init;
@@ -58,7 +71,9 @@ public partial class TweaksViewModel : ObservableRecipient
     [ObservableProperty] private bool _showErrorDialog;
     [ObservableProperty] private bool _hideScrollBar;
     [ObservableProperty] private bool _showDisplayVersion;
-    [ObservableProperty] private bool _setWindowsDPI;
+    [ObservableProperty] private bool _setWindowsDpi;
+    [ObservableProperty] private bool _enhancedSearchIndexing;
+    [ObservableProperty] private bool _securityFileDownload;
 
     [ObservableProperty] private int _selectedTitleBarSize;
 
@@ -89,7 +104,9 @@ public partial class TweaksViewModel : ObservableRecipient
         VisualFeedBack = settings.VisualFeedBack;
         HideScrollBar = settings.HideScrollBar;
         ShowDisplayVersion = settings.ShowDisplayVersion;
-        SetWindowsDPI = settings.DefaultDPI;
+        SetWindowsDpi = settings.DefaultDpi;
+        EnhancedSearchIndexing = settings.EnhancedSearchIndexing;
+        SecurityFileDownload = settings.SecurityFileDownloads;
     }
 
     private async Task SaveSettings()
@@ -105,12 +122,13 @@ public partial class TweaksViewModel : ObservableRecipient
                 SelectedTitleBarSize = SelectedTitleBarSize,
                 VisualFeedBack = VisualFeedBack,
                 ShowDisplayVersion = ShowDisplayVersion,
-                DefaultDPI = ShowDisplayVersion,
+                DefaultDpi = SetWindowsDpi,
+                EnhancedSearchIndexing = EnhancedSearchIndexing,
+                SecurityFileDownloads = SecurityFileDownload,
             });
         }
         catch
         {
-            
             await ContentDialogService.ShowDialogAsync(errorData.title, errorData.description, errorData.errorCode);
         }
         finally
@@ -146,6 +164,7 @@ public partial class TweaksViewModel : ObservableRecipient
     {
         // Indicate that an operation is in progress
         IsBusy = true;
+        ErrorCodeStrings.ErrorHandler.TryGetValue("Error-Applying-TitleBarSize", out var errorData);
 
         // Try to get the selected title bar size from the dictionary
         if (DictionaryStrings.StringData.TryGetValue(SelectedTitleBarSize, out var stringPair))
@@ -163,10 +182,7 @@ public partial class TweaksViewModel : ObservableRecipient
         if (string.IsNullOrEmpty(SelectedString))
         {
             // Show an error dialog if the selected string is missing or empty
-            await ContentDialogService.ShowDialogAsync(
-                title: "Error Applying Title Bar Size",
-                description: "Failed to apply title bar size. The selected string is missing or empty.",
-                errorCode: "Please ensure that a valid title bar size is selected before applying.");
+            await ContentDialogService.ShowDialogAsync(errorData.title, errorData.description, errorData.errorCode);
 
             IsBusy = false; // Indicate that the operation is complete
             return; // Exit the method to avoid further execution
@@ -188,15 +204,31 @@ public partial class TweaksViewModel : ObservableRecipient
         // Get the identifier for the ToggleSwitch
         // Get the registry command
         // Get the state of the ToggleSwitch
+        ErrorCodeStrings.ErrorHandler.TryGetValue("ErrorCode-DefaultError", out var errorData);
+
         var toggleSwitch = (ToggleSwitch)sender;
         var toggleSwitchId = toggleSwitch.Tag.ToString();
         var customCommand = RegistryHelper.SetRegistryValue;
         var check = toggleSwitch.IsOn;
-        ErrorCodeStrings.ErrorHandler.TryGetValue("ErrorCode-DefaultError", out var errorData);
         var removeCommand = RegistryHelper.RemoveRegistryKey;
 
         switch (toggleSwitchId)
         {
+            case "SecuritySettingsFileDownload":
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.SecurityFileDownloadPath,
+                    ValueStrings.SecurityFileDownloadValue, check ? "no" : 0);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.SecurityFileDownloadPath,
+                    ValueStrings.SecurityFileDownloadValue1, check ? 00000001 : 0);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.SecurityFileDownloadPath1,
+                    ValueStrings.SecurityFileDownloadValue2, check ? 00000001 : 0);
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.SecurityFileDownloadPath2,
+                    ValueStrings.SecurityFileDownloadValue3,
+                    check
+                        ? ".zip;.rar;.nfo;.txt;.exe;.bat;.com;.cmd;.reg;.msi;.htm;.html;.gif;.bmp;.jpg;.avi;.mpg;.mpeg;.mov;.mp3;.m3u;.msu;.wav;"
+                        : 0);
+                SecurityFileDownload = check;
+                await SaveSettings().ConfigureAwait(true);
+                break;
             case "HideScrollBar":
                 customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.ShowAlwaysScrollBarPath,
                     ValueStrings.ShowAlwaysScrollBarValue, check ? 1 : 0);
@@ -223,13 +255,20 @@ public partial class TweaksViewModel : ObservableRecipient
                 await SaveSettings().ConfigureAwait(true);
                 break;
             case "SetWindowsDPI":
-                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.WindowsDPIPath, ValueStrings.WindowsDPIValue,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.WindowsDpiPath, ValueStrings.WindowsDpiValue,
                     00000096);
-                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.WindowsDPIPath2, ValueStrings.WindowsDPIValue2,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.WindowsDpiPath2, ValueStrings.WindowsDpiValue2,
                     check ? 0 : 1);
-                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.WindowsDPIPath2, ValueStrings.WindowsDPIValue3,
+                customCommand(RootKeys.HKEY_CURRENT_USER, PathStrings.WindowsDpiPath2, ValueStrings.WindowsDpiValue3,
                     check ? 00000096 : 0);
                 removeCommand("HKEY_CURRENT_USER", @"Control Panel\Desktop\PerMonitorSettings");
+                SetWindowsDpi = check;
+                await SaveSettings().ConfigureAwait(true);
+                break;
+            case "EnhancedSearchIndexing":
+                customCommand(RootKeys.HKEY_LOCAL_MACHINE, PathStrings.EnhancedSearchIndexingPath,
+                    ValueStrings.EnhancedSearchIndexingValue, check ? 0 : 0000001);
+                EnhancedSearchIndexing = check;
                 await SaveSettings().ConfigureAwait(true);
                 break;
             default:

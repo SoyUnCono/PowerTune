@@ -20,6 +20,27 @@
             Transitions="{StaticResource SettingsCardsAnimations}"
             VerticalScrollBarVisibility="Hidden">
             <StackPanel Margin="0,0,0,20" Orientation="Vertical">
+                <models:Groups Header="Features" IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}">
+                    <labs:SettingsCard Header="Enhanced Search Index Control"
+                                       Description="Toggle this setting to control advanced indexing options for Windows Search,
+                                        allowing you to optimize search performance and resource usage.">
+                        <labs:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xEDE4;" />
+                        </labs:SettingsCard.HeaderIcon>
+                        <ToggleSwitch Tag="EnhancedSearchIndexing"
+                                      IsOn="{x:Bind ViewModel.EnhancedSearchIndexing, Mode=TwoWay}"
+                                      Toggled="{x:Bind ViewModel.ApplyToggleSwitchValue}" />
+                    </labs:SettingsCard>
+                    <labs:SettingsCard Header="Security Settings for File Downloads"
+                                       Description="Adjust your system's file download and attachment security settings using this toggle switch.This setting entries configure how your browser and system manage different file types, bolstering overall security.">
+                        <labs:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE81B;" />
+                        </labs:SettingsCard.HeaderIcon>
+                        <ToggleSwitch Tag="SecuritySettingsFileDownload"
+                                      IsOn="{x:Bind ViewModel.SecurityFileDownload, Mode=TwoWay}"
+                                      Toggled="{x:Bind ViewModel.ApplyToggleSwitchValue}" />
+                    </labs:SettingsCard>
+                </models:Groups>
                 <models:Groups Header="Appearance" IsEnabled="{x:Bind ViewModel.IsNotBusy, Mode=OneWay}">
                     <labs:SettingsCard x:Uid="VisualFeedback">
                         <labs:SettingsCard.HeaderIcon>
@@ -30,22 +51,29 @@
                             Tag="VisualFeedBack"
                             Toggled="{x:Bind ViewModel.ApplyToggleSwitchValue}" />
                     </labs:SettingsCard>
-                    <labs:SettingsCard x:Uid="TitleBarChangeSize" HorizontalContentAlignment="Right">
-                        <labs:SettingsCard.HeaderIcon>
+                    <labs:SettingsExpander x:Uid="TitleBarChangeSize"
+                                           IsExpanded="False"
+                                           HorizontalContentAlignment="Left">
+                        <labs:SettingsExpander.HeaderIcon>
                             <FontIcon Glyph="&#xE8BA;" />
-                        </labs:SettingsCard.HeaderIcon>
-                        <StackPanel Orientation="Horizontal" Spacing="3">
-                            <CheckBox
-                                Click="{x:Bind ViewModel.ApplyTitleBarSizeAsync}"
-                                IsChecked="{x:Bind ViewModel.IsBoldCheck, Mode=TwoWay}"
-                                ToolTipService.ToolTip="Set Text To bold" />
-                            <ComboBox
-                                Margin="1"
-                                ItemsSource="{x:Bind viewModels:TweaksViewModel.TitlebarSizes}"
-                                SelectedIndex="{x:Bind ViewModel.SelectedTitleBarSize, Mode=TwoWay}"
-                                SelectionChanged="{x:Bind ViewModel.ApplyTitleBarSizeAsync}" />
-                        </StackPanel>
-                    </labs:SettingsCard>
+                        </labs:SettingsExpander.HeaderIcon>
+                        <labs:SettingsExpander.Items>
+                            <labs:SettingsCard Description="Set TitleBar font Size to"
+                                               CornerRadius="0">
+                                <ComboBox
+                                    Margin="1"
+                                    ItemsSource="{x:Bind viewModels:TweaksViewModel.TitlebarSizes}"
+                                    SelectedIndex="{x:Bind ViewModel.SelectedTitleBarSize, Mode=TwoWay}"
+                                    SelectionChanged="{x:Bind ViewModel.ApplyTitleBarSizeAsync}" />
+                            </labs:SettingsCard>
+                            <labs:SettingsCard Description="Set Text to Bold"
+                                               CornerRadius="{StaticResource RadiusExpander}">
+                                <CheckBox
+                                    Click="{x:Bind ViewModel.ApplyTitleBarSizeAsync}"
+                                    IsChecked="{x:Bind ViewModel.IsBoldCheck, Mode=TwoWay}" />
+                            </labs:SettingsCard>
+                        </labs:SettingsExpander.Items>
+                    </labs:SettingsExpander>
                     <labs:SettingsCard
                         Header="Set Default Windows DPI"
                         Description="This will make modifications to your system to enhance display and DPI settings for improved clarity.">
@@ -53,7 +81,7 @@
                             <FontIcon Glyph="&#xE70C;" />
                         </labs:SettingsCard.HeaderIcon>
                         <ToggleSwitch Tag="SetWindowsDPI"
-                                      IsOn="{x:Bind ViewModel.SetWindowsDPI, Mode=TwoWay}"
+                                      IsOn="{x:Bind ViewModel.SetWindowsDpi, Mode=TwoWay}"
                                       Toggled="{x:Bind ViewModel.ApplyToggleSwitchValue}" />
                     </labs:SettingsCard>
                     <labs:SettingsCard x:Uid="AutomaticallyHideScrollBars">

@@ -186,7 +186,7 @@
                                         x:Uid="Infomessage_windows"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Bottom"
-                                        Visibility="{x:Bind ViewModel.IsNotWindows11, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        Visibility="{x:Bind ViewModel.IsWindows10, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 </StackPanel>
                             </labs:SettingsCard.Description>
                             <ComboBox
@@ -205,7 +205,7 @@
                                 Unchecked="{x:Bind ViewModel.SetWindowsRegistryCheckBox, Mode=OneWay}" />
                         </labs:SettingsCard>
                         <labs:SettingsCard CornerRadius="{StaticResource RadiusExpander}"
-                                           IsEnabled="{x:Bind ViewModel.IsNotWindows11, Mode=OneWay}">
+                                           IsEnabled="{x:Bind ViewModel.IsWindows10, Mode=OneWay}">
                             <labs:SettingsCard.Description>
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock x:Uid="Old_Volume_Mixer" />

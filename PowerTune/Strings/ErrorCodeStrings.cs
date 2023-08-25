@@ -43,6 +43,12 @@ public static class ErrorCodeStrings
                 "An unexpected error occurred while applying the settings. Please contact your system administrator or our support service for assistance.",
                 "Error Code - [ _INSUFFICIENT_PERMISSIONS_LEVEL ]"
             )
+        },
+        {
+            "ErrorCode-StringValueNull", (
+                "Error-Applying-TitleBarSize",
+                "Failed to apply title bar size. The selected string is missing or empty.Please ensure that a valid title bar size is selected before applying.",
+                "Error Code - [ _STRING_VALUE_NULL ]")
         }
     };
 }
