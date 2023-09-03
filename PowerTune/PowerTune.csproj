@@ -55,8 +55,6 @@
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.RivePlayer" Version="0.0.4" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.SettingsControls" Version="0.0.18" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.0.1" />
-		<PackageReference Include="CommunityToolkit.Labs.WinUI.StackedNotificationsBehavior" Version="0.0.2" />
-		<PackageReference Include="CommunityToolkit.Labs.WinUI.TransitionHelper" Version="0.0.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
 		<PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
@@ -81,9 +79,6 @@
 		</Page>
 		<Page Update="Views\NewsPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Views\Controls\CustomNotificationMessage.xaml">
-			<Generator>MSBuild:Compile</Generator>
 		</Page>
 		<Page Update="Styles\CustomControls.xaml">
 			<Generator>MSBuild:Compile</Generator>

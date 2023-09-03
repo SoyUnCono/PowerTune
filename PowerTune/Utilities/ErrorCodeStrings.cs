@@ -1,4 +1,4 @@
-﻿namespace PowerTune.Strings;
+﻿namespace PowerTune.Utilities;
 
 public static class ErrorCodeStrings
 {
@@ -49,6 +49,12 @@ public static class ErrorCodeStrings
                 "Error-Applying-TitleBarSize",
                 "Failed to apply title bar size. The selected string is missing or empty.Please ensure that a valid title bar size is selected before applying.",
                 "Error Code - [ _STRING_VALUE_NULL ]")
-        }
+        },
+        {
+            "ErrorCode-RegeditValueNull", (
+                "Error-TryingToGetSystemValue",
+                "Failed to get SystemInformation, Please ensure that you have the necessary permissions and try again.",
+                "Error Code - [ _REGISTRY_KEY_EMPTY ]")
+        },
     };
 }

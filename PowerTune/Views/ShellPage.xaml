@@ -7,7 +7,7 @@
       Loaded="OnLoaded"
       xmlns:ui="using:CommunityToolkit.WinUI.UI"
       xmlns:converter="using:PowerTune.Converters"
-      xmlns:helpers="using:PowerTune.Helpers" xmlns:Controls="using:PowerTune.Views.Controls"
+      xmlns:helpers="using:PowerTune.Helpers" 
       mc:Ignorable="d">
     <Page.Resources>
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -46,10 +46,8 @@
                         PaneDisplayMode="LeftCompact"
                         IsPaneToggleButtonVisible="False"
                         IsSettingsVisible="False"
-                        ShoulderNavigationEnabled="Always"
                         DisplayModeChanged="NavigationViewControl_DisplayModeChanged">
             <NavigationView.MenuItems>
-                
                 <NavigationViewItem x:Uid="ShellMenuItem_Views_Main.Content"
                                     helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.MainViewModel"
                                     Margin="0 15 0 0"
@@ -62,7 +60,6 @@
                                     Icon="{ui:BitmapIcon Source=/Assets/NavigationViewIcons/icons8-search-16.png,ShowAsMonochrome=False}" />
                 <NavigationViewItemSeparator />
             </NavigationView.MenuItems>
-            
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem x:Uid="Shell_Settings"
                                     helpers:NavigationHelper.NavigateTo="PowerTune.ViewModels.SettingsViewModel"

@@ -1,66 +1,15 @@
-﻿using System.CodeDom;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using PowerTune.Core.Contracts.Services;
 using PowerTune.Helpers;
+using PowerTune.Models;
 using PowerTune.Services;
 using PowerTune.Strings;
+using PowerTune.Utilities;
 
 namespace PowerTune.ViewModels;
-
-public class AppSettings
-{
-    public bool SecurityFileDownloads
-    {
-        get;
-        init;
-    }
-
-    public bool IsBoldCheck
-    {
-        get;
-        init;
-    }
-
-    public bool DefaultDpi
-    {
-        get;
-        init;
-    }
-
-    public bool EnhancedSearchIndexing
-    {
-        get;
-        init;
-    }
-
-    public bool VisualFeedBack
-    {
-        get;
-        init;
-    }
-
-    public bool HideScrollBar
-    {
-        get;
-        init;
-    }
-
-    public int SelectedTitleBarSize
-    {
-        get;
-        init;
-    }
-
-    public bool ShowDisplayVersion
-    {
-        get;
-        init;
-    }
-}
 
 public partial class TweaksViewModel : ObservableRecipient
 {
@@ -93,20 +42,29 @@ public partial class TweaksViewModel : ObservableRecipient
 
     private async Task LoadSettingsAsync()
     {
-        var settings = await _fileService.Read<AppSettings>($"{Constants.PowerTunePath}", "AppSettings.json");
+        var settings = await _fileService.Read<LocalSettingsOptions>($"{Constants.PowerTunePath}", "AppSettings.json");
         ErrorCodeStrings.ErrorHandler.TryGetValue("ErrorCode-LoadSettings", out var errorData);
 
         if (settings == null)
-            await ContentDialogService.ShowDialogAsync(errorData.title, errorData.description, errorData.errorCode);
+        {
+            return;
+        }
 
-        SelectedTitleBarSize = settings!.SelectedTitleBarSize;
-        IsBoldCheck = settings.IsBoldCheck;
-        VisualFeedBack = settings.VisualFeedBack;
-        HideScrollBar = settings.HideScrollBar;
-        ShowDisplayVersion = settings.ShowDisplayVersion;
-        SetWindowsDpi = settings.DefaultDpi;
-        EnhancedSearchIndexing = settings.EnhancedSearchIndexing;
-        SecurityFileDownload = settings.SecurityFileDownloads;
+        try
+        {
+            SelectedTitleBarSize = settings!.SelectedTitleBarSize;
+            IsBoldCheck = settings.IsBoldCheck;
+            VisualFeedBack = settings.VisualFeedBack;
+            HideScrollBar = settings.HideScrollBar;
+            ShowDisplayVersion = settings.ShowDisplayVersion;
+            SetWindowsDpi = settings.DefaultDpi;
+            EnhancedSearchIndexing = settings.EnhancedSearchIndexing;
+            SecurityFileDownload = settings.SecurityFileDownloads;
+        }
+        catch
+        {
+            await ContentDialogService.ShowDialogAsync(errorData.title, errorData.description, errorData.errorCode);
+        }
     }
 
     private async Task SaveSettings()
@@ -115,7 +73,7 @@ public partial class TweaksViewModel : ObservableRecipient
         try
         {
             IsBusy = true;
-            await _fileService.Save($"{Constants.PowerTunePath}", "AppSettings.json", new AppSettings
+            await _fileService.Save($"{Constants.PowerTunePath}", "AppSettings.json", new LocalSettingsOptions
             {
                 HideScrollBar = HideScrollBar,
                 IsBoldCheck = IsBoldCheck,
@@ -146,15 +104,19 @@ public partial class TweaksViewModel : ObservableRecipient
         // Retrieve the current operating system version
         var osVersion = Environment.OSVersion.Version;
 
-        // Check if the OS version is Windows 10 (specifically 10.0)
-        // Apply Windows 10 registry optimizations
+        /* Check if the OS version is Windows 10 (specifically 10.0)
+         Apply Windows 10 registry optimizations */
         if (osVersion is { Major: 10, Minor: 0 })
+        {
             RegistryHelper.ImportRegistryFromString(RawString.RawBasicsOptimizationsW10);
+        }
 
-        // Check if the OS version is Windows 11 with a build number greater than or equal to 22000
-        // Apply Windows 11 registry optimizations
+        /* Check if the OS version is Windows 11 with a build number greater than or equal to 22000
+         Apply Windows 11 registry optimizations */
         if (osVersion is { Major: >= 10, Build: >= 22000 })
+        {
             RegistryHelper.ImportRegistryFromString(RawString.RawBasicsOptimizationsW11);
+        }
 
         // Indicate that the operation is complete
         IsBusy = false;
@@ -171,11 +133,15 @@ public partial class TweaksViewModel : ObservableRecipient
         {
             // Check if the IsBoldCheck is false
             if (IsBoldCheck == false)
+            {
                 SelectedString = stringPair.REGULAR; // Use the regular string
+            }
 
             // Check if the IsBoldCheck is true
             if (IsBoldCheck)
+            {
                 SelectedString = stringPair.BOLD; // Use the bold string
+            }
         }
 
         // Check if the SelectedString is null or empty

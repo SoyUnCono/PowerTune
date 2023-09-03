@@ -1,6 +1,7 @@
 ﻿using System.Management;
 using PowerTune.Contracts.Services;
 using PowerTune.Strings;
+using PowerTune.Utilities;
 
 namespace PowerTune.Services;
 

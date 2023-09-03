@@ -9,18 +9,18 @@ using Windows.Storage;
 namespace PowerTune.Services;
 
 public class LocalSettingsService : ILocalSettingsService {
-    const string _defaultApplicationDataFolder = "PowerTune";
-    const string _defaultLocalSettingsFile = "LocalSettings.json";
+   private  const string _defaultApplicationDataFolder = "PowerTune";
+   private const string _defaultLocalSettingsFile = "LocalSettings.json";
 
-    readonly IFileService _fileService;
-    readonly LocalSettingsOptions _options;
+   private readonly IFileService _fileService;
+   private readonly LocalSettingsOptions _options;
 
-    readonly string _localApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-    readonly string _applicationDataFolder, _localsettingsFile;
+   private readonly string _localApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+   private readonly string _applicationDataFolder, _localsettingsFile;
 
-    IDictionary<string, object> _settings;
+   private IDictionary<string, object> _settings;
 
-    bool _isInitialized;
+   private bool _isInitialized;
 
     public LocalSettingsService(IFileService fileService, IOptions<LocalSettingsOptions> options) {
         _fileService = fileService;
@@ -32,10 +32,9 @@ public class LocalSettingsService : ILocalSettingsService {
         _settings = new Dictionary<string, object>();
     }
 
-    async Task InitializeAsync() {
+    private async Task InitializeAsync() {
         if (!_isInitialized) {
             _settings = await Task.Run(() => _fileService.Read<IDictionary<string, object>>(_applicationDataFolder, _localsettingsFile)) ?? new Dictionary<string, object>();
-
             _isInitialized = true;
         }
     }
@@ -49,7 +48,7 @@ public class LocalSettingsService : ILocalSettingsService {
         else {
             await InitializeAsync();
 
-            if (_settings != null && _settings.TryGetValue(key, out var obj)) {
+            if (_settings.TryGetValue(key, out var obj)) {
                 return await Json.ToObjectAsync<T>((string)obj);
             }
         }

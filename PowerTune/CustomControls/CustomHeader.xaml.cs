@@ -3,12 +3,12 @@
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using PowerTune.Views.Controls.ViewModels;
+using CustomHeaderViewModel = PowerTune.CustomControls.ViewModels.CustomHeaderViewModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace PowerTune.Views.Controls;
+namespace PowerTune.CustomControls;
 public sealed partial class CustomHeader : UserControl {
     /// <summary>
     /// HeaderImageProperty 

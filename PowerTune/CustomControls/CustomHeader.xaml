@@ -1,10 +1,11 @@
-<UserControl x:Class="PowerTune.Views.Controls.CustomHeader"
+<UserControl x:Class="PowerTune.CustomControls.CustomHeader"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:PowerTune.Views.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converter="using:PowerTune.Converters"
+             xmlns:customControls="using:PowerTune.CustomControls"
              mc:Ignorable="d">
     <UserControl.Resources>
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -53,7 +54,7 @@
         </StackPanel>
         <ContentPresenter x:Name="RightContentPresenter"
                           Content="{x:Bind HeaderRightContent, Mode=OneWay}"
-                          Visibility="{Binding Path=(local:CustomHeader.IsRightContentVisible), RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Visibility="{Binding Path=(customControls:CustomHeader.IsRightContentVisible), RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}"
                           Margin="19"
                           VerticalContentAlignment="Center"
                           HorizontalContentAlignment="Center"

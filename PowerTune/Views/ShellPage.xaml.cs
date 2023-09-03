@@ -8,14 +8,17 @@ using PowerTune.ViewModels;
 
 namespace PowerTune.Views;
 
-public sealed partial class ShellPage : Page {
+public sealed partial class ShellPage : Page
+{
     // ViewModel property representing the view model associated with the ShellPage
-    public ShellViewModel ViewModel {
+    public ShellViewModel ViewModel
+    {
         get;
     }
 
     // Constructor for ShellPage, initializes the view model and sets up the UI
-    public ShellPage(ShellViewModel viewModel) {
+    public ShellPage(ShellViewModel viewModel)
+    {
         ViewModel = viewModel;
         InitializeComponent();
 
@@ -31,15 +34,21 @@ public sealed partial class ShellPage : Page {
     }
 
     // Event handler for the MainWindow Activated event, updates the app title bar based on activation state
-    private void MainWindow_Activated(object sender, WindowActivatedEventArgs args) {
-        var resource = args.WindowActivationState == WindowActivationState.Deactivated ? "WindowCaptionForegroundDisabled" : "WindowCaptionForeground";
+    private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+    {
+        var resource = args.WindowActivationState == WindowActivationState.Deactivated
+            ? "WindowCaptionForegroundDisabled"
+            : "WindowCaptionForeground";
 
         AppTitleBarText.Foreground = (SolidColorBrush)App.Current.Resources[resource];
         App.AppTitlebar = AppTitleBarText as UIElement;
     }
 
-    private void NavigationViewControl_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args) {
-        AppTitleBar.Margin = new Thickness() {
+    private void NavigationViewControl_DisplayModeChanged(NavigationView sender,
+        NavigationViewDisplayModeChangedEventArgs args)
+    {
+        AppTitleBar.Margin = new Thickness()
+        {
             Left = sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 2 : 1),
             Top = AppTitleBar.Margin.Top,
             Right = AppTitleBar.Margin.Right,

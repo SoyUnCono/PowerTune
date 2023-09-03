@@ -166,8 +166,6 @@ public partial class MainViewModel : ObservableRecipient
                     ValueStrings.TaskbarPositionValue, 0);
                 break;
 
-            default:
-                break;
         }
     }
 
